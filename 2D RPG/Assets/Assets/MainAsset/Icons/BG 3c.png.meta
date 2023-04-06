@@ -3,7 +3,7 @@ guid: 9c7355b0cb8a5024bba44738f70d9e74
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -7976,8 +7975,8 @@ TextureImporter:
       BG 3c_189: -1782499882
       BG 3c_157: 1121425871
       BG 3c_72: -1492527400
-      BG 3c_261: -1318604223
       BG 3c_328: -980673930
+      BG 3c_261: -1318604223
       BG 3c_155: -1526484019
       BG 3c_314: 1718132311
       BG 3c_28: 89729872
@@ -7989,16 +7988,16 @@ TextureImporter:
       BG 3c_112: -2110570489
       BG 3c_355: -439930540
       BG 3c_177: 845521226
-      BG 3c_247: 233956519
       BG 3c_316: 1386708492
+      BG 3c_247: 233956519
       BG 3c_365: -677438020
       BG 3c_179: -492207353
       BG 3c_215: -1970464339
       BG 3c_293: 1373384274
       BG 3c_260: -96262159
       BG 3c_131: 969618363
-      BG 3c_1: 1314559700
       BG 3c_360: 662423781
+      BG 3c_1: 1314559700
       BG 3c_254: -1502473130
       BG 3c_287: 1417134913
       BG 3c_218: 736727487
@@ -8009,8 +8008,8 @@ TextureImporter:
       BG 3c_221: -1697646575
       BG 3c_111: 970580547
       BG 3c_273: -3612140
-      BG 3c_13: 695333659
       BG 3c_242: -1673196072
+      BG 3c_13: 695333659
       BG 3c_319: -808083111
       BG 3c_220: 1039590052
       BG 3c_291: 1146507719

@@ -3,7 +3,7 @@ guid: be55291aae08d434db3da3b59db3ab4a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -6158,8 +6157,8 @@ TextureImporter:
       '#2 - Transparent Icons & Drop Shadow_192': -979731868
       '#2 - Transparent Icons & Drop Shadow_215': -1726271465
       '#2 - Transparent Icons & Drop Shadow_29': 1508536180
-      '#2 - Transparent Icons & Drop Shadow_145': 351727531
       '#2 - Transparent Icons & Drop Shadow_155': -2070399289
+      '#2 - Transparent Icons & Drop Shadow_145': 351727531
       '#2 - Transparent Icons & Drop Shadow_14': 1767515411
       '#2 - Transparent Icons & Drop Shadow_71': 2043814778
       '#2 - Transparent Icons & Drop Shadow_170': 1409933052
@@ -6227,11 +6226,11 @@ TextureImporter:
       '#2 - Transparent Icons & Drop Shadow_17': 2134143234
       '#2 - Transparent Icons & Drop Shadow_38': -1550959131
       '#2 - Transparent Icons & Drop Shadow_25': -1868606538
-      '#2 - Transparent Icons & Drop Shadow_229': -104826009
       '#2 - Transparent Icons & Drop Shadow_268': -317809730
       '#2 - Transparent Icons & Drop Shadow_53': 1863113123
       '#2 - Transparent Icons & Drop Shadow_69': -72005552
       '#2 - Transparent Icons & Drop Shadow_131': -598475839
+      '#2 - Transparent Icons & Drop Shadow_229': -104826009
       '#2 - Transparent Icons & Drop Shadow_278': -533659001
       '#2 - Transparent Icons & Drop Shadow_130': 1907419988
       '#2 - Transparent Icons & Drop Shadow_80': -460786257
