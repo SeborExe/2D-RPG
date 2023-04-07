@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public PlayerAirState AirState { get; private set; }
     public PlayerDashState DashState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerWallJumpState WallJumpState { get; private set; }
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
 
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
         AirState = new PlayerAirState(StateMachine, this, Resources.Jump);
         DashState = new PlayerDashState(StateMachine, this, Resources.Dash);
         WallSlideState = new PlayerWallSlideState(StateMachine, this, Resources.WallSlide);
+        WallJumpState = new PlayerWallJumpState(StateMachine, this, Resources.Jump);
 
         Animator = GetComponentInChildren<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -94,6 +96,9 @@ public class Player : MonoBehaviour
 
     private void CheckForDash()
     {
+        if (IsWallDetected())
+            return;
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer <= 0f)
         {
             DashDir = Input.GetAxisRaw("Horizontal");

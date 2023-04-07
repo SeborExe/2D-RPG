@@ -19,10 +19,8 @@ public class PlayerMoveState : PlayerGroundedState
 
         player.SetVelocity(xInput * player.MoveSpeed, player.Rigidbody2D.velocity.y);
 
-        if (xInput == 0)
-        {
+        if (xInput == 0 || player.IsWallDetected())
             stateMachine.ChangeState(player.IdleState);
-        }
     }
 
     public override void Exit()

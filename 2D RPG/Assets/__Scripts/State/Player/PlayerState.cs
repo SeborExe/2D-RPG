@@ -13,6 +13,7 @@ public class PlayerState
     protected float xInput;
     protected float yInput;
     protected float dashTimer = 0f;
+    protected float stateTimer = 0f;
 
     public PlayerState(PlayerStateMachine stateMachine, Player player, int animBoolName)
     {
@@ -46,6 +47,12 @@ public class PlayerState
         {
             dashTimer -= Time.deltaTime;
             if (dashTimer < 0f) { dashTimer = 0f; }
+        }
+
+        if (stateTimer > 0f)
+        {
+            stateTimer -= Time.deltaTime;
+            if (stateTimer < 0f) { stateTimer = 0f; }
         }
     }
 }
