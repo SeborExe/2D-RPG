@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerGroundedState
+public class PlayerAirState : PlayerState
 {
-    public PlayerIdleState(PlayerStateMachine stateMachine, Player player, int animBoolName) : base(stateMachine, player, animBoolName)
+    public PlayerAirState(PlayerStateMachine stateMachine, Player player, int animBoolName) : base(stateMachine, player, animBoolName)
     {
     }
 
@@ -17,9 +17,9 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Update();
 
-        if (xInput != 0)
+        if (player.Rigidbody2D.velocity.y == 0)
         {
-            stateMachine.ChangeState(player.MoveState);
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 
