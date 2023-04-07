@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState JumpState { get; private set; }
     public PlayerAirState AirState { get; private set; }
     public PlayerDashState DashState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
 
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(StateMachine, this, Resources.Jump);
         AirState = new PlayerAirState(StateMachine, this, Resources.Jump);
         DashState = new PlayerDashState(StateMachine, this, Resources.Dash);
+        WallSlideState = new PlayerWallSlideState(StateMachine, this, Resources.WallSlide);
 
         Animator = GetComponentInChildren<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -70,6 +72,7 @@ public class Player : MonoBehaviour
     }
 
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+    public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, wallCheckDistance, whatIsGround);
 
     public void Flip()
     {

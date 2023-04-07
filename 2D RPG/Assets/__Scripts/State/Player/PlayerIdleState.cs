@@ -17,6 +17,14 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Update();
 
+        if (xInput == 0)
+            player.Rigidbody2D.velocity = new Vector2(0, player.Rigidbody2D.velocity.y);
+
+        if (xInput == player.FacingDir && player.IsWallDetected())
+        {
+            return;
+        }
+
         if (xInput != 0)
         {
             stateMachine.ChangeState(player.MoveState);

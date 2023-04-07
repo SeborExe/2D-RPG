@@ -11,6 +11,7 @@ public class PlayerState
     private int animBoolName;
 
     protected float xInput;
+    protected float yInput;
     protected float dashTimer = 0f;
 
     public PlayerState(PlayerStateMachine stateMachine, Player player, int animBoolName)
@@ -28,6 +29,7 @@ public class PlayerState
     public virtual void Update()
     {
         xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
         player.Animator.SetFloat(Resources.yVelocity, player.Rigidbody2D.velocity.y);
 
         UpdateTimers();
