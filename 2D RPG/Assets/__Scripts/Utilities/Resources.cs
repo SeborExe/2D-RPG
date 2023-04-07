@@ -8,4 +8,5 @@ public static class Resources
     public static int Move = Animator.StringToHash("Move");
     public static int Jump = Animator.StringToHash("Jump");
     public static int yVelocity = Animator.StringToHash("yVelocity");
+    public static int Dash = Animator.StringToHash("Dash");
 }

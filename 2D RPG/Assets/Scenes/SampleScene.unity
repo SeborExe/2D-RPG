@@ -258,8 +258,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369868392}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.72, z: 0}
-  m_LocalScale: {x: 15, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -6, z: 0}
+  m_LocalScale: {x: 25, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -662,6 +662,9 @@ MonoBehaviour:
   groundCheckDistance: 0.15
   wallCheck: {fileID: 1489000556}
   wallCheckDistance: 0.2
+  <DashSpeed>k__BackingField: 25
+  <DashDuration>k__BackingField: 0.3
+  <DashCooldown>k__BackingField: 3
 --- !u!50 &1616109276
 Rigidbody2D:
   serializedVersion: 4

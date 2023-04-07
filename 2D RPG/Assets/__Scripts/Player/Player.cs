@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerAirState AirState { get; private set; }
+    public PlayerDashState DashState { get; private set; }
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
 
@@ -25,6 +27,14 @@ public class Player : MonoBehaviour
 
     [field: Header("Direction Info")]
     public bool FacingRight { get; private set; } = true;
+    public int FacingDir { get; private set; } = 1;
+
+    [field: Header("Dash Info")]
+    [field: SerializeField] public float DashSpeed { get; private set; } = 25f;
+    [field: SerializeField] public float DashDuration { get; private set; } = 0.3f;
+    [field: SerializeField] public float DashCooldown { get; private set; } = 0.3f;
+    public float DashDir { get; private set; }
+    private float dashTimer;
 
     private void Awake()
     {
@@ -34,6 +44,7 @@ public class Player : MonoBehaviour
         MoveState = new PlayerMoveState(StateMachine, this, Resources.Move);
         JumpState = new PlayerJumpState(StateMachine, this, Resources.Jump);
         AirState = new PlayerAirState(StateMachine, this, Resources.Jump);
+        DashState = new PlayerDashState(StateMachine, this, Resources.Dash);
 
         Animator = GetComponentInChildren<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -47,6 +58,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.Update();
+
+        CheckForDash();
+        UpdateTimers();
     }
 
     public void SetVelocity(float xVelocity, float yVelicoty)
@@ -60,6 +74,7 @@ public class Player : MonoBehaviour
     public void Flip()
     {
         FacingRight = !FacingRight;
+        FacingDir *= -1;
 
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
@@ -72,6 +87,31 @@ public class Player : MonoBehaviour
             Flip();
         else if (move < 0 && FacingRight)
             Flip();
+    }
+
+    private void CheckForDash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer <= 0f)
+        {
+            DashDir = Input.GetAxisRaw("Horizontal");
+
+            if (DashDir == 0)
+            {
+                DashDir = FacingDir;
+            }
+
+            dashTimer = DashCooldown;
+            StateMachine.ChangeState(DashState);
+        }
+    }
+
+    private void UpdateTimers()
+    {
+        if (dashTimer > 0f)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer < 0f) { dashTimer = 0f; }
+        }
     }
 
     private void OnDrawGizmos()
