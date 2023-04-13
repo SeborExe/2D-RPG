@@ -668,6 +668,10 @@ MonoBehaviour:
   <WallJumpMovementSlowdown>k__BackingField: 0.4
   <InAirMovementSlowdown>k__BackingField: 0.75
   <JumpMovementSlowdown>k__BackingField: 0.6
+  attackMovement:
+  - {x: 3, y: 2}
+  - {x: 1, y: 2}
+  - {x: 4, y: 2}
 --- !u!50 &1616109276
 Rigidbody2D:
   serializedVersion: 4
@@ -827,6 +831,7 @@ GameObject:
   - component: {fileID: 2093864564}
   - component: {fileID: 2093864566}
   - component: {fileID: 2093864565}
+  - component: {fileID: 2093864567}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -921,3 +926,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2093864567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093864563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3178cb25222fb4645b7490b5385fa514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

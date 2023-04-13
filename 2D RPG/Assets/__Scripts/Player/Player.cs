@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
 
-    public PlayerPrimaryAttack PrimaryAttack { get; private set; }
+    public PlayerPrimaryAttackState PrimaryAttack { get; private set; }
     #endregion
 
     #region Move Info
@@ -48,6 +49,9 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float DashSpeed { get; private set; } = 25f;
     [field: SerializeField] public float DashDuration { get; private set; } = 0.3f;
     [field: SerializeField] public float DashCooldown { get; private set; } = 0.3f;
+
+    public float DashDir { get; private set; }
+    private float dashTimer;
     #endregion
 
     #region In Air Slowdonw
@@ -57,8 +61,12 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float JumpMovementSlowdown { get; private set; } = 0.6f;
     #endregion
 
-    public float DashDir { get; private set; }
-    private float dashTimer;
+    #region AttackDetails
+    [Header("Attack Details")]
+    public Vector2[] attackMovement;
+    #endregion
+
+    public bool isBusy { get; private set; }
 
     private void Awake()
     {
@@ -72,7 +80,7 @@ public class Player : MonoBehaviour
         WallSlideState = new PlayerWallSlideState(StateMachine, this, Resources.WallSlide);
         WallJumpState = new PlayerWallJumpState(StateMachine, this, Resources.Jump);
 
-        PrimaryAttack = new PlayerPrimaryAttack(StateMachine, this, Resources.Attack);
+        PrimaryAttack = new PlayerPrimaryAttackState(StateMachine, this, Resources.Attack);
 
         Animator = GetComponentInChildren<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -145,6 +153,17 @@ public class Player : MonoBehaviour
             if (dashTimer < 0f) { dashTimer = 0f; }
         }
     }
+
+    public async Task BusyFor(int miliseconds)
+    {
+        isBusy = true;
+
+        await Task.Delay(miliseconds);
+
+        isBusy = false;
+    }
+
+    public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
     private void OnDrawGizmos()
     {

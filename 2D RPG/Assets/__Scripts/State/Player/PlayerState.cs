@@ -15,6 +15,8 @@ public class PlayerState
     protected float dashTimer = 0f;
     protected float stateTimer = 0f;
 
+    protected bool triggerCalled;
+
     public PlayerState(PlayerStateMachine stateMachine, Player player, int animBoolName)
     {
         this.stateMachine = stateMachine;
@@ -25,6 +27,7 @@ public class PlayerState
     public virtual void Enter()
     {
         player.Animator.SetBool(animBoolName, true);
+        triggerCalled = false;
     }
 
     public virtual void Update()
@@ -39,6 +42,11 @@ public class PlayerState
     public virtual void Exit()
     {
         player.Animator.SetBool(animBoolName, false);
+    }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        triggerCalled = true;
     }
 
     private void UpdateTimers()

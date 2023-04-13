@@ -23,14 +23,10 @@ public class PlayerIdleState : PlayerGroundedState
             player.Rigidbody2D.velocity = new Vector2(0, player.Rigidbody2D.velocity.y);
 
         if (xInput == player.FacingDir && player.IsWallDetected())
-        {
             return;
-        }
 
-        if (xInput != 0)
-        {
+        if (xInput != 0 && !player.isBusy)
             stateMachine.ChangeState(player.MoveState);
-        }
     }
 
     public override void Exit()
