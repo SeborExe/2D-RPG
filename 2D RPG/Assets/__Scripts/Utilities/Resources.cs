@@ -6,4 +6,10 @@ public static class Resources
 {
     public static int Idle = Animator.StringToHash("Idle");
     public static int Move = Animator.StringToHash("Move");
+    public static int Jump = Animator.StringToHash("Jump");
+    public static int yVelocity = Animator.StringToHash("yVelocity");
+    public static int Dash = Animator.StringToHash("Dash");
+    public static int WallSlide = Animator.StringToHash("WallSlide");
+    public static int Attack = Animator.StringToHash("Attack");
+    public static int ComboCounter = Animator.StringToHash("ComboCounter");
 }
