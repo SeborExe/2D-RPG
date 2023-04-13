@@ -10,4 +10,5 @@ public static class Resources
     public static int yVelocity = Animator.StringToHash("yVelocity");
     public static int Dash = Animator.StringToHash("Dash");
     public static int WallSlide = Animator.StringToHash("WallSlide");
+    public static int Attack = Animator.StringToHash("Attack");
 }

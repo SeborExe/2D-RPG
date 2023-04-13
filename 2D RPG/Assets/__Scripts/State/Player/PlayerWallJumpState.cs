@@ -25,6 +25,9 @@ public class PlayerWallJumpState : PlayerState
 
         if (player.IsGroundDetected())
             stateMachine.ChangeState(player.IdleState);
+
+        if (xInput != 0)
+            player.SetVelocity(player.MoveSpeed * player.WallJumpMovementSlowdown * xInput, player.Rigidbody2D.velocity.y);
     }
 
     public override void Exit()
