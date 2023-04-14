@@ -5,33 +5,43 @@ using UnityEngine;
 public class EnemyState
 {
     protected EnemyStateMachine stateMachine;
-    protected Enemy enemy;
+    protected Enemy enemyBase;
 
     protected bool triggerCalled;
     protected float stateTimer;
 
     private int animBoolName;
 
-    public EnemyState(EnemyStateMachine stateMachine, Enemy enemy, int animBoolName)
+    public EnemyState(EnemyStateMachine stateMachine, Enemy enemyBase, int animBoolName)
     {
         this.stateMachine = stateMachine;
-        this.enemy = enemy;
+        this.enemyBase = enemyBase;
         this.animBoolName = animBoolName;
     }
 
     public virtual void Enter()
     {
         triggerCalled = false;
-        enemy.Animator.SetBool(animBoolName, true);
+        enemyBase.Animator.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
     {
-        stateTimer -= Time.deltaTime;
+        UpdateTimers();
     }
 
     public virtual void Exit()
     {
-        enemy.Animator.SetBool(animBoolName, false);
+        enemyBase.Animator.SetBool(animBoolName, false);
+    }
+
+    private void UpdateTimers()
+    {
+        if (stateTimer > 0f)
+        {
+            stateTimer -= Time.deltaTime;
+            if (stateTimer < 0f) 
+                stateTimer = 0f;
+        }
     }
 }
