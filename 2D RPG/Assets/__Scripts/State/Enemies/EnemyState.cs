@@ -44,4 +44,6 @@ public class EnemyState
                 stateTimer = 0f;
         }
     }
+
+    public virtual void AnimationFinishTrigger() => triggerCalled = true;
 }

@@ -315,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 503557344}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +780,8 @@ GameObject:
   - component: {fileID: 651291747}
   - component: {fileID: 651291749}
   - component: {fileID: 651291748}
-  m_Layer: 0
+  - component: {fileID: 651291750}
+  m_Layer: 8
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,6 +875,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &651291750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651291746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d822142ae0e9e2d4f91a47113d6af297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &677173444
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 781641853}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2774,7 +2787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1483842024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2805,7 +2818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1489000556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2923,7 +2936,7 @@ GameObject:
   - component: {fileID: 1616109275}
   - component: {fileID: 1616109277}
   - component: {fileID: 1616109276}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2968,13 +2981,13 @@ MonoBehaviour:
   wallCheck: {fileID: 1489000556}
   wallCheckDistance: 0.1
   <MoveSpeed>k__BackingField: 8
-  <JumpForce>k__BackingField: 12
+  <JumpForce>k__BackingField: 16
   <DashSpeed>k__BackingField: 25
   <DashDuration>k__BackingField: 0.3
   <DashCooldown>k__BackingField: 3
   <WallJumpMovementSlowdown>k__BackingField: 0.4
-  <InAirMovementSlowdown>k__BackingField: 0.75
-  <JumpMovementSlowdown>k__BackingField: 0.6
+  <InAirMovementSlowdown>k__BackingField: 0.8
+  <JumpMovementSlowdown>k__BackingField: 0.7
   attackMovement:
   - {x: 3, y: 2}
   - {x: 1, y: 2}
@@ -3112,7 +3125,7 @@ GameObject:
   - component: {fileID: 2014899016}
   - component: {fileID: 2014899018}
   - component: {fileID: 2014899015}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3137,9 +3150,17 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckDistance: 0.25
   wallCheck: {fileID: 1483842024}
-  wallCheckDistance: 1.5
+  wallCheckDistance: 1.2
   <IdleTime>k__BackingField: 2
+  <BattleTime>k__BackingField: 6
+  <MaxDistanceToFollowPlayer>k__BackingField: 15
   <MoveSpeed>k__BackingField: 1.2
+  <AttackDistance>k__BackingField: 1.5
+  <AttackCooldown>k__BackingField: 0.5
+  lastTimeAttack: 0
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &2014899016
 Rigidbody2D:
   serializedVersion: 4
@@ -3169,8 +3190,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014899014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.11, y: -2.63, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.11, y: -2.23, z: 0}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 651291747}
@@ -3217,7 +3238,7 @@ GameObject:
   - component: {fileID: 2093864566}
   - component: {fileID: 2093864565}
   - component: {fileID: 2093864567}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
