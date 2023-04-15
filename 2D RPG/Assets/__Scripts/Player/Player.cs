@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public PlayerStateMachine StateMachine { get; private set; }
-    public Animator Animator { get; private set; }
-    public Rigidbody2D Rigidbody2D { get; private set; }
 
     #region States
     [field: Header("States")]
@@ -27,21 +25,6 @@ public class Player : MonoBehaviour
     [field: Header("Move Info")]
     [field:SerializeField] public float MoveSpeed { get; private set; } = 8f;
     [field:SerializeField] public float JumpForce { get; private set; } = 12f;
-    #endregion
-
-    #region CollisionInfo
-    [field: Header("Collision Info")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private float wallCheckDistance;
-    #endregion
-
-    #region Direction Info
-    [field: Header("Direction Info")]
-    public bool FacingRight { get; private set; } = true;
-    public int FacingDir { get; private set; } = 1;
     #endregion
 
     #region Dash Info
@@ -68,7 +51,7 @@ public class Player : MonoBehaviour
 
     public bool isBusy { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
         StateMachine = new PlayerStateMachine();
 
@@ -82,48 +65,22 @@ public class Player : MonoBehaviour
 
         PrimaryAttack = new PlayerPrimaryAttackState(StateMachine, this, Resources.Attack);
 
-        Animator = GetComponentInChildren<Animator>();
-        Rigidbody2D = GetComponent<Rigidbody2D>();
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StateMachine.Initialize(IdleState);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         StateMachine.CurrentState.Update();
 
         CheckForDash();
         UpdateTimers();
-    }
-
-    public void SetVelocity(float xVelocity, float yVelicoty)
-    {
-        Rigidbody2D.velocity = new Vector2(xVelocity, yVelicoty);
-        FlipController(xVelocity);
-    }
-
-    public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
-    public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, wallCheckDistance, whatIsGround);
-
-    public void Flip()
-    {
-        FacingRight = !FacingRight;
-        FacingDir *= -1;
-
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
-
-    public void FlipController(float move)
-    {
-        if (move > 0 && !FacingRight)
-            Flip();
-        else if (move < 0 && FacingRight)
-            Flip();
     }
 
     private void CheckForDash()
@@ -164,10 +121,4 @@ public class Player : MonoBehaviour
     }
 
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
-    }
 }
