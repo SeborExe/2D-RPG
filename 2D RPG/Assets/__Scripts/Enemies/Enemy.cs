@@ -25,6 +25,13 @@ public class Enemy : Entity
     [HideInInspector] public float lastTimeAttack;
     #endregion
 
+    #region StunState
+    public float stunTime;
+    public Vector2 stunDirection;
+    protected bool canBeStunned;
+    [SerializeField] protected GameObject counterImage;
+    #endregion
+
     [SerializeField] protected LayerMask whatIsPlayer;
 
     protected override void Awake()
@@ -38,6 +45,29 @@ public class Enemy : Entity
     {
         base.Update();
         StateMachine.CurrentState.Update();
+    }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+
+        return false;
     }
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, 20f, whatIsPlayer);
