@@ -12,4 +12,7 @@ public static class Resources
     public static int WallSlide = Animator.StringToHash("WallSlide");
     public static int Attack = Animator.StringToHash("Attack");
     public static int ComboCounter = Animator.StringToHash("ComboCounter");
+    public static int Stun = Animator.StringToHash("Stun");
+    public static int CounterAttack = Animator.StringToHash("CounterAttack");
+    public static int SuccessfulCounterAttack = Animator.StringToHash("SuccessfulCounterAttack");
 }

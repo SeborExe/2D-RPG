@@ -17,6 +17,7 @@ public class Player : Entity
     public PlayerDashState DashState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
+    public PlayerCounterAttackState CounterAttackState { get; private set; }
 
     public PlayerPrimaryAttackState PrimaryAttack { get; private set; }
     #endregion
@@ -47,6 +48,7 @@ public class Player : Entity
     #region AttackDetails
     [Header("Attack Details")]
     public Vector2[] attackMovement;
+    public float counterAttackDuration = 0.2f;
     #endregion
 
     public bool isBusy { get; private set; }
@@ -62,6 +64,7 @@ public class Player : Entity
         DashState = new PlayerDashState(StateMachine, this, Resources.Dash);
         WallSlideState = new PlayerWallSlideState(StateMachine, this, Resources.WallSlide);
         WallJumpState = new PlayerWallJumpState(StateMachine, this, Resources.Jump);
+        CounterAttackState = new PlayerCounterAttackState(StateMachine, this, Resources.CounterAttack);
 
         PrimaryAttack = new PlayerPrimaryAttackState(StateMachine, this, Resources.Attack);
 
