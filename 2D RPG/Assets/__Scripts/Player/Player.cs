@@ -32,10 +32,7 @@ public class Player : Entity
     [field: Header("Dash Info")]
     [field: SerializeField] public float DashSpeed { get; private set; } = 25f;
     [field: SerializeField] public float DashDuration { get; private set; } = 0.3f;
-    [field: SerializeField] public float DashCooldown { get; private set; } = 0.3f;
-
     public float DashDir { get; private set; }
-    private float dashTimer;
     #endregion
 
     #region In Air Slowdonw
@@ -83,7 +80,6 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForDash();
-        UpdateTimers();
     }
 
     private void CheckForDash()
@@ -91,26 +87,14 @@ public class Player : Entity
         if (IsWallDetected())
             return;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer <= 0f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.DashSkill.CanUseSkill())
         {
             DashDir = Input.GetAxisRaw("Horizontal");
 
             if (DashDir == 0)
-            {
                 DashDir = FacingDir;
-            }
 
-            dashTimer = DashCooldown;
             StateMachine.ChangeState(DashState);
-        }
-    }
-
-    private void UpdateTimers()
-    {
-        if (dashTimer > 0f)
-        {
-            dashTimer -= Time.deltaTime;
-            if (dashTimer < 0f) { dashTimer = 0f; }
         }
     }
 
