@@ -840,6 +840,37 @@ Transform:
   m_Father: {fileID: 1408122942}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &858480502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858480503}
+  m_Layer: 7
+  m_Name: AimDotParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &858480503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858480502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1616109274}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &926899120
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,6 +2889,7 @@ Transform:
   - {fileID: 503557344}
   - {fileID: 1489000556}
   - {fileID: 1926319266}
+  - {fileID: 858480503}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3036,10 +3068,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6a315cb03b8cb46afa56828c0fb569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0
+  cooldown: 2
   swordPrefab: {fileID: 1692833936459921559, guid: 980df68a466b6bf4397da2e82f806f65, type: 3}
-  lunchDirection: {x: 15, y: 15}
+  lunchForce: {x: 15, y: 30}
   swordGravity: 4
+  numberOfDots: 20
+  spaceBetweenDots: 0.07
+  dotPrefab: {fileID: 6958553576752401970, guid: 023ab69caeea66747a62d0121b7d4ff6, type: 3}
+  dotsParent: {fileID: 858480503}
 --- !u!1 &1865758348
 GameObject:
   m_ObjectHideFlags: 0
