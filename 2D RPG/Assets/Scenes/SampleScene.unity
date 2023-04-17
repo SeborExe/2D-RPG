@@ -2959,6 +2959,7 @@ GameObject:
   - component: {fileID: 1639881708}
   - component: {fileID: 1639881710}
   - component: {fileID: 1639881711}
+  - component: {fileID: 1639881712}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -3023,6 +3024,22 @@ MonoBehaviour:
   cloneDuration: 1.5
   colorLoosingSpeed: 1
   canAttack: 1
+--- !u!114 &1639881712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639881707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6a315cb03b8cb46afa56828c0fb569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  swordPrefab: {fileID: 1692833936459921559, guid: 980df68a466b6bf4397da2e82f806f65, type: 3}
+  lunchDirection: {x: 15, y: 15}
+  swordGravity: 4
 --- !u!1 &1865758348
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,7 +55,6 @@ public class Player : Entity
     protected override void Awake()
     {
         StateMachine = new PlayerStateMachine();
-        SkillManager = SkillManager.Instance;
 
         IdleState = new PlayerIdleState(StateMachine, this, Resources.Idle);
         MoveState = new PlayerMoveState(StateMachine, this, Resources.Move);
@@ -77,6 +76,9 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
+
+        SkillManager = SkillManager.Instance;
+
         StateMachine.Initialize(IdleState);
     }
 
