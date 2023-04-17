@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : Entity
 {
     public PlayerStateMachine StateMachine { get; private set; }
+    public SkillManager SkillManager { get; private set; }
 
     #region States
     [field: Header("States")]
@@ -18,7 +19,6 @@ public class Player : Entity
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
-
     public PlayerPrimaryAttackState PrimaryAttack { get; private set; }
     #endregion
 
@@ -53,6 +53,7 @@ public class Player : Entity
     protected override void Awake()
     {
         StateMachine = new PlayerStateMachine();
+        SkillManager = SkillManager.Instance;
 
         IdleState = new PlayerIdleState(StateMachine, this, Resources.Idle);
         MoveState = new PlayerMoveState(StateMachine, this, Resources.Move);

@@ -15,4 +15,5 @@ public static class Resources
     public static int Stun = Animator.StringToHash("Stun");
     public static int CounterAttack = Animator.StringToHash("CounterAttack");
     public static int SuccessfulCounterAttack = Animator.StringToHash("SuccessfulCounterAttack");
+    public static int AttackNumber = Animator.StringToHash("AttackNumber");
 }
