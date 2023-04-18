@@ -282,6 +282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8545509615850543148, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 8545509616761298688, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -3127,6 +3131,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
+  swordType: 3
+  bounceAmount: 5
+  bounceGravity: 5
+  bounceSpeed: 20
+  pierceAmount: 2
+  pierceGravity: 1
+  hitCooldown: 0.35
+  maxTravelDinstance: 7
+  spinDuration: 2
+  spinMoveSpeed: 0
+  spinGravity: 1
   swordPrefab: {fileID: 1692833936459921559, guid: 980df68a466b6bf4397da2e82f806f65, type: 3}
   lunchForce: {x: 35, y: 25}
   swordGravity: 4.5
@@ -3458,6 +3473,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8545509615850543148, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 8545509616761298688, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
       propertyPath: m_RootOrder
       value: 10
