@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1692833936459921557}
   - component: {fileID: 1692833936459921556}
   - component: {fileID: 1692833936459921559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1692833936616431753}
   - component: {fileID: 1692833936616431752}
   - component: {fileID: 1692833936616431755}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SwordAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,14 +109,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692833936616431754}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.87553257, w: 0.4831592}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1692833936459921546}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 122.216}
 --- !u!212 &1692833936616431752
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayerID: 1832699243
   m_SortingLayer: 3
   m_SortingOrder: -1
-  m_Sprite: {fileID: 1633007794, guid: f6b296ee51c42564abe9c05f1c502ecd, type: 3}
+  m_Sprite: {fileID: -2004053239, guid: f6b296ee51c42564abe9c05f1c502ecd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

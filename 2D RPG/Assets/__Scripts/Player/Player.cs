@@ -8,6 +8,7 @@ public class Player : Entity
 {
     public PlayerStateMachine StateMachine { get; private set; }
     public SkillManager SkillManager { get; private set; }
+    public GameObject Sword { get; private set; }
 
     #region States
     [field: Header("States")]
@@ -28,6 +29,7 @@ public class Player : Entity
     [field: Header("Move Info")]
     [field:SerializeField] public float MoveSpeed { get; private set; } = 8f;
     [field:SerializeField] public float JumpForce { get; private set; } = 12f;
+    [field:SerializeField] public float SwordReturnImpact { get; private set; }
     #endregion
 
     #region Dash Info
@@ -88,6 +90,17 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForDash();
+    }
+
+    public void AssignNewSword(GameObject newSword)
+    {
+        Sword = newSword;
+    }
+
+    public void CatchSword()
+    {
+        StateMachine.ChangeState(CatchSwordState);
+        Destroy(Sword);
     }
 
     private void CheckForDash()

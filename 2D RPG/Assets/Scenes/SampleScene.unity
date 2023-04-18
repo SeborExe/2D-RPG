@@ -2918,6 +2918,7 @@ MonoBehaviour:
   knockbackDurationInMiliseconds: 0
   <MoveSpeed>k__BackingField: 8
   <JumpForce>k__BackingField: 16
+  <SwordReturnImpact>k__BackingField: 7
   <DashSpeed>k__BackingField: 25
   <DashDuration>k__BackingField: 0.3
   <WallJumpMovementSlowdown>k__BackingField: 0.4
@@ -3070,8 +3071,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 2
   swordPrefab: {fileID: 1692833936459921559, guid: 980df68a466b6bf4397da2e82f806f65, type: 3}
-  lunchForce: {x: 15, y: 30}
-  swordGravity: 4
+  lunchForce: {x: 35, y: 25}
+  swordGravity: 4.5
   numberOfDots: 20
   spaceBetweenDots: 0.07
   dotPrefab: {fileID: 6958553576752401970, guid: 023ab69caeea66747a62d0121b7d4ff6, type: 3}

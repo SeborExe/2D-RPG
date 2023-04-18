@@ -22,7 +22,9 @@ public class SwordSkill : Skill
     public void CreateSword()
     {
         SwordSkillController newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
-        newSword.SetUpSword(finalDirection, swordGravity);
+        newSword.SetUpSword(finalDirection, swordGravity, player);
+
+        player.AssignNewSword(newSword.gameObject);
 
         DotsActive(false);
     }
@@ -81,7 +83,7 @@ public class SwordSkill : Skill
     {
         Vector2 position = (Vector2)player.transform.position + new Vector2(
             AimDirection().normalized.x * lunchForce.x,
-            AimDirection().normalized.y * lunchForce.y) * t * 0.5f * (Physics2D.gravity * swordGravity) * (t * t);
+            AimDirection().normalized.y * lunchForce.y) * t + 0.5f * (Physics2D.gravity * swordGravity) * (t * t);
 
         return position;
     }
