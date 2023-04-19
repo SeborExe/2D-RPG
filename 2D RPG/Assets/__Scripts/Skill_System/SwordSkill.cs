@@ -5,6 +5,13 @@ public class SwordSkill : Skill
 {
     public SwordType swordType = SwordType.Regular;
 
+    [Header("Skill Info")]
+    [SerializeField] private SwordSkillController swordPrefab;
+    [SerializeField] private Vector2 lunchForce;
+    [SerializeField] private float swordGravity;
+    [SerializeField] private float freezTimeDuration;
+    [SerializeField] private float returnSpeed;
+
     [Header("Bounce Info")]
     [SerializeField] private int bounceAmount;
     [SerializeField] private float bounceGravity;
@@ -20,11 +27,6 @@ public class SwordSkill : Skill
     [SerializeField] private float spinDuration;
     [SerializeField] private float spinMoveSpeed;
     [SerializeField] private float spinGravity;
-
-    [Header("Skill Info")]
-    [SerializeField] private SwordSkillController swordPrefab;
-    [SerializeField] private Vector2 lunchForce;
-    [SerializeField] private float swordGravity;
 
     [Header("Aim Dots")]
     [SerializeField] private int numberOfDots;
@@ -46,12 +48,14 @@ public class SwordSkill : Skill
     public void CreateSword()
     {
         SwordSkillController newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
-        newSword.SetUpSword(finalDirection, swordGravity, player, swordType);
+        newSword.SetUpSword(finalDirection, swordGravity, player, swordType, freezTimeDuration, returnSpeed);
 
         if (swordType == SwordType.Bounce)
             newSword.SetUpBounce(bounceAmount, bounceSpeed);
+
         else if (swordType == SwordType.Pirce)
             newSword.SetUpPierce(pierceAmount);
+
         else if (swordType == SwordType.Spin)
             newSword.SetUpSpin(maxTravelDinstance, spinDuration, hitCooldown, spinMoveSpeed);
 

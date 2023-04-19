@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
     #region Knockback
     [Header("Knockback info")]
     [SerializeField] protected Vector2 knockbackDirection;
-    [SerializeField] protected int knockbackDurationInMiliseconds;
+    [SerializeField] protected float knockbackDuration;
     protected bool isKnocked;
     #endregion
 
@@ -77,18 +77,18 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
-    public async virtual void Damage()
+    public virtual void Damage()
     {
-        await HitKnockback();
-        await EntityFX.FlashFX();
+        StartCoroutine(HitKnockback());
+        StartCoroutine(EntityFX.FlashFX());
     }
 
-    protected async virtual Task HitKnockback()
+    protected virtual IEnumerator HitKnockback()
     {
         isKnocked = true;
         Rigidbody2D.velocity = new Vector2(knockbackDirection.x * -FacingDir, knockbackDirection.y);
 
-        await Task.Delay(knockbackDurationInMiliseconds);
+        yield return new WaitForSeconds(knockbackDuration);
 
         isKnocked = false;
     }

@@ -10,12 +10,14 @@ public class SwordSkillController : MonoBehaviour
     private CircleCollider2D collider;
     private Player player;
 
-    [SerializeField] private float returnSpeed = 12f;
     [SerializeField] private float distanceToDisapear = 0.5f;
+    [SerializeField] private float maximumDistanceBetweenPlayerAndSwordToDisapear = 40f;
 
     private bool canRotate = true;
     private bool isReturning;
     private SwordType swordType;
+    private float freezTimeDuration;
+    private float returnSpeed;
 
     [Header("Bounce Info")]
     private bool isBouncing;
@@ -47,17 +49,20 @@ public class SwordSkillController : MonoBehaviour
         collider = GetComponent<CircleCollider2D>();
     }
 
-    public void SetUpSword(Vector2 direction, float gravityScale, Player player, SwordType swordType)
+    public void SetUpSword(Vector2 direction, float gravityScale, Player player, SwordType swordType, float freezTimeDuration, float returnSpeed)
     {
         rb.velocity = direction;
         rb.gravityScale = gravityScale;
         this.player = player;
         this.swordType = swordType;
+        this.freezTimeDuration = freezTimeDuration;
+        this.returnSpeed = returnSpeed;
 
         if (swordType != SwordType.Pirce)
             animator.SetBool(Resources.Rotation, true);
 
-        spinDirection = Math.Clamp(rb.velocity.x, -1, 1);
+        if (swordType != SwordType.Spin)
+            spinDirection = Math.Clamp(rb.velocity.x, -1, 1);
     }
 
     private void Update()
@@ -68,6 +73,14 @@ public class SwordSkillController : MonoBehaviour
         HandleReturning();
         HandleBounce();
         HandleSpin();
+
+        if (Vector2.Distance(player.transform.position, transform.position) > maximumDistanceBetweenPlayerAndSwordToDisapear)
+            DestroySword();
+    }
+
+    private void DestroySword()
+    {
+        Destroy(gameObject);
     }
 
     public void SetUpBounce(int bounceAmount, float bounceSpeed)
@@ -112,7 +125,7 @@ public class SwordSkillController : MonoBehaviour
 
             if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < 0.1f)
             {
-                enemyTarget[targetIndex].GetComponent<Enemy>()?.Damage();
+                SwordSkillDamage(enemyTarget[targetIndex].GetComponent<Enemy>());
 
                 targetIndex++;
                 bounceAmount--;
@@ -162,7 +175,7 @@ public class SwordSkillController : MonoBehaviour
                     foreach (Collider2D hit in colliders)
                     {
                         if (hit.TryGetComponent(out Enemy enemy))
-                            enemy.Damage();
+                            SwordSkillDamage(enemy);
                     }
                 }
             }
@@ -188,14 +201,25 @@ public class SwordSkillController : MonoBehaviour
     {
         if (isReturning) return;
 
-        collision.GetComponent<Enemy>()?.Damage();
-        SetUpTargetsForBounce(collision);
+        if (collision.TryGetComponent(out Enemy enemy))
+        {
+            SwordSkillDamage(enemy);
+        }
 
+        SetUpTargetsForBounce(collision);
         StickTheSword(collision);
+    }
+
+    private void SwordSkillDamage(Enemy enemy)
+    {
+        enemy.Damage();
+        enemy.StartCoroutine(enemy.FreezTimeFor(freezTimeDuration));
     }
 
     private void SetUpTargetsForBounce(Collider2D collision)
     {
+        if (swordType != SwordType.Bounce) return;
+
         if (collision.GetComponent<Enemy>() != null)
         {
             if (isBouncing && enemyTarget.Count <= 0)
@@ -213,7 +237,7 @@ public class SwordSkillController : MonoBehaviour
 
     private void StickTheSword(Collider2D collision)
     {
-        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        if (swordType == SwordType.Pirce && collision.GetComponent<Enemy>() != null && pierceAmount > 0)
         {
             pierceAmount--;
             return; 

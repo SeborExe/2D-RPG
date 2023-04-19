@@ -509,13 +509,13 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckDistance: 0.25
+  groundCheckDistance: 1
   wallCheck: {fileID: 8545509616225916321}
   wallCheckDistance: 1.2
   attackCheck: {fileID: 8545509615983762733}
   attackCheckRadius: 1.1
-  knockbackDirection: {x: 6, y: 10}
-  knockbackDurationInMiliseconds: 70
+  knockbackDirection: {x: 4, y: 8}
+  knockbackDuration: 0.25
   <IdleTime>k__BackingField: 2
   <BattleTime>k__BackingField: 6
   <MaxDistanceToFollowPlayer>k__BackingField: 15
@@ -542,4 +542,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: 5ab0fcdcd26745c40b344fd1037298d4, type: 2}
-  flashDurationInMiliseconds: 200
+  flashDuration: 0.2

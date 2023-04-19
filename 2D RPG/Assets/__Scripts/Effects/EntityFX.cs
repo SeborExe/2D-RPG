@@ -10,7 +10,7 @@ public class EntityFX : MonoBehaviour
     [Header("Flash FX")]
     [SerializeField] private Material hitMat;
     private Material originalMat;
-    [SerializeField] private int flashDurationInMiliseconds = 200;
+    [SerializeField] private float flashDuration = 0.2f;
 
     private void Awake()
     {
@@ -22,11 +22,11 @@ public class EntityFX : MonoBehaviour
         originalMat = spriteRenderer.material;
     }
 
-    public async Task FlashFX()
+    public IEnumerator FlashFX()
     {
         spriteRenderer.material = hitMat;
 
-        await Task.Delay(flashDurationInMiliseconds);
+        yield return new WaitForSeconds(flashDuration);
 
         spriteRenderer.material = originalMat;
     }
