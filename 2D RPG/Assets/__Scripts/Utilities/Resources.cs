@@ -19,4 +19,5 @@ public static class Resources
     public static int AimSword = Animator.StringToHash("AimSword");
     public static int CatchSword = Animator.StringToHash("CatchSword");
     public static int Rotation = Animator.StringToHash("Rotation");
+    public static int Explode = Animator.StringToHash("Explode");
 }

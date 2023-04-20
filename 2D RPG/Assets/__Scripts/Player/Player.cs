@@ -91,6 +91,7 @@ public class Player : Entity
         base.Update();
         StateMachine.CurrentState.Update();
 
+        CheckForCrystal();
         CheckForDash();
     }
 
@@ -118,6 +119,14 @@ public class Player : Entity
                 DashDir = FacingDir;
 
             StateMachine.ChangeState(DashState);
+        }
+    }
+
+    private void CheckForCrystal()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SkillManager.CrystalSkill.CanUseSkill();
         }
     }
 

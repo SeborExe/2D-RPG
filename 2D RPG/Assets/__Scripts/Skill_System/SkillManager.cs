@@ -8,6 +8,7 @@ public class SkillManager : SingletonMonobehaviour<SkillManager>
     public CloneSkill CloneSkill { get; private set; }
     public SwordSkill SwordSkill { get; private set; }
     public BlackholeSkill BlackholeSkill { get; private set; }
+    public CrystalSkill CrystalSkill { get; private set; }
 
     protected override void Awake()
     {
@@ -17,5 +18,6 @@ public class SkillManager : SingletonMonobehaviour<SkillManager>
         CloneSkill = GetComponent<CloneSkill>();
         SwordSkill = GetComponent<SwordSkill>();
         BlackholeSkill = GetComponent<BlackholeSkill>();
+        CrystalSkill = GetComponent<CrystalSkill>();
     }
 }
