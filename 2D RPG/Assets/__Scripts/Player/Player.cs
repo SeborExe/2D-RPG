@@ -23,6 +23,7 @@ public class Player : Entity
     public PlayerPrimaryAttackState PrimaryAttack { get; private set; }
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
+    public PlayerBlackholeState BlackholeState { get; private set; }
     #endregion
 
     #region Move Info
@@ -66,6 +67,7 @@ public class Player : Entity
         WallSlideState = new PlayerWallSlideState(StateMachine, this, Resources.WallSlide);
         WallJumpState = new PlayerWallJumpState(StateMachine, this, Resources.Jump);
         CounterAttackState = new PlayerCounterAttackState(StateMachine, this, Resources.CounterAttack);
+        BlackholeState = new PlayerBlackholeState(StateMachine, this, Resources.Jump);
 
         AimSwordState = new PlayerAimSwordState(StateMachine, this, Resources.AimSword);
         CatchSwordState = new PlayerCatchSwordState(StateMachine, this, Resources.CatchSword);
