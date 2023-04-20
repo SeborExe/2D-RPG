@@ -18,9 +18,9 @@ public class CloneSkillController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void SetupClone(Transform newTransform, float cloneDuration, float colorLoosingSpeed, bool canAttack)
+    public void SetupClone(Transform newTransform, float cloneDuration, float colorLoosingSpeed, bool canAttack, Vector3 offset)
     {
-        transform.position = newTransform.position;
+        transform.position = newTransform.position + offset;
         cloneTimer = cloneDuration;
         this.colorLoosingSpeed = colorLoosingSpeed;
 

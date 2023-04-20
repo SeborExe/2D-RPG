@@ -15,9 +15,9 @@ public class CloneSkill : Skill
         base.UseSkill();
     }
 
-    public void CreateClone(Transform clonePosition)
+    public void CreateClone(Transform clonePosition, Vector3 offset)
     {
         CloneSkillController newClone = Instantiate(clonePrefab);
-        newClone.SetupClone(clonePosition, cloneDuration, colorLoosingSpeed, canAttack);
+        newClone.SetupClone(clonePosition, cloneDuration, colorLoosingSpeed, canAttack, offset);
     }
 }

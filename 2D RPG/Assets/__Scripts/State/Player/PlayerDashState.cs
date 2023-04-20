@@ -12,7 +12,7 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
 
-        player.SkillManager.CloneSkill.CreateClone(player.transform);
+        player.SkillManager.CloneSkill.CreateClone(player.transform, Vector3.zero);
 
         dashTimer = player.DashDuration;
     }
