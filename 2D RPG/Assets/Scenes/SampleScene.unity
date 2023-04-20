@@ -3255,9 +3255,17 @@ MonoBehaviour:
   cooldown: 0
   crystalPrefab: {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
   crystalDuration: 2
-  moveSpeed: 0
-  canMove: 0
+  moveSpeed: 3
+  canMove: 1
   canExplode: 1
+  canUseMultiStacks: 1
+  crystalAmount: 3
+  multiStackCooldown: 4
+  useTimeWindow: 2.5
+  crystalLeft:
+  - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
+  - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
+  - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
 --- !u!1 &1865758348
 GameObject:
   m_ObjectHideFlags: 0
