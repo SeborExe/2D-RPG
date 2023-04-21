@@ -282,6 +282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1778788399715199478, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: <MaxHealth>k__BackingField.baseValue
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8545509615850543148, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3121,11 +3125,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed97f280e741ea4fa19b13333889132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField:
-    baseValue: 8
+  <Strength>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Agility>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Intelligence>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Vitality>k__BackingField:
+    baseValue: 0
     modifiers: 
   <MaxHealth>k__BackingField:
     baseValue: 100
+    modifiers: 
+  <Armor>k__BackingField:
+    baseValue: 50
+    modifiers: 
+  <Evasion>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Damage>k__BackingField:
+    baseValue: 8
     modifiers: 
   currentHealth: 0
 --- !u!1 &1639881707
@@ -3617,6 +3639,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1778788399715199478, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: <MaxHealth>k__BackingField.baseValue
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8545509615850543148, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

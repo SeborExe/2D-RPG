@@ -27,15 +27,22 @@ public class Enemy : Entity
     #endregion
 
     #region StunState
+    [field: Header("Stun state info")]
     public float stunTime;
     public Vector2 stunDirection;
     protected bool canBeStunned;
     [SerializeField] protected GameObject counterImage;
     #endregion
 
+    #region Dead
+    [field: Header("Dead info")]
+    [field: SerializeField] public bool HasDeadAnimation { get; private set; }
+    #endregion
+
     [SerializeField] protected LayerMask whatIsPlayer;
 
     private float defaultMoveSpeed;
+    public int LastAnimBoolName { get; private set; }
 
     protected override void Awake()
     {
@@ -98,6 +105,11 @@ public class Enemy : Entity
         }
 
         return false;
+    }
+
+    public virtual void AssignLastAnimName(int animBoolName)
+    {
+        LastAnimBoolName = animBoolName;
     }
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, 20f, whatIsPlayer);

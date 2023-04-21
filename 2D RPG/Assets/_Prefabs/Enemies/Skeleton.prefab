@@ -417,7 +417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8545509616761298688}
   - component: {fileID: 8545509616761298689}
-  - component: {fileID: 8545509616761298691}
+  - component: {fileID: 4453119633306960246}
   - component: {fileID: 8545509616761298702}
   - component: {fileID: 8545509616761298690}
   - component: {fileID: 1778788399715199478}
@@ -468,8 +468,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &8545509616761298691
-BoxCollider2D:
+--- !u!70 &4453119633306960246
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -481,19 +481,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.25}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.26}
+  m_Size: {x: 0.8, y: 1.5}
+  m_Direction: 0
 --- !u!114 &8545509616761298702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,12 +511,13 @@ MonoBehaviour:
   <BattleTime>k__BackingField: 6
   <MaxDistanceToFollowPlayer>k__BackingField: 15
   <MoveSpeed>k__BackingField: 1.2
-  <AttackDistance>k__BackingField: 1.6
+  <AttackDistance>k__BackingField: 2
   <AttackCooldown>k__BackingField: 0.5
   lastTimeAttack: 0
   stunTime: 0.65
   stunDirection: {x: 6, y: 10}
   counterImage: {fileID: 8545509614957615206}
+  <HasDeadAnimation>k__BackingField: 1
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
@@ -556,10 +547,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059817f758db605419bb18183461fde5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField:
-    baseValue: 5
+  <Strength>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Agility>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Intelligence>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Vitality>k__BackingField:
+    baseValue: 0
     modifiers: 
   <MaxHealth>k__BackingField:
     baseValue: 50
+    modifiers: 
+  <Armor>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Evasion>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <Damage>k__BackingField:
+    baseValue: 5
     modifiers: 
   currentHealth: 0

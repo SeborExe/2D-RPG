@@ -33,6 +33,7 @@ public class EnemyState
     public virtual void Exit()
     {
         enemyBase.Animator.SetBool(animBoolName, false);
+        enemyBase.AssignLastAnimName(animBoolName);
     }
 
     private void UpdateTimers()

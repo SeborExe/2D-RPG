@@ -24,6 +24,7 @@ public class Player : Entity
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
     public PlayerBlackholeState BlackholeState { get; private set; }
+    public PlayerDeadState DeadState { get; private set; }
     #endregion
 
     #region Move Info
@@ -73,6 +74,7 @@ public class Player : Entity
         CatchSwordState = new PlayerCatchSwordState(StateMachine, this, Resources.CatchSword);
 
         PrimaryAttack = new PlayerPrimaryAttackState(StateMachine, this, Resources.Attack);
+        DeadState = new PlayerDeadState(StateMachine, this, Resources.Die);
 
         base.Awake();
     }
@@ -137,6 +139,13 @@ public class Player : Entity
         await Task.Delay(miliseconds);
 
         isBusy = false;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        StateMachine.ChangeState(DeadState);
     }
 
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

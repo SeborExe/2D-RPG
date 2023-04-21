@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
     public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
     public CharacterStats CharacterStats { get; private set; }
+    public CapsuleCollider2D CapsuleCollider { get; private set;}
 
     #region CollisionInfo
     [field: Header("Collision Info")]
@@ -41,6 +42,7 @@ public class Entity : MonoBehaviour
         Rigidbody2D = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
         CharacterStats = GetComponent<CharacterStats>();
+        CapsuleCollider = GetComponent<CapsuleCollider2D>();
         Animator = GetComponentInChildren<Animator>();
         SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -104,6 +106,8 @@ public class Entity : MonoBehaviour
         else
             SpriteRenderer.color = Color.white;
     }
+
+    public virtual void Die() { }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public virtual bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, wallCheckDistance, whatIsGround);
