@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     public Rigidbody2D Rigidbody2D { get; private set; }
     public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
+    public CharacterStats CharacterStats { get; private set; }
 
     #region CollisionInfo
     [field: Header("Collision Info")]
@@ -39,6 +40,7 @@ public class Entity : MonoBehaviour
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
+        CharacterStats = GetComponent<CharacterStats>();
         Animator = GetComponentInChildren<Animator>();
         SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -79,7 +81,7 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
-    public virtual void Damage()
+    public virtual void DamageEffect()
     {
         StartCoroutine(HitKnockback());
         StartCoroutine(EntityFX.FlashFX());
