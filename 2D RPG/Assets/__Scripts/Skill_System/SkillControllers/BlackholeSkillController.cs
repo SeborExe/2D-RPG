@@ -39,6 +39,9 @@ public class BlackholeSkillController : MonoBehaviour
         this.player = player;
 
         blackholeTimer = blackholeDuration;
+
+        if (SkillManager.Instance.CloneSkill.GetCrystalInsteadOfClone())
+            playerCanDisapear = false;
     }
 
     private void Update()
@@ -141,7 +144,17 @@ public class BlackholeSkillController : MonoBehaviour
             float xOffset;
             GetRandomIndexAndOffset(out randomIndex, out xOffset);
 
-            SkillManager.Instance.CloneSkill.CreateClone(targets[randomIndex], new Vector3(xOffset, 0));
+            if (SkillManager.Instance.CloneSkill.GetCrystalInsteadOfClone())
+            {
+                float radius = maxSize / 2;
+                SkillManager.Instance.CrystalSkill.CreateCrystal();
+                SkillManager.Instance.CrystalSkill.CurrentCrystalChooseRandonTarget(radius);
+            }
+            else
+            {
+                SkillManager.Instance.CloneSkill.CreateClone(targets[randomIndex], new Vector3(xOffset, 0));
+            }
+
             attacksAmount--;
 
             if (attacksAmount <= 0)

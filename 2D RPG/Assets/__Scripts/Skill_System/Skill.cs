@@ -63,4 +63,28 @@ public class Skill : MonoBehaviour
 
         return closestEnemy;
     }
+
+    protected virtual Transform ChooseRandomEnemy(Transform checkTransform)
+    {
+        float detectionRadius = 10f;
+        Transform closestEnemy = null;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkTransform.position, detectionRadius);
+        List<Enemy> enemiesInRange = new List<Enemy>();
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent(out Enemy enemy))
+            {
+                enemiesInRange.Add(enemy);
+            }
+        }
+
+        if (enemiesInRange.Count > 0)
+        {
+            closestEnemy = enemiesInRange[Random.Range(0, enemiesInRange.Count)].transform;
+        }
+
+        return closestEnemy;
+    }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,6 +72,25 @@ public class CrystalSkillController : MonoBehaviour
             {
                 enemy.Damage();
             }
+        }
+    }
+
+    public void ChooseRandomEnemy(float radius)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
+        List<Enemy> enemiesInRange = new List<Enemy>();
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent(out Enemy enemy))
+            {
+                enemiesInRange.Add(enemy);
+            }
+        }
+
+        if (enemiesInRange.Count > 0)
+        {
+            closestEnemy = enemiesInRange[UnityEngine.Random.Range(0, enemiesInRange.Count)].transform;
         }
     }
 

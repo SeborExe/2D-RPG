@@ -10,6 +10,9 @@ public class CrystalSkill : Skill
     [SerializeField] private bool canMove;
     [SerializeField] private bool canExplode;
 
+    [Header("Crystal Mirage")]
+    [SerializeField] private bool cloneInsteadCrystal;
+
     [Header("Multi Crystal")]
     [SerializeField] private bool canUseMultiStacks;
     [SerializeField] private int crystalAmount;
@@ -27,22 +30,36 @@ public class CrystalSkill : Skill
 
         if (currentCrystal == null)
         {
-            currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
-            CrystalSkillController crystal = currentCrystal.GetComponent<CrystalSkillController>();
-            crystal.SetupCrystal(crystalDuration, canExplode, canMove, moveSpeed, FindClosestEnemy(currentCrystal.transform));
+            CreateCrystal();
         }
         else
         {
             if (canMove) return;
 
             Vector2 playerPos = player.transform.position;
-
             player.transform.position = currentCrystal.transform.position;
-
             currentCrystal.transform.position = playerPos;
-            currentCrystal.GetComponent<CrystalSkillController>().FinishCrystal();
+
+            if (cloneInsteadCrystal)
+            {
+                SkillManager.Instance.CloneSkill.CreateClone(currentCrystal.transform, Vector3.zero);
+                Destroy(currentCrystal);
+            }
+            else
+            {
+                currentCrystal.GetComponent<CrystalSkillController>().FinishCrystal();
+            }
         }
     }
+
+    public void CreateCrystal()
+    {
+        currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
+        CrystalSkillController crystal = currentCrystal.GetComponent<CrystalSkillController>();
+        crystal.SetupCrystal(crystalDuration, canExplode, canMove, moveSpeed, FindClosestEnemy(currentCrystal.transform));
+    }
+
+    public void CurrentCrystalChooseRandonTarget(float radius) => currentCrystal.GetComponent<CrystalSkillController>().ChooseRandomEnemy(radius);
 
     private bool CanUseMultiCrystal()
     {

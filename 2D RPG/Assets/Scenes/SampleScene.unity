@@ -3187,6 +3187,12 @@ MonoBehaviour:
   cloneDuration: 1.5
   colorLoosingSpeed: 1
   canAttack: 1
+  createCloneOnDashStart: 1
+  createCloneOnDashEnd: 1
+  canCreateCloneOnCounterAttack: 1
+  canDuplicateClone: 1
+  chanceToDuplicate: 35
+  crystalInsteadOfClone: 1
 --- !u!114 &1639881712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3238,7 +3244,7 @@ MonoBehaviour:
   growSpeed: 3
   shrinkSpeed: 5
   blackholeDuration: 4
-  attacksAmount: 5
+  attacksAmount: 15
   cloneAttackCooldown: 0.3
 --- !u!114 &1639881714
 MonoBehaviour:
@@ -3258,6 +3264,7 @@ MonoBehaviour:
   moveSpeed: 3
   canMove: 1
   canExplode: 1
+  cloneInsteadCrystal: 0
   canUseMultiStacks: 1
   crystalAmount: 3
   multiStackCooldown: 4
