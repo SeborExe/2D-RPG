@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -34,11 +35,15 @@ public class Enemy : Entity
 
     [SerializeField] protected LayerMask whatIsPlayer;
 
+    private float defaultMoveSpeed;
+
     protected override void Awake()
     {
         StateMachine = new EnemyStateMachine();
 
         base.Awake();
+
+        defaultMoveSpeed = MoveSpeed;
     }
 
     protected override void Update()
@@ -47,6 +52,30 @@ public class Enemy : Entity
         StateMachine.CurrentState.Update();
     }
 
+    public virtual void FreezTime(bool timeFrozen)
+    {
+        if (timeFrozen)
+        {
+            MoveSpeed = 0f;
+            Animator.speed = 0f;
+        }
+        else
+        {
+            MoveSpeed = defaultMoveSpeed;
+            Animator.speed = 1f;
+        }
+    }
+
+    public virtual IEnumerator FreezTimeFor(float seconds)
+    {
+        FreezTime(true);
+
+        yield return new WaitForSeconds(seconds);
+
+        FreezTime(false);
+    } 
+
+    #region Counter Attack
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -58,6 +87,7 @@ public class Enemy : Entity
         canBeStunned = false;
         counterImage.SetActive(false);
     }
+    #endregion
 
     public virtual bool CanBeStunned()
     {

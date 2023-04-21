@@ -9,6 +9,7 @@ public class Entity : MonoBehaviour
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
     public EntityFX EntityFX { get; private set; }
+    public SpriteRenderer SpriteRenderer { get; private set; }
 
     #region CollisionInfo
     [field: Header("Collision Info")]
@@ -30,15 +31,16 @@ public class Entity : MonoBehaviour
     #region Knockback
     [Header("Knockback info")]
     [SerializeField] protected Vector2 knockbackDirection;
-    [SerializeField] protected int knockbackDurationInMiliseconds;
+    [SerializeField] protected float knockbackDuration;
     protected bool isKnocked;
     #endregion
 
     protected virtual void Awake()
     {
-        Animator = GetComponentInChildren<Animator>();
         Rigidbody2D = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
+        Animator = GetComponentInChildren<Animator>();
+        SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Start()
@@ -77,20 +79,28 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
-    public async virtual void Damage()
+    public virtual void Damage()
     {
-        await HitKnockback();
-        await EntityFX.FlashFX();
+        StartCoroutine(HitKnockback());
+        StartCoroutine(EntityFX.FlashFX());
     }
 
-    protected async virtual Task HitKnockback()
+    protected virtual IEnumerator HitKnockback()
     {
         isKnocked = true;
         Rigidbody2D.velocity = new Vector2(knockbackDirection.x * -FacingDir, knockbackDirection.y);
 
-        await Task.Delay(knockbackDurationInMiliseconds);
+        yield return new WaitForSeconds(knockbackDuration);
 
         isKnocked = false;
+    }
+
+    public void MakeTransparent(bool transparent)
+    {
+        if (transparent)
+            SpriteRenderer.color = Color.clear;
+        else
+            SpriteRenderer.color = Color.white;
     }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
