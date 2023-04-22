@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public event Action OnHealthChanged;
+
     [field: Header("Major stats")]
     [field: SerializeField] public Stat Strength { get; private set; } //1 point to damage and critical chance
     [field: SerializeField] public Stat Agility { get; private set; } //1 point evasion and critical chance
@@ -40,13 +42,15 @@ public class CharacterStats : MonoBehaviour
     private float igniteDamageTimer;
     private int igniteDamage;
 
-    [SerializeField] private int currentHealth;
+    public int CurrentHealth { get; private set; }
     private int defaultCriticalPower = 150;
+
 
     protected virtual void Start()
     {
-        currentHealth = MaxHealth.GetValue();
+        CurrentHealth = GetMaxHealthValue();
         CriticPower.SetDefaultValue(defaultCriticalPower);
+        OnHealthChanged?.Invoke();
     }
 
     protected virtual void Update()
@@ -66,16 +70,16 @@ public class CharacterStats : MonoBehaviour
             totalDamage = CalculateCriticalDamage(totalDamage);
         }
 
-        //targetStats.TakeDamage(totalDamage);
+        targetStats.TakeDamage(totalDamage);
         DoMagicDamage(targetStats);
     }
 
 
     public virtual void TakeDamage(int damage)
     {
-        currentHealth = Mathf.Max(0, currentHealth - damage);
+        DecreaseHealthBy(damage);
 
-        if (currentHealth == 0)
+        if (CurrentHealth == 0)
             Die();
     }
 
@@ -160,6 +164,14 @@ public class CharacterStats : MonoBehaviour
     {
         
     }
+
+    protected virtual void DecreaseHealthBy(int damage)
+    {
+        CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
+
+        OnHealthChanged?.Invoke();
+    }
+
     private bool AvoidAttack(CharacterStats targetStats)
     {
         int totalEvasion = targetStats.Evasion.GetValue() + targetStats.Agility.GetValue();
@@ -174,6 +186,7 @@ public class CharacterStats : MonoBehaviour
 
         return false;
     }
+
     private int CalculateDamage(CharacterStats targetStats)
     {
         int totalDamage = Damage.GetValue() + Strength.GetValue();
@@ -185,6 +198,7 @@ public class CharacterStats : MonoBehaviour
 
         return totalDamage;
     }
+
     private bool CheckCritical()
     {
         int totalCriticalChance = CriticChance.GetValue() + Agility.GetValue();
@@ -196,6 +210,7 @@ public class CharacterStats : MonoBehaviour
 
         return false;
     }
+
     private int CalculateCriticalDamage(int damage)
     {
         float totalCriticalPower = (CriticPower.GetValue() + Strength.GetValue()) / 100;
@@ -251,9 +266,14 @@ public class CharacterStats : MonoBehaviour
 
     private void DealIgniteDamage()
     {
-        currentHealth = Mathf.Max(0, currentHealth - igniteDamage);
+        DecreaseHealthBy(igniteDamage);
 
-        if (currentHealth == 0)
+        if (CurrentHealth == 0)
             Die();
+    }
+
+    public int GetMaxHealthValue()
+    {
+        return MaxHealth.GetValue() + Vitality.GetValue() * 5;
     }
 }

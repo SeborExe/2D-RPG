@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -94,7 +95,7 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForCrystal();
-        CheckForDash();
+        CheckForDash();    
     }
 
     public void AssignNewSword(GameObject newSword)

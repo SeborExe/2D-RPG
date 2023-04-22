@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Entity : MonoBehaviour
 {
+    public event Action OnFlipped;
+
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
     public EntityFX EntityFX { get; private set; }
@@ -73,6 +76,8 @@ public class Entity : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        OnFlipped?.Invoke();
     }
 
     public virtual void FlipController(float move)
