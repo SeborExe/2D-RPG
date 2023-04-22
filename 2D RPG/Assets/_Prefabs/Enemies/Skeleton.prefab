@@ -568,7 +568,28 @@ MonoBehaviour:
   <Evasion>k__BackingField:
     baseValue: 0
     modifiers: 
+  <MagicResistance>k__BackingField:
+    baseValue: 0
+    modifiers: 
   <Damage>k__BackingField:
     baseValue: 5
     modifiers: 
+  <CriticChance>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <CriticPower>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <FireDamage>k__BackingField:
+    baseValue: 10
+    modifiers: 
+  <IceDamage>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <LightingDamage>k__BackingField:
+    baseValue: 0
+    modifiers: 
+  <IsIgnited>k__BackingField: 0
+  <IsChilled>k__BackingField: 0
+  <IsSchocked>k__BackingField: 0
   currentHealth: 0
