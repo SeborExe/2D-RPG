@@ -581,7 +581,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   <FireDamage>k__BackingField:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   <IceDamage>k__BackingField:
     baseValue: 0

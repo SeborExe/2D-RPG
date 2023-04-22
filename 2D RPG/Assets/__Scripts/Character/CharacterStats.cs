@@ -28,9 +28,17 @@ public class CharacterStats : MonoBehaviour
     [field: SerializeField] public Stat LightingDamage { get; private set; }
 
     [field: Header("Bools")]
-    [field: SerializeField] public bool IsIgnited { get; private set; }
-    [field: SerializeField] public bool IsChilled { get; private set; }
-    [field: SerializeField] public bool IsSchocked { get; private set; }
+    [field: SerializeField] public bool IsIgnited { get; private set; } //Damage over time
+    [field: SerializeField] public bool IsChilled { get; private set; } //Decrease armor and slowdown
+    [field: SerializeField] public bool IsSchocked { get; private set; } //Reduce accurecy
+
+    private float ignitedTimer;
+    private float chilledTimer;
+    private float schockedTimer;
+
+    private float igniteDamageCooldown = 0.3f;
+    private float igniteDamageTimer;
+    private int igniteDamage;
 
     [SerializeField] private int currentHealth;
     private int defaultCriticalPower = 150;
@@ -39,6 +47,11 @@ public class CharacterStats : MonoBehaviour
     {
         currentHealth = MaxHealth.GetValue();
         CriticPower.SetDefaultValue(defaultCriticalPower);
+    }
+
+    protected virtual void Update()
+    {
+        UpdateTimers();
     }
 
     public virtual void DoDamage(CharacterStats targetStats)
@@ -106,6 +119,9 @@ public class CharacterStats : MonoBehaviour
             }
         }
 
+        if (canApplyIgnite)
+            targetStats.SetupIgniteDamage(Mathf.RoundToInt(fireDamage * 0.15f));
+
         targetStats.ApplyAilments(canApplyIgnite, canAppllyChild, canApplyShock);
     }
 
@@ -120,9 +136,24 @@ public class CharacterStats : MonoBehaviour
     {
         if (IsIgnited || IsChilled || IsSchocked) return;
 
-        IsIgnited = ignite;
-        IsChilled = chill;
-        IsSchocked = schock;
+        if (ignite)
+        {
+            IsIgnited = ignite;
+            ignitedTimer = 2f;
+            igniteDamageTimer = igniteDamageCooldown;
+        }
+
+        if (chill)
+        {
+            IsChilled = chill;
+            chilledTimer = 2f;
+        }
+
+        if (schock)
+        {
+            IsSchocked = schock;
+            schockedTimer = 2f;
+        }
     }
 
     protected virtual void Die()
@@ -132,6 +163,9 @@ public class CharacterStats : MonoBehaviour
     private bool AvoidAttack(CharacterStats targetStats)
     {
         int totalEvasion = targetStats.Evasion.GetValue() + targetStats.Agility.GetValue();
+
+        if (IsSchocked)
+            totalEvasion += 20;
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
@@ -143,7 +177,12 @@ public class CharacterStats : MonoBehaviour
     private int CalculateDamage(CharacterStats targetStats)
     {
         int totalDamage = Damage.GetValue() + Strength.GetValue();
-        totalDamage = Mathf.Max(1, totalDamage - targetStats.Armor.GetValue());
+
+        if (targetStats.IsChilled)
+            totalDamage = Mathf.Max(1, totalDamage - Mathf.RoundToInt(targetStats.Armor.GetValue() * 0.8f));
+        else
+            totalDamage = Mathf.Max(1, totalDamage - targetStats.Armor.GetValue());
+
         return totalDamage;
     }
     private bool CheckCritical()
@@ -163,5 +202,58 @@ public class CharacterStats : MonoBehaviour
         float criticalDamage = damage * totalCriticalPower;
 
         return Mathf.RoundToInt(criticalDamage);
+    }
+
+    public void SetupIgniteDamage(int damage) => igniteDamage = damage;
+
+    private void UpdateTimers()
+    {
+        if (ignitedTimer > 0)
+        {
+            ignitedTimer -= Time.deltaTime;
+            if (ignitedTimer <= 0)
+            {
+                ignitedTimer = 0;
+                IsIgnited = false;
+            }
+        }
+
+        if (igniteDamageTimer > 0)
+        {
+            igniteDamageTimer -= Time.deltaTime;
+            if (igniteDamageTimer <= 0 && IsIgnited)
+            {
+                DealIgniteDamage();
+                igniteDamageTimer = igniteDamageCooldown;
+            }
+        }
+
+        if (chilledTimer > 0)
+        {
+            chilledTimer -= Time.deltaTime;
+            if (chilledTimer <= 0)
+            {
+                chilledTimer = 0;
+                IsChilled = false;
+            }
+        }
+
+        if (schockedTimer > 0)
+        {
+            schockedTimer -= Time.deltaTime;
+            if (schockedTimer <= 0)
+            {
+                schockedTimer = 0;
+                IsSchocked = false;
+            }
+        }
+    }
+
+    private void DealIgniteDamage()
+    {
+        currentHealth = Mathf.Max(0, currentHealth - igniteDamage);
+
+        if (currentHealth == 0)
+            Die();
     }
 }
