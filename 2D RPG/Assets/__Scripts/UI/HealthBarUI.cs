@@ -45,5 +45,8 @@ public class HealthBarUI : MonoBehaviour
     {
         healthSlider.maxValue = stats.GetMaxHealthValue();
         healthSlider.value = stats.CurrentHealth;
+
+        if (stats.CurrentHealth == 0)
+            gameObject.SetActive(false);
     }
 }

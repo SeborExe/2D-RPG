@@ -604,7 +604,7 @@ MonoBehaviour:
   defaultCriticalPower: 150
   aligmentsDuration: 3
   slowPercentageWhenChill: 0.2
-  schockStrikePrefab: {fileID: 1790169769560573931, guid: eab1d3a42dd9c1e49ae516841ea400e9, type: 3}
+  shockStrikePrefab: {fileID: 1790169769560573931, guid: eab1d3a42dd9c1e49ae516841ea400e9, type: 3}
 --- !u!1001 &7097520843984781891
 PrefabInstance:
   m_ObjectHideFlags: 0

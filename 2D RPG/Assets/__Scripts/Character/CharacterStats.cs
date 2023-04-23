@@ -7,6 +7,7 @@ public class CharacterStats : MonoBehaviour
 {
     public event Action OnHealthChanged;
 
+    #region Stats
     [field: Header("Major stats")]
     [field: SerializeField] public Stat Strength { get; private set; } //1 point to damage and critical chance
     [field: SerializeField] public Stat Agility { get; private set; } //1 point evasion and critical chance
@@ -28,13 +29,16 @@ public class CharacterStats : MonoBehaviour
     [field: SerializeField] public Stat FireDamage { get; private set; }
     [field: SerializeField] public Stat IceDamage { get; private set; }
     [field: SerializeField] public Stat LightingDamage { get; private set; }
+    #endregion
 
+    #region Other components and values
     [field: Header("Bools")]
     [field: SerializeField] public bool IsIgnited { get; private set; } //Damage over time
     [field: SerializeField] public bool IsChilled { get; private set; } //Decrease armor and slowdown
     [field: SerializeField] public bool IsSchocked { get; private set; } //Reduce accurecy
 
     private EntityFX entityFX;
+    private Entity entity;
 
     [Space, Header("Default Values")]
     [SerializeField] private float igniteDamageCooldown = 0.3f;
@@ -50,12 +54,14 @@ public class CharacterStats : MonoBehaviour
     private int igniteDamage;
     private int schockDamage;
     [SerializeField] private GameObject shockStrikePrefab;
-
     public int CurrentHealth { get; private set; }
+    #endregion
+
 
     protected virtual void Start()
     {
         entityFX = GetComponent<EntityFX>();
+        entity = GetComponent<Entity>();
 
         CurrentHealth = GetMaxHealthValue();
         CriticPower.SetDefaultValue(defaultCriticalPower);
@@ -80,13 +86,15 @@ public class CharacterStats : MonoBehaviour
         }
 
         targetStats.TakeDamage(totalDamage);
-        DoMagicDamage(targetStats);
+        //DoMagicDamage(targetStats);
     }
-
 
     public virtual void TakeDamage(int damage)
     {
         DecreaseHealthBy(damage);
+
+        entity.DamageImpact();
+        entityFX.StartCoroutine(entityFX.FlashFX());
 
         if (CurrentHealth == 0)
             Die();
@@ -104,6 +112,11 @@ public class CharacterStats : MonoBehaviour
 
         if (Mathf.Max(fireDamage, iceDamage, lightingDamage) <= 0) return;
 
+        AttemptToApplyAilments(targetStats, fireDamage, iceDamage, lightingDamage);
+    }
+
+    private void AttemptToApplyAilments(CharacterStats targetStats, int fireDamage, int iceDamage, int lightingDamage)
+    {
         bool canApplyIgnite = fireDamage > iceDamage && fireDamage > lightingDamage;
         bool canAppllyChild = iceDamage > fireDamage && iceDamage > lightingDamage;
         bool canApplyShock = lightingDamage > fireDamage && lightingDamage > iceDamage;
@@ -268,6 +281,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void SetupIgniteDamage(int damage) => igniteDamage = damage;
+
     public void SetupSchockDamage(int damage) => schockDamage = damage;
 
     private void UpdateTimers()
@@ -317,7 +331,7 @@ public class CharacterStats : MonoBehaviour
     {
         DecreaseHealthBy(igniteDamage);
 
-        if (CurrentHealth == 0)
+        if (CurrentHealth == 0 && !entity.IsDead)
             Die();
     }
 

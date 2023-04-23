@@ -35,7 +35,7 @@ public class CloneSkill : Skill
 
         CloneSkillController newClone = Instantiate(clonePrefab);
         newClone.SetupClone(clonePosition, cloneDuration, colorLoosingSpeed, canAttack, offset, FindClosestEnemy(newClone.transform), canDuplicateClone, 
-            chanceToDuplicate);
+            chanceToDuplicate, player);
     }
 
     public void CreateCloneOnDashStart()

@@ -102,10 +102,9 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
-    public virtual void DamageEffect()
+    public virtual void DamageImpact()
     {
         StartCoroutine(HitKnockback());
-        StartCoroutine(EntityFX.FlashFX());
     }
 
     protected virtual IEnumerator HitKnockback()
@@ -118,17 +117,12 @@ public class Entity : MonoBehaviour
         isKnocked = false;
     }
 
-    public void MakeTransparent(bool transparent)
-    {
-        if (transparent)
-            SpriteRenderer.color = Color.clear;
-        else
-            SpriteRenderer.color = Color.white;
-    }
-
     public virtual void Die() 
     {
         IsDead = true;
+
+        CapsuleCollider.offset = new Vector2(0, -0.73f);
+        CapsuleCollider.size = new Vector2(0.5f, 0.5f);
     }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);

@@ -27,6 +27,14 @@ public class EntityFX : MonoBehaviour
         originalMat = spriteRenderer.material;
     }
 
+    public void MakeTransparent(bool transparent)
+    {
+        if (transparent)
+            spriteRenderer.color = Color.clear;
+        else
+            spriteRenderer.color = Color.white;
+    }
+
     public IEnumerator FlashFX()
     {
         spriteRenderer.material = hitMat;

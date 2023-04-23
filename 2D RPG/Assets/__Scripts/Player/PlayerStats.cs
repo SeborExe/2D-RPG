@@ -19,8 +19,6 @@ public class PlayerStats : CharacterStats
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-
-        player.DamageEffect();
     }
 
     protected override void Die()

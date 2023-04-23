@@ -3369,13 +3369,13 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   <FireDamage>k__BackingField:
-    baseValue: 0
+    baseValue: 8
     modifiers: 
   <IceDamage>k__BackingField:
     baseValue: 0
     modifiers: 
   <LightingDamage>k__BackingField:
-    baseValue: 2
+    baseValue: 0
     modifiers: 
   <IsIgnited>k__BackingField: 0
   <IsChilled>k__BackingField: 0
@@ -3384,7 +3384,7 @@ MonoBehaviour:
   defaultCriticalPower: 150
   aligmentsDuration: 3
   slowPercentageWhenChill: 0.2
-  shockStrikePrefab: {fileID: 0}
+  shockStrikePrefab: {fileID: 1790169769560573931, guid: eab1d3a42dd9c1e49ae516841ea400e9, type: 3}
 --- !u!1 &1639881707
 GameObject:
   m_ObjectHideFlags: 0
