@@ -12,6 +12,11 @@ public class EntityFX : MonoBehaviour
     private Material originalMat;
     [SerializeField] private float flashDuration = 0.2f;
 
+    [Header("Ailments Color")]
+    [SerializeField] private Color chillColor;
+    [SerializeField] private Color[] schockColors;
+    [SerializeField] private Color[] igniteColors;
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -25,9 +30,12 @@ public class EntityFX : MonoBehaviour
     public IEnumerator FlashFX()
     {
         spriteRenderer.material = hitMat;
+        Color currentColor = spriteRenderer.color;
+        spriteRenderer.color = Color.white;
 
         yield return new WaitForSeconds(flashDuration);
 
+        spriteRenderer.color = currentColor;
         spriteRenderer.material = originalMat;
     }
 
@@ -39,7 +47,54 @@ public class EntityFX : MonoBehaviour
             spriteRenderer.color = Color.red;
     }
 
-    public void CancelReadBlink()
+    public void IgniteFX(float seconds, float blinkingDuration = 0.2f)
+    {
+        InvokeRepeating(nameof(IgniteColorFX), 0, blinkingDuration);
+        Invoke(nameof(CancelColorChange), seconds);
+    }
+
+    public void ChillFX(float seconds, float blinkingDuration = 0.2f)
+    {
+        InvokeRepeating(nameof(ChillColorFX), 0, blinkingDuration);
+        Invoke(nameof(CancelColorChange), seconds);
+    }
+
+    public void SchockFX(float seconds, float blinkingDuration = 0.2f)
+    {
+        InvokeRepeating(nameof(SchockColorFX), 0, blinkingDuration);
+        Invoke(nameof(CancelColorChange), seconds);
+    }
+
+    private void IgniteColorFX()
+    {
+        if (spriteRenderer.color != igniteColors[0])
+            spriteRenderer.color = igniteColors[0];
+        else
+            spriteRenderer.color = igniteColors[1];
+    }
+
+    private void SchockColorFX()
+    {
+        if (spriteRenderer.color != schockColors[0])
+            spriteRenderer.color = schockColors[0];
+        else
+            spriteRenderer.color = schockColors[1];
+    }
+
+    private void ChillColorFX()
+    {
+        if (spriteRenderer.color != chillColor)
+            spriteRenderer.color = chillColor;
+        else
+            spriteRenderer.color = chillColor;
+    }
+
+    private void SetColorBlinking(Color colorToSet)
+    {
+        spriteRenderer.color = colorToSet;
+    }
+
+    public void CancelColorChange()
     {
         CancelInvoke();
         spriteRenderer.color = Color.white;

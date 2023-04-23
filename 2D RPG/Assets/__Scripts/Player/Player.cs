@@ -33,6 +33,8 @@ public class Player : Entity
     [field:SerializeField] public float MoveSpeed { get; private set; } = 8f;
     [field:SerializeField] public float JumpForce { get; private set; } = 12f;
     [field:SerializeField] public float SwordReturnImpact { get; private set; }
+    private float defaultMoveSpeed;
+    private float defaultJumpForce;
     #endregion
 
     #region Dash Info
@@ -40,6 +42,7 @@ public class Player : Entity
     [field: SerializeField] public float DashSpeed { get; private set; } = 25f;
     [field: SerializeField] public float DashDuration { get; private set; } = 0.3f;
     public float DashDir { get; private set; }
+    private float defaultDashSpeed;
     #endregion
 
     #region In Air Slowdonw
@@ -87,6 +90,10 @@ public class Player : Entity
         SkillManager = SkillManager.Instance;
 
         StateMachine.Initialize(IdleState);
+
+        defaultMoveSpeed = MoveSpeed;
+        defaultJumpForce = JumpForce;
+        defaultDashSpeed = DashSpeed;
     }
 
     protected override void Update()
@@ -96,6 +103,25 @@ public class Player : Entity
 
         CheckForCrystal();
         CheckForDash();    
+    }
+
+    public override void SlowEntity(float slowPercentage, float slowDuration)
+    {
+        MoveSpeed = MoveSpeed * (1 - slowPercentage);
+        JumpForce = JumpForce * (1 - slowPercentage);
+        DashSpeed = DashSpeed * (1 - slowPercentage);
+        Animator.speed = Animator.speed * (1 - slowPercentage);
+
+        Invoke(nameof(ReturnDefaultSpeed), slowDuration);
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+
+        MoveSpeed = defaultMoveSpeed;
+        JumpForce = defaultJumpForce;
+        DashSpeed = defaultDashSpeed;
     }
 
     public void AssignNewSword(GameObject newSword)

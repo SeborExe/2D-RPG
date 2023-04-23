@@ -34,20 +34,27 @@ public class CharacterStats : MonoBehaviour
     [field: SerializeField] public bool IsChilled { get; private set; } //Decrease armor and slowdown
     [field: SerializeField] public bool IsSchocked { get; private set; } //Reduce accurecy
 
+    private EntityFX entityFX;
+
+    [Space, Header("Default Values")]
+    [SerializeField] private float igniteDamageCooldown = 0.3f;
+    [SerializeField] private int defaultCriticalPower = 150;
+    [SerializeField] private float aligmentsDuration = 3f;
+    [SerializeField] private float slowPercentageWhenChill = 0.2f;
+
     private float ignitedTimer;
     private float chilledTimer;
     private float schockedTimer;
 
-    private float igniteDamageCooldown = 0.3f;
     private float igniteDamageTimer;
     private int igniteDamage;
 
     public int CurrentHealth { get; private set; }
-    private int defaultCriticalPower = 150;
-
 
     protected virtual void Start()
     {
+        entityFX = GetComponent<EntityFX>();
+
         CurrentHealth = GetMaxHealthValue();
         CriticPower.SetDefaultValue(defaultCriticalPower);
         OnHealthChanged?.Invoke();
@@ -145,18 +152,25 @@ public class CharacterStats : MonoBehaviour
             IsIgnited = ignite;
             ignitedTimer = 2f;
             igniteDamageTimer = igniteDamageCooldown;
+
+            entityFX.IgniteFX(aligmentsDuration);
         }
 
         if (chill)
         {
             IsChilled = chill;
             chilledTimer = 2f;
+
+            entityFX.ChillFX(aligmentsDuration);
+            GetComponent<Entity>().SlowEntity(slowPercentageWhenChill, aligmentsDuration);
         }
 
         if (schock)
         {
             IsSchocked = schock;
             schockedTimer = 2f;
+
+            entityFX.SchockFX(aligmentsDuration);
         }
     }
 

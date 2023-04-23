@@ -84,6 +84,8 @@ public class CrystalSkillController : MonoBehaviour
         {
             if (collider.TryGetComponent(out Enemy enemy))
             {
+                if (enemy.IsDead) return; 
+
                 enemiesInRange.Add(enemy);
             }
         }

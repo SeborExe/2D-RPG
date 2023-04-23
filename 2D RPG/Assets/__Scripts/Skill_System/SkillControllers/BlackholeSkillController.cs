@@ -87,7 +87,7 @@ public class BlackholeSkillController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Enemy enemy))
+        if (collision.TryGetComponent(out Enemy enemy) && !enemy.IsDead)
         {
             enemy.FreezTime(true);
 

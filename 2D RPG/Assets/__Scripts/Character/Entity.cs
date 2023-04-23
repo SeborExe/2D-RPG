@@ -40,6 +40,10 @@ public class Entity : MonoBehaviour
     protected bool isKnocked;
     #endregion
 
+    #region Dead
+    public bool IsDead { get; private set; }
+    #endregion
+
     protected virtual void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -66,6 +70,16 @@ public class Entity : MonoBehaviour
 
         Rigidbody2D.velocity = new Vector2(xVelocity, yVelicoty);
         FlipController(xVelocity);
+    }
+
+    public virtual void SlowEntity(float slowPercentage, float slowDuration)
+    {
+
+    }
+
+    protected virtual void ReturnDefaultSpeed()
+    {
+        Animator.speed = 1f;
     }
 
     public virtual void Flip()
@@ -112,7 +126,10 @@ public class Entity : MonoBehaviour
             SpriteRenderer.color = Color.white;
     }
 
-    public virtual void Die() { }
+    public virtual void Die() 
+    {
+        IsDead = true;
+    }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public virtual bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, wallCheckDistance, whatIsGround);

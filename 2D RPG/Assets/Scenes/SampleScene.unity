@@ -557,6 +557,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8545509616761298690, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: igniteColors.Array.data[1].b
+      value: 0.5788893
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545509616761298690, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: igniteColors.Array.data[1].g
+      value: 0.5788893
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545509616761298690, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
+      propertyPath: igniteColors.Array.data[1].r
+      value: 0.9528302
+      objectReference: {fileID: 0}
     - target: {fileID: 8545509616761298703, guid: a2be354c540af3b4eb2bf58bd20acb87, type: 3}
       propertyPath: m_Name
       value: Skeleton
@@ -3304,6 +3316,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: 5ab0fcdcd26745c40b344fd1037298d4, type: 2}
   flashDuration: 0.2
+  chillColor: {r: 0.22922742, g: 0.8867924, b: 0.8867924, a: 1}
+  schockColors:
+  - {r: 0.9622642, g: 0.9559686, b: 0.63908863, a: 1}
+  - {r: 0.9622642, g: 0.9496359, b: 0.46660736, a: 1}
+  igniteColors:
+  - {r: 0.9716981, g: 0.37951222, b: 0.37951222, a: 1}
+  - {r: 0.9528302, g: 0.5788893, b: 0.5788893, a: 1}
 --- !u!114 &1616109279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3350,10 +3369,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   <FireDamage>k__BackingField:
-    baseValue: 2
+    baseValue: 0
     modifiers: 
   <IceDamage>k__BackingField:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   <LightingDamage>k__BackingField:
     baseValue: 0
@@ -3361,6 +3380,10 @@ MonoBehaviour:
   <IsIgnited>k__BackingField: 0
   <IsChilled>k__BackingField: 0
   <IsSchocked>k__BackingField: 0
+  igniteDamageCooldown: 0.3
+  defaultCriticalPower: 150
+  aligmentsDuration: 3
+  slowPercentageWhenChill: 0.2
 --- !u!1 &1639881707
 GameObject:
   m_ObjectHideFlags: 0

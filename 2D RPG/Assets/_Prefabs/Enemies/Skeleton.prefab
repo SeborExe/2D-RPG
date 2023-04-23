@@ -536,6 +536,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: 5ab0fcdcd26745c40b344fd1037298d4, type: 2}
   flashDuration: 0.2
+  chillColor: {r: 0.22922742, g: 0.8867924, b: 0.8867924, a: 1}
+  schockColors:
+  - {r: 0.9622642, g: 0.9559686, b: 0.63908863, a: 1}
+  - {r: 0.9622642, g: 0.9496359, b: 0.46660736, a: 1}
+  igniteColors:
+  - {r: 0.9716981, g: 0.37951222, b: 0.37951222, a: 1}
+  - {r: 0.9528302, g: 0.5788893, b: 0.5788893, a: 1}
 --- !u!114 &1778788399715199478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +600,10 @@ MonoBehaviour:
   <IsIgnited>k__BackingField: 0
   <IsChilled>k__BackingField: 0
   <IsSchocked>k__BackingField: 0
+  igniteDamageCooldown: 0.3
+  defaultCriticalPower: 150
+  aligmentsDuration: 3
+  slowPercentageWhenChill: 0.2
 --- !u!1001 &7097520843984781891
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -59,6 +59,21 @@ public class Enemy : Entity
         StateMachine.CurrentState.Update();
     }
 
+    public override void SlowEntity(float slowPercentage, float slowDuration)
+    {
+        MoveSpeed = MoveSpeed * (1 - slowPercentage);
+        Animator.speed = Animator.speed * (1 - slowPercentage);
+
+        Invoke(nameof(ReturnDefaultSpeed), slowDuration);
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+
+        MoveSpeed = defaultMoveSpeed;
+    }
+
     public virtual void FreezTime(bool timeFrozen)
     {
         if (timeFrozen)
