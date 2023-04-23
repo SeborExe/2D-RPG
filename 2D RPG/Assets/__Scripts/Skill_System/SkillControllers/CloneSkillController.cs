@@ -17,6 +17,7 @@ public class CloneSkillController : MonoBehaviour
     [SerializeField] private float attackCheckRadius;
 
     private Transform closestEnemy;
+    private Player player;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class CloneSkillController : MonoBehaviour
     }
 
     public void SetupClone(Transform newTransform, float cloneDuration, float colorLoosingSpeed, bool canAttack, Vector3 offset,
-        Transform closestEnemy, bool canDuplicateClone, float chanceToDuplicate)
+        Transform closestEnemy, bool canDuplicateClone, float chanceToDuplicate, Player player)
     {
         transform.position = newTransform.position + offset;
         cloneTimer = cloneDuration;
@@ -33,6 +34,7 @@ public class CloneSkillController : MonoBehaviour
         this.closestEnemy = closestEnemy;
         this.canDuplicateClone = canDuplicateClone;
         this.chanceToDuplicate = chanceToDuplicate;
+        this.player = player;
 
         if (canAttack)
         {
@@ -65,7 +67,8 @@ public class CloneSkillController : MonoBehaviour
         {
             if (collider.TryGetComponent(out Enemy enemy))
             {
-                enemy.Damage();
+                //enemy.DamageEffect();
+                player.CharacterStats.DoDamage(enemy.CharacterStats);
 
                 if (canDuplicateClone)
                 {

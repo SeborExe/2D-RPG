@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class Player : Entity
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
     public PlayerBlackholeState BlackholeState { get; private set; }
+    public PlayerDeadState DeadState { get; private set; }
     #endregion
 
     #region Move Info
@@ -31,6 +33,8 @@ public class Player : Entity
     [field:SerializeField] public float MoveSpeed { get; private set; } = 8f;
     [field:SerializeField] public float JumpForce { get; private set; } = 12f;
     [field:SerializeField] public float SwordReturnImpact { get; private set; }
+    private float defaultMoveSpeed;
+    private float defaultJumpForce;
     #endregion
 
     #region Dash Info
@@ -38,6 +42,7 @@ public class Player : Entity
     [field: SerializeField] public float DashSpeed { get; private set; } = 25f;
     [field: SerializeField] public float DashDuration { get; private set; } = 0.3f;
     public float DashDir { get; private set; }
+    private float defaultDashSpeed;
     #endregion
 
     #region In Air Slowdonw
@@ -73,6 +78,7 @@ public class Player : Entity
         CatchSwordState = new PlayerCatchSwordState(StateMachine, this, Resources.CatchSword);
 
         PrimaryAttack = new PlayerPrimaryAttackState(StateMachine, this, Resources.Attack);
+        DeadState = new PlayerDeadState(StateMachine, this, Resources.Die);
 
         base.Awake();
     }
@@ -84,6 +90,10 @@ public class Player : Entity
         SkillManager = SkillManager.Instance;
 
         StateMachine.Initialize(IdleState);
+
+        defaultMoveSpeed = MoveSpeed;
+        defaultJumpForce = JumpForce;
+        defaultDashSpeed = DashSpeed;
     }
 
     protected override void Update()
@@ -92,7 +102,26 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForCrystal();
-        CheckForDash();
+        CheckForDash();    
+    }
+
+    public override void SlowEntity(float slowPercentage, float slowDuration)
+    {
+        MoveSpeed = MoveSpeed * (1 - slowPercentage);
+        JumpForce = JumpForce * (1 - slowPercentage);
+        DashSpeed = DashSpeed * (1 - slowPercentage);
+        Animator.speed = Animator.speed * (1 - slowPercentage);
+
+        Invoke(nameof(ReturnDefaultSpeed), slowDuration);
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+
+        MoveSpeed = defaultMoveSpeed;
+        JumpForce = defaultJumpForce;
+        DashSpeed = defaultDashSpeed;
     }
 
     public void AssignNewSword(GameObject newSword)
@@ -137,6 +166,13 @@ public class Player : Entity
         await Task.Delay(miliseconds);
 
         isBusy = false;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        StateMachine.ChangeState(DeadState);
     }
 
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

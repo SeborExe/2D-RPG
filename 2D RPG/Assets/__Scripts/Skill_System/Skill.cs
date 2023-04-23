@@ -50,7 +50,7 @@ public class Skill : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.TryGetComponent(out Enemy enemy))
+            if (collider.TryGetComponent(out Enemy enemy) && !enemy.IsDead)
             {
                 float distanceToEnemy = Vector2.Distance(checkTransform.position, enemy.transform.position);
                 if (distanceToEnemy < closestDistance)

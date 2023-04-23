@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,10 +7,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Entity : MonoBehaviour
 {
+    public event Action OnFlipped;
+
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
     public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
+    public CharacterStats CharacterStats { get; private set; }
+    public CapsuleCollider2D CapsuleCollider { get; private set;}
 
     #region CollisionInfo
     [field: Header("Collision Info")]
@@ -35,10 +40,16 @@ public class Entity : MonoBehaviour
     protected bool isKnocked;
     #endregion
 
+    #region Dead
+    public bool IsDead { get; private set; }
+    #endregion
+
     protected virtual void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
+        CharacterStats = GetComponent<CharacterStats>();
+        CapsuleCollider = GetComponent<CapsuleCollider2D>();
         Animator = GetComponentInChildren<Animator>();
         SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -61,6 +72,16 @@ public class Entity : MonoBehaviour
         FlipController(xVelocity);
     }
 
+    public virtual void SlowEntity(float slowPercentage, float slowDuration)
+    {
+
+    }
+
+    protected virtual void ReturnDefaultSpeed()
+    {
+        Animator.speed = 1f;
+    }
+
     public virtual void Flip()
     {
         FacingRight = !FacingRight;
@@ -69,6 +90,8 @@ public class Entity : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
+        OnFlipped?.Invoke();
     }
 
     public virtual void FlipController(float move)
@@ -79,10 +102,9 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
-    public virtual void Damage()
+    public virtual void DamageImpact()
     {
         StartCoroutine(HitKnockback());
-        StartCoroutine(EntityFX.FlashFX());
     }
 
     protected virtual IEnumerator HitKnockback()
@@ -95,12 +117,12 @@ public class Entity : MonoBehaviour
         isKnocked = false;
     }
 
-    public void MakeTransparent(bool transparent)
+    public virtual void Die() 
     {
-        if (transparent)
-            SpriteRenderer.color = Color.clear;
-        else
-            SpriteRenderer.color = Color.white;
+        IsDead = true;
+
+        CapsuleCollider.offset = new Vector2(0, -0.73f);
+        CapsuleCollider.size = new Vector2(0.5f, 0.5f);
     }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
