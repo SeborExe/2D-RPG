@@ -48,6 +48,8 @@ public class CharacterStats : MonoBehaviour
 
     private float igniteDamageTimer;
     private int igniteDamage;
+    private int schockDamage;
+    [SerializeField] private GameObject shockStrikePrefab;
 
     public int CurrentHealth { get; private set; }
 
@@ -108,14 +110,14 @@ public class CharacterStats : MonoBehaviour
 
         while (!canApplyIgnite && !canAppllyChild && !canApplyShock)
         {
-            if (UnityEngine.Random.value < 0.4f && iceDamage > 0)
+            if (UnityEngine.Random.value < 0.4f && fireDamage > 0)
             {
                 canApplyIgnite = true;
                 targetStats.ApplyAilments(canApplyIgnite, canAppllyChild, canApplyShock);
                 return;
             }
 
-            if (UnityEngine.Random.value < 0.5f && fireDamage > 0)
+            if (UnityEngine.Random.value < 0.5f && iceDamage > 0)
             {
                 canAppllyChild = true;
                 targetStats.ApplyAilments(canApplyIgnite, canAppllyChild, canApplyShock);
@@ -133,6 +135,9 @@ public class CharacterStats : MonoBehaviour
         if (canApplyIgnite)
             targetStats.SetupIgniteDamage(Mathf.RoundToInt(fireDamage * 0.15f));
 
+        if (canApplyShock)
+            targetStats.SetupSchockDamage(Mathf.RoundToInt(lightingDamage * 0.15f));
+
         targetStats.ApplyAilments(canApplyIgnite, canAppllyChild, canApplyShock);
     }
 
@@ -145,9 +150,11 @@ public class CharacterStats : MonoBehaviour
 
     public void ApplyAilments(bool ignite, bool chill, bool schock)
     {
-        if (IsIgnited || IsChilled || IsSchocked) return;
+        bool canApplyIgnite = !IsIgnited && !IsSchocked && !IsChilled;
+        bool canApplyChild = !IsIgnited && !IsSchocked && !IsChilled;
+        bool canApplySchock = !IsIgnited && !IsChilled;
 
-        if (ignite)
+        if (ignite && canApplyIgnite)
         {
             IsIgnited = ignite;
             ignitedTimer = 2f;
@@ -156,7 +163,7 @@ public class CharacterStats : MonoBehaviour
             entityFX.IgniteFX(aligmentsDuration);
         }
 
-        if (chill)
+        if (chill && canApplyChild)
         {
             IsChilled = chill;
             chilledTimer = 2f;
@@ -165,12 +172,39 @@ public class CharacterStats : MonoBehaviour
             GetComponent<Entity>().SlowEntity(slowPercentageWhenChill, aligmentsDuration);
         }
 
-        if (schock)
+        if (schock && canApplySchock)
         {
-            IsSchocked = schock;
-            schockedTimer = 2f;
+            if (!IsSchocked)
+            {
+                ApplyShock(schock);
+            }
+            else
+            {
+                if (GetComponent<Player>() != null) return;
 
-            entityFX.SchockFX(aligmentsDuration);
+                HitClosestEnemyWithShockStrike();
+            }
+        }
+    }
+
+    public void ApplyShock(bool schock)
+    {
+        if (IsSchocked) return;
+
+        IsSchocked = schock;
+        schockedTimer = 2f;
+
+        entityFX.SchockFX(aligmentsDuration);
+    }
+
+    private void HitClosestEnemyWithShockStrike()
+    {
+        Transform closestEnemy = FindDifferentClosestEnemy();
+
+        if (closestEnemy != null)
+        {
+            GameObject newSchockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);
+            newSchockStrike.GetComponent<ShockStrikeController>().SetUp(schockDamage, closestEnemy.GetComponent<CharacterStats>());
         }
     }
 
@@ -234,6 +268,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void SetupIgniteDamage(int damage) => igniteDamage = damage;
+    public void SetupSchockDamage(int damage) => schockDamage = damage;
 
     private void UpdateTimers()
     {
@@ -284,6 +319,33 @@ public class CharacterStats : MonoBehaviour
 
         if (CurrentHealth == 0)
             Die();
+    }
+
+    private Transform FindDifferentClosestEnemy()
+    {
+        float detectionRadius = 10f;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent(out Enemy enemy) && !enemy.IsDead && Vector2.Distance(transform.position, enemy.transform.position) > 1f)
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = enemy.transform;
+                }
+            }
+        }
+
+        if (closestEnemy == null)
+            closestEnemy = transform;
+
+        return closestEnemy;
     }
 
     public int GetMaxHealthValue()
