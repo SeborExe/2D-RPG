@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-
     [SerializeField] private ItemData itemData;
 
-    private void Awake()
+    private void OnValidate()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        spriteRenderer.sprite = itemData.icon;
+        GetComponent<SpriteRenderer>().sprite = itemData.icon;
+        gameObject.name = $"ItemObject_{itemData.name}";
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Player player))
         {
-            Debug.Log("Item pickUp");
+            Inventory.Instance.AddItem(itemData);
+            Destroy(gameObject);
         }
     }
 }
