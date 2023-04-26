@@ -5,3 +5,17 @@ public enum SwordType
     Pirce,
     Spin
 }
+
+public enum ItemType
+{
+    Material,
+    Equipment
+}
+
+public enum EquipmentType
+{
+    Weapon,
+    Armor,
+    Amulet,
+    Flash
+}

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour
+public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text itemText;
@@ -27,6 +28,14 @@ public class ItemSlotUI : MonoBehaviour
             {
                 itemText.text = "";
             }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (item.data.itemType == ItemType.Equipment)
+        {
+            Inventory.Instance.EquipItem(item.data);
         }
     }
 }
