@@ -20,9 +20,11 @@ public class Inventory : SingletonMonobehaviour<Inventory>
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stshSlotParent;
+    [SerializeField] private Transform equipmentSlotParent;
 
-    private ItemSlotUI[] inventoryItemSlot;
-    private ItemSlotUI[] stashItemSlot;
+    private ItemSlotUI[] inventoryItemSlots;
+    private ItemSlotUI[] stashItemSlots;
+    private EquipmentSlotUI[] equipmentSlots;
 
     protected override void Awake()
     {
@@ -31,8 +33,9 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 
     private void Start()
     {
-        inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<ItemSlotUI>();
-        stashItemSlot = stshSlotParent.GetComponentsInChildren<ItemSlotUI>();
+        inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<ItemSlotUI>();
+        stashItemSlots = stshSlotParent.GetComponentsInChildren<ItemSlotUI>();
+        equipmentSlots = equipmentSlotParent.GetComponentsInChildren<EquipmentSlotUI>();
     }
 
     private void OnEnable()
@@ -47,14 +50,35 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 
     private void UpdateSlotsUI()
     {
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equipmentType == equipmentSlots[i].slotType)
+                {
+                    equipmentSlots[i].UpdateSlot(item.Value);
+                }
+            }
+        }
+
+        for (int i = 0; i < inventoryItemSlots.Length; i++)
+        {
+            inventoryItemSlots[i].CleanUpSlot();
+        }
+
+        for (int i = 0; i < stashItemSlots.Length; i++)
+        {
+            stashItemSlots[i].CleanUpSlot();
+        }
+
         for (int i = 0; i < inventory.Count; i++)
         {
-            inventoryItemSlot[i].UpdateSlot(inventory[i]);
+            inventoryItemSlots[i].UpdateSlot(inventory[i]);
         }
 
         for (int i = 0; i < stash.Count; i++)
         {
-            stashItemSlot[i].UpdateSlot(stash[i]);
+            stashItemSlots[i].UpdateSlot(stash[i]);
         }
     }
 
@@ -137,29 +161,38 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         ItemDataEquipment newEquipment = item as ItemDataEquipment;
         InventoryItem newItem = new InventoryItem(newEquipment);
 
-        ItemDataEquipment itemToRemove = null;
+        ItemDataEquipment oldEquipment = null;
 
         foreach (KeyValuePair<ItemDataEquipment, InventoryItem> itemToCheck in equipmentDictionary)
         {
             if (itemToCheck.Key.equipmentType == newEquipment.equipmentType)
             {
-                itemToRemove = itemToCheck.Key;
+                oldEquipment = itemToCheck.Key;
             }
         }
 
-        if (itemToRemove != null)
-            UnequipItem(itemToRemove);
+        if (oldEquipment != null)
+        {
+            UnequipItem(oldEquipment);
+            AddItem(oldEquipment);
+        }
 
         equipment.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifier();
+
+        RemoveItem(item);
+
+        UpdateSlotsUI();
     }
 
-    private void UnequipItem(ItemDataEquipment itemToRemove)
+    public void UnequipItem(ItemDataEquipment itemToRemove)
     {
         if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             equipmentDictionary.Remove(itemToRemove);
+            itemToRemove.RemoveModifier();
         }
     }
 }

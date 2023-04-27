@@ -9,6 +9,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text itemText;
+    [SerializeField] private Sprite defaultImage;
 
     public InventoryItem item;
 
@@ -31,11 +32,19 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (item.data.itemType == ItemType.Equipment)
         {
             Inventory.Instance.EquipItem(item.data);
         }
+    }
+
+    public void CleanUpSlot()
+    {
+        item = null;
+        itemImage.sprite = defaultImage;
+
+        itemText.text = "";
     }
 }

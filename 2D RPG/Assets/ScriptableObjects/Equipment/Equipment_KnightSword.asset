@@ -16,3 +16,17 @@ MonoBehaviour:
   itemName: Knight Sword
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   equipmentType: 0
+  stregth: 1
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 8
+  criticalChance: 5
+  criticalPower: 2
+  health: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightingDamage: 0
