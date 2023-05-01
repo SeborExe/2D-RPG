@@ -7,6 +7,8 @@ public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    public ItemEffect[] itemEffects;
+
     [Header("Main Stats")]
     public int stregth;
     public int agility;
@@ -70,5 +72,13 @@ public class ItemDataEquipment : ItemData
         playerStats.FireDamage.RemoveModifiers(fireDamage);
         playerStats.IceDamage.RemoveModifiers(iceDamage);
         playerStats.LightingDamage.RemoveModifiers(lightingDamage);
+    }
+
+    public void ExecuteItemEffect()
+    {
+        foreach (ItemEffect effect in itemEffects)
+        {
+            effect.ExecuteEffect();
+        }
     }
 }

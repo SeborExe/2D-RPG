@@ -1908,7 +1908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7baf532d005af94bb68a79830541b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingEquipment: []
+  startingEquipment:
+  - {fileID: 11400000, guid: 2e9688396aa979542ad5e2a647f531ff, type: 2}
+  - {fileID: 11400000, guid: 38cdc0cebda1c9e48a8e0bbbe10c202e, type: 2}
   inventory: []
   stash: []
   equipment: []

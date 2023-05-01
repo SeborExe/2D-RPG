@@ -243,4 +243,19 @@ public class Inventory : SingletonMonobehaviour<Inventory>
     public List<InventoryItem> GetEquipmentList() => equipment;
 
     public List<InventoryItem> GetStashList() => stash;
+
+    public ItemDataEquipment GetEquipment(EquipmentType type)
+    {
+        ItemDataEquipment equipedItem = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == type)
+            {
+                equipedItem = item.Key;
+            }
+        }
+
+        return equipedItem;
+    }
 }
