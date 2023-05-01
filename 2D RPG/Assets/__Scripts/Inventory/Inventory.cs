@@ -8,6 +8,8 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 {
     public event Action OnItemPickUp;
 
+    [SerializeField] private List<ItemData> startingEquipment = new List<ItemData>();
+
     public List<InventoryItem> inventory = new List<InventoryItem>();
     public Dictionary<ItemData, InventoryItem> inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
 
@@ -36,6 +38,8 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<ItemSlotUI>();
         stashItemSlots = stshSlotParent.GetComponentsInChildren<ItemSlotUI>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<EquipmentSlotUI>();
+
+        AddStartingEquipment();
     }
 
     private void OnEnable()
@@ -79,6 +83,14 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         for (int i = 0; i < stash.Count; i++)
         {
             stashItemSlots[i].UpdateSlot(stash[i]);
+        }
+    }
+
+    private void AddStartingEquipment()
+    {
+        for (int i = 0; i < startingEquipment.Count; i++)
+        {
+            AddItem(startingEquipment[i]);
         }
     }
 
@@ -227,4 +239,8 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         AddItem(itemToCraft);
         return true;
     }
+
+    public List<InventoryItem> GetEquipmentList() => equipment;
+
+    public List<InventoryItem> GetStashList() => stash;
 }
