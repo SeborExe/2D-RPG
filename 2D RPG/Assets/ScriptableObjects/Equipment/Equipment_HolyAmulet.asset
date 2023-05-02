@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81953d6f366360d4bad36cd3773de7ae, type: 3}
+  m_Name: Equipment_HolyAmulet
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Holy Amulet
+  icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 15
+  equipmentType: 2
+  itemEffects:
+  - {fileID: 11400000, guid: ffdc438ab8d2804499ce429053e54cfc, type: 2}
+  stregth: 0
+  agility: 0
+  intelligence: 2
+  vitality: 0
+  damage: 0
+  criticalChance: 0
+  criticalPower: 0
+  health: 20
+  armor: 0
+  evasion: 0
+  magicResistance: 6
+  fireDamage: 0
+  iceDamage: 0
+  lightingDamage: 5
+  craftingMaterials: []

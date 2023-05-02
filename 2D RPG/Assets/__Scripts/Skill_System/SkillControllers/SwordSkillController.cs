@@ -156,8 +156,7 @@ public class SwordSkillController : MonoBehaviour
                 spinTimer -= Time.deltaTime;
 
                 //Move Spin sword into enemy 
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y),
-                    spinMoveSpeed * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y), spinMoveSpeed * Time.deltaTime);
 
                 if (spinTimer <= 0)
                 {
@@ -192,7 +191,6 @@ public class SwordSkillController : MonoBehaviour
     public void ReturnSword()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        //rb.isKinematic = false;
         transform.parent = null;
         isReturning = true;
     }
@@ -214,6 +212,12 @@ public class SwordSkillController : MonoBehaviour
     {
         player.CharacterStats.DoDamage(enemy.CharacterStats);
         enemy.StartCoroutine(enemy.FreezTimeFor(freezTimeDuration));
+
+        ItemDataEquipment equipedAmulat = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
+        if (equipedAmulat != null)
+        {
+            equipedAmulat.Effect(enemy.transform);
+        }
     }
 
     private void SetUpTargetsForBounce(Collider2D collision)

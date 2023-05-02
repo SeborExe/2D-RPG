@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerPrimaryAttackState : PlayerState
 {
-    private int comboCounter;
+    public int ComboCounter { get; private set; }
 
     private float lastTimeAttacked;
     private float comboWindow = 1.5f;
@@ -19,16 +19,16 @@ public class PlayerPrimaryAttackState : PlayerState
         base.Enter();
         xInput = 0;
 
-        if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
-            comboCounter = 0;
+        if (ComboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
+            ComboCounter = 0;
 
-        player.Animator.SetInteger(Resources.ComboCounter, comboCounter);
+        player.Animator.SetInteger(Resources.ComboCounter, ComboCounter);
 
         float attackDir = player.FacingDir;
         if (xInput != 0)
             attackDir = xInput;
 
-        player.SetVelocity(player.attackMovement[comboCounter].x * attackDir, player.attackMovement[comboCounter].y);
+        player.SetVelocity(player.attackMovement[ComboCounter].x * attackDir, player.attackMovement[ComboCounter].y);
 
         float slideTimeWhenAttack = 0.1f;
         stateTimer = slideTimeWhenAttack;
@@ -51,7 +51,7 @@ public class PlayerPrimaryAttackState : PlayerState
 
         await player.BusyFor(busyTimeAfterAttackInMiliseconds);
 
-        comboCounter++;
+        ComboCounter++;
         lastTimeAttacked = Time.time;
     }
 }

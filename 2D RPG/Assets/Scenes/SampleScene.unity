@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingEquipment:
   - {fileID: 11400000, guid: 2e9688396aa979542ad5e2a647f531ff, type: 2}
-  - {fileID: 11400000, guid: 38cdc0cebda1c9e48a8e0bbbe10c202e, type: 2}
+  - {fileID: 11400000, guid: 5311f1dd6b467bc479540f376db43fd9, type: 2}
   inventory: []
   stash: []
   equipment: []
@@ -5371,10 +5371,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   <IceDamage>k__BackingField:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   <LightingDamage>k__BackingField:
-    baseValue: 2
+    baseValue: 0
     modifiers: 
   <IsIgnited>k__BackingField: 0
   <IsChilled>k__BackingField: 0
