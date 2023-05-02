@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 871167318c1b2ab47baba9ab0d7b4f28, type: 3}
-  m_Name: Effect_LightSpark
+  m_Script: {fileID: 11500000, guid: c9fe71522d6688842881f53f32d29fdd, type: 3}
+  m_Name: Effect_ThunderStrike
   m_EditorClassIdentifier: 
+  thunderStrikePrefab: {fileID: 5104315523558244443, guid: 5afe4f8f1b354e5479922ec677d568bb, type: 3}

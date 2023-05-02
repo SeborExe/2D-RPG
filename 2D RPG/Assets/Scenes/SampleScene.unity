@@ -5368,13 +5368,13 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   <FireDamage>k__BackingField:
-    baseValue: 8
+    baseValue: 0
     modifiers: 
   <IceDamage>k__BackingField:
     baseValue: 0
     modifiers: 
   <LightingDamage>k__BackingField:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   <IsIgnited>k__BackingField: 0
   <IsChilled>k__BackingField: 0

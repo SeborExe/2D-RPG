@@ -23,6 +23,8 @@ public class PlayerStats : CharacterStats
 
     protected override void Die()
     {
+        if (player.IsDead) return;
+
         base.Die();
 
         player.Die();

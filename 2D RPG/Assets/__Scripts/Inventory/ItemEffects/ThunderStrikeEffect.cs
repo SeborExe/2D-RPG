@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Effect_ThunderStrike_", menuName = "Inventory/Item Effect/Thunder Strike")]
 public class ThunderStrikeEffect : ItemEffect
 {
-    public override void ExecuteEffect()
+    [SerializeField] private GameObject thunderStrikePrefab;
+
+    public override void ExecuteEffect(Transform enemyPosition)
     {
-        base.ExecuteEffect();
+        GameObject newThunderStrike = Instantiate(thunderStrikePrefab, enemyPosition.position, Quaternion.identity);
+
+        Destroy(newThunderStrike, 1f);
     }
 }

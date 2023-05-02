@@ -62,6 +62,8 @@ public class EnemyStats : CharacterStats
 
     protected override void Die()
     {
+        if (enemy.IsDead) return;
+
         base.Die();
         enemy.Die();
 
