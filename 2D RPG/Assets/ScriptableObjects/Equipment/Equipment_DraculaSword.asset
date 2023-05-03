@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81953d6f366360d4bad36cd3773de7ae, type: 3}
+  m_Name: Equipment_DraculaSword
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Knight Sword
+  icon: {fileID: -1944902997, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 5
+  equipmentType: 0
+  itemEffects:
+  - {fileID: 11400000, guid: 4776d4f30ba29fb4dbc0ebec7d8c34ac, type: 2}
+  stregth: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 7
+  criticalChance: 10
+  criticalPower: 2
+  health: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightingDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 6c11e86fe3086a348a0f2e59193a89c8, type: 2}
+    stackSize: 3

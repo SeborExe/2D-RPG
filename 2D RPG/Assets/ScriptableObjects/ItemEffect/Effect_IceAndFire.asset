@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6af1dab8f0b33e478a0a3cc29a8842a, type: 3}
+  m_Name: Effect_IceAndFire
+  m_EditorClassIdentifier: 
+  iceAndFirePrefab: {fileID: 8844577945757711805, guid: 52469fa3a1526ae45bb55dc132a52317, type: 3}
+  xVelocity: 15
