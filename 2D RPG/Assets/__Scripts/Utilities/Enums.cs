@@ -19,3 +19,21 @@ public enum EquipmentType
     Amulet,
     Flash
 }
+
+public enum StatType
+{
+    Strength,
+    Agility,
+    Inteligence,
+    Vitality,
+    Damage,
+    CritChance,
+    CritPower,
+    Health,
+    Armor,
+    Evasion,
+    MaicRes,
+    FireDamage,
+    IceDamage,
+    LightingDamage
+}

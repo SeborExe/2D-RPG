@@ -8,6 +8,7 @@ public class ItemDataEquipment : ItemData
     public EquipmentType equipmentType;
 
     public ItemEffect[] itemEffects;
+    public float itemCooldown;
 
     [Header("Main Stats")]
     public int stregth;

@@ -28,6 +28,12 @@ public class Inventory : SingletonMonobehaviour<Inventory>
     private ItemSlotUI[] stashItemSlots;
     private EquipmentSlotUI[] equipmentSlots;
 
+    private float lastTimeUsedFlask;
+    private float lastTimeUsedArmor;
+
+    private float flaskCooldown;
+    private float armorCooldown;
+
     protected override void Awake()
     {
         base.Awake();
@@ -257,5 +263,35 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         }
 
         return equipedItem;
+    }
+
+    public void UseFlask()
+    {
+        ItemDataEquipment currentFlask = GetEquipment(EquipmentType.Flash);
+
+        if (currentFlask != null)
+        {
+            bool canUseFlash = Time.time > lastTimeUsedFlask + flaskCooldown;
+
+            if (canUseFlash)
+            {
+                flaskCooldown = currentFlask.itemCooldown;
+                currentFlask.Effect(null);
+                lastTimeUsedFlask = Time.time;
+            }
+        }
+    }
+
+    public bool CanUseArmor()
+    {
+        ItemDataEquipment currentArmor = GetEquipment(EquipmentType.Armor);
+        if (Time.time > lastTimeUsedArmor + armorCooldown)
+        {
+            armorCooldown = currentArmor.itemCooldown;
+            lastTimeUsedArmor = Time.time;
+            return true;
+        }
+
+        return false;
     }
 }

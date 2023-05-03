@@ -102,7 +102,8 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
 
         CheckForCrystal();
-        CheckForDash();    
+        CheckForDash();
+        CheckForFlash();
     }
 
     public override void SlowEntity(float slowPercentage, float slowDuration)
@@ -156,6 +157,14 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.F))
         {
             SkillManager.CrystalSkill.CanUseSkill();
+        }
+    }
+
+    private void CheckForFlash()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Inventory.Instance.UseFlask();
         }
     }
 

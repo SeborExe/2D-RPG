@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -86,7 +87,8 @@ public class CharacterStats : MonoBehaviour
         }
 
         targetStats.TakeDamage(totalDamage);
-        //DoMagicDamage(targetStats);
+
+        DoMagicDamage(targetStats); //Apply magic damage on normal attack
     }
 
     public virtual void TakeDamage(int damage)
@@ -231,6 +233,27 @@ public class CharacterStats : MonoBehaviour
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
 
         OnHealthChanged?.Invoke();
+    }
+
+    public virtual void IncreaseHealthBy(int heal)
+    {
+        CurrentHealth = Mathf.Min(GetMaxHealthValue(), CurrentHealth + heal);
+
+        OnHealthChanged?.Invoke();
+    }
+
+    public virtual async void IncreaseStatBy(int modifier, int duration, Stat statToModify)
+    {
+        await ModifyStat(modifier, duration, statToModify);
+    }
+
+    private async Task ModifyStat(int modifier, int duration, Stat statToModify)
+    {
+        statToModify.AddModifiers(modifier);
+
+        await Task.Delay(duration * 1000);
+
+        statToModify.RemoveModifiers(modifier);
     }
 
     private bool AvoidAttack(CharacterStats targetStats)
