@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 
 public class Inventory : SingletonMonobehaviour<Inventory>
 {
+    public event Action OnItemEquiped;
     public event Action OnItemPickUp;
 
     [SerializeField] private List<ItemData> startingEquipment = new List<ItemData>();
@@ -90,6 +91,8 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         {
             stashItemSlots[i].UpdateSlot(stash[i]);
         }
+
+        OnItemEquiped?.Invoke();
     }
 
     private void AddStartingEquipment()

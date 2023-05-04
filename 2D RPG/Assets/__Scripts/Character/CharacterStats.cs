@@ -389,4 +389,24 @@ public class CharacterStats : MonoBehaviour
     {
         return MaxHealth.GetValue() + Vitality.GetValue() * 5;
     }
+
+    public Stat GetStat(StatType statType)
+    {
+        if (statType == StatType.Strength) return Strength;
+        else if (statType == StatType.Agility) return Agility;
+        else if (statType == StatType.Inteligence) return Intelligence;
+        else if (statType == StatType.Vitality) return Vitality;
+        else if (statType == StatType.Damage) return Damage;
+        else if (statType == StatType.CritChance) return CriticChance;
+        else if (statType == StatType.CritPower) return CriticPower;
+        else if (statType == StatType.Health) return MaxHealth;
+        else if (statType == StatType.Armor) return Armor;
+        else if (statType == StatType.Evasion) return Evasion;
+        else if (statType == StatType.MaicRes) return MagicResistance;
+        else if (statType == StatType.FireDamage) return FireDamage;
+        else if (statType == StatType.IceDamage) return IceDamage;
+        else if (statType == StatType.LightingDamage) return LightingDamage;
+
+        return null;
+    }
 }
