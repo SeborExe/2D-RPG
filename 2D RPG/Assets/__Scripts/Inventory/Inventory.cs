@@ -105,7 +105,7 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 
     public void AddItem(ItemData item)
     {
-        if (item.itemType == ItemType.Equipment)
+        if (item.itemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(item);
         }
@@ -215,6 +215,17 @@ public class Inventory : SingletonMonobehaviour<Inventory>
             equipmentDictionary.Remove(itemToRemove);
             itemToRemove.RemoveModifier();
         }
+    }
+
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= inventoryItemSlots.Length)
+        {
+            Debug.Log("No more space");
+            return false;
+        }
+
+        return true;
     }
 
     public bool CanCraft(ItemDataEquipment itemToCraft, List<InventoryItem> requiredMaterials)

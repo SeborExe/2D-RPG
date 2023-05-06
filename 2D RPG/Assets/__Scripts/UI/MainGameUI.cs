@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainGameUI : MonoBehaviour
 {
+    [field: SerializeField] public ItemTooltipUI itemTooltipUI { get; private set; }
+
     public void SwitchTo(GameObject menu)
     {
         for (int i = 0; i < transform.childCount; i++)

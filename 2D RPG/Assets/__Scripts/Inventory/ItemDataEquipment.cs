@@ -82,4 +82,40 @@ public class ItemDataEquipment : ItemData
             effect.ExecuteEffect(enemyPosition);
         }
     }
+
+    public override string GetDiscription()
+    {
+        sb.Length = 0;
+
+        AddItemDescription(stregth, "Strength");
+        AddItemDescription(agility, "Agility");
+        AddItemDescription(intelligence, "Intelligence");
+        AddItemDescription(vitality, "Vitality");
+
+        AddItemDescription(damage, "Damage");
+        AddItemDescription(criticalChance, "Crit.Chance");
+        AddItemDescription(criticalPower, "Crit.Power");
+
+        AddItemDescription(health, "Health");
+        AddItemDescription(evasion, "Evasion");
+        AddItemDescription(armor, "Armor");
+        AddItemDescription(magicResistance, "Magic Resist.");
+
+        AddItemDescription(fireDamage, "Fire Damage");
+        AddItemDescription(iceDamage, "Ice Damage");
+        AddItemDescription(lightingDamage, "Lighting Dam.");
+
+        return sb.ToString();
+    }
+
+    private void AddItemDescription(int value, string name)
+    {
+        if (value != 0)
+        {
+            if (sb.Length > 0)
+                sb.AppendLine();
+
+            if (value> 0) sb.Append($"+ {value} {name}");
+        }
+    }
 }

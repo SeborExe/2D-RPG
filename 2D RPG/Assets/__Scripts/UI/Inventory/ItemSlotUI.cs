@@ -5,13 +5,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
+public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text itemText;
     [SerializeField] private Sprite defaultImage;
 
+    private MainGameUI mainGameUI;
+
     public InventoryItem item;
+
+    private void Start()
+    {
+        mainGameUI = GetComponentInParent<MainGameUI>();
+    }
 
     public void UpdateSlot(InventoryItem item)
     {
@@ -54,5 +61,19 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
         itemImage.sprite = defaultImage;
 
         itemText.text = "";
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        mainGameUI.itemTooltipUI.ShowTooltip(item.data as ItemDataEquipment);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        mainGameUI.itemTooltipUI.HideTooltip();
     }
 }
