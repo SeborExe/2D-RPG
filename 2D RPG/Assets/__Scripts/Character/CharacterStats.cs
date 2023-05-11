@@ -273,7 +273,7 @@ public class CharacterStats : MonoBehaviour
 
     private int CalculateDamage(CharacterStats targetStats)
     {
-        int totalDamage = Damage.GetValue() + Strength.GetValue();
+        int totalDamage = GetDamage();
 
         if (targetStats.IsChilled)
             totalDamage = Mathf.Max(1, totalDamage - Mathf.RoundToInt(targetStats.Armor.GetValue() * 0.8f));
@@ -281,6 +281,11 @@ public class CharacterStats : MonoBehaviour
             totalDamage = Mathf.Max(1, totalDamage - targetStats.Armor.GetValue());
 
         return totalDamage;
+    }
+
+    public int GetDamage()
+    {
+        return Damage.GetValue() + Strength.GetValue();
     }
 
     private bool CheckCritical()
