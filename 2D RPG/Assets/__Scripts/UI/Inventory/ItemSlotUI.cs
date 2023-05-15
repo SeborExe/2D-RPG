@@ -7,15 +7,16 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    [SerializeField] private TMP_Text itemText;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TMP_Text itemAmountText;
     [SerializeField] private Sprite defaultImage;
+    [SerializeField] protected GameObject itemAmountBackground;
 
-    private MainGameUI mainGameUI;
+    protected MainGameUI mainGameUI;
 
     public InventoryItem item;
 
-    private void Start()
+    protected virtual void Start()
     {
         mainGameUI = GetComponentInParent<MainGameUI>();
     }
@@ -30,11 +31,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 
             if (item.stackSize > 1)
             {
-                itemText.text = item.stackSize.ToString();
+                itemAmountBackground.SetActive(true);
+                itemAmountText.text = item.stackSize.ToString();
+
             }
             else
             {
-                itemText.text = "";
+                itemAmountBackground.SetActive(false);
+                itemAmountText.text = "";
             }
         }
     }
@@ -60,7 +64,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
         item = null;
         itemImage.sprite = defaultImage;
 
-        itemText.text = "";
+        itemAmountText.text = "";
     }
 
     public void OnPointerEnter(PointerEventData eventData)

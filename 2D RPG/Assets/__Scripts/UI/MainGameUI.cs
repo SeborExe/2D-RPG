@@ -6,6 +6,7 @@ public class MainGameUI : MonoBehaviour
 {
     [field: SerializeField] public ItemTooltipUI itemTooltipUI { get; private set; }
     [field: SerializeField] public StatTooltipUI statTooltipUI { get; private set; }
+    [field: SerializeField] public CraftWindowUI craftWindowUI { get; private set; }
 
     [SerializeField] private GameObject characterUI;
     [SerializeField] private GameObject skillUI;
