@@ -9,35 +9,31 @@ public class CraftListUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject craftSlotPrefab;
 
     [SerializeField] private List<ItemDataEquipment> craftEquipment = new List<ItemDataEquipment>();
-    [SerializeField] private List<CraftingSlotUI> craftSlots = new List<CraftingSlotUI>();
 
     private void Start()
     {
-        AssignCraftSlots();
-    }
-
-    private void AssignCraftSlots()
-    {
-        for (int i = 0; i < craftSlotParent.childCount; i++)
-        {
-            craftSlots.Add(craftSlotParent.GetChild(i).GetComponent<CraftingSlotUI>());
-        }
+        transform.parent.GetChild(0).GetComponent<CraftListUI>().SetUpCraftList();
+        SetUpDefaultCraftWindow();
     }
 
     public void SetUpCraftList()
     {
-        for (int i = 0; i < craftSlots.Count; i++)
+        for (int i = 0; i < craftSlotParent.childCount; i++)
         {
-            Destroy(craftSlots[i].gameObject);
+            Destroy(craftSlotParent.GetChild(i).gameObject);
         }
-
-        craftSlots = new List<CraftingSlotUI>();
 
         for (int i = 0; i < craftEquipment.Count; i++)
         {
             GameObject newSlot = Instantiate(craftSlotPrefab, craftSlotParent);
             newSlot.GetComponent<CraftingSlotUI>().SetUpCraftSlot(craftEquipment[i]);
         }
+    }
+
+    public void SetUpDefaultCraftWindow()
+    {
+        if (craftEquipment[0] != null)
+            GetComponentInParent<MainGameUI>().craftWindowUI.SetUpCraftWindow(craftEquipment[0]);
     }
 
     public void OnPointerDown(PointerEventData eventData)

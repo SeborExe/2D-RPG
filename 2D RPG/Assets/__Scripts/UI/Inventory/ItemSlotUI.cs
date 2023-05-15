@@ -57,6 +57,8 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
         {
             Inventory.Instance.EquipItem(item.data);
         }
+
+ 
     }
 
     public void CleanUpSlot()
