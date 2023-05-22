@@ -17,9 +17,10 @@ MonoBehaviour:
   icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 15
   equipmentType: 2
+  itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: ffdc438ab8d2804499ce429053e54cfc, type: 2}
-  itemCooldown: 0
+  itemEffectDescription: 'Uniqie: Summon lighting on hit'
   stregth: 0
   agility: 0
   intelligence: 2

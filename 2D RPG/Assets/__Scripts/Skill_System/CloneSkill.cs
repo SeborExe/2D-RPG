@@ -11,8 +11,6 @@ public class CloneSkill : Skill
     [Space]
     [SerializeField] private bool canAttack;
     [Space, Header("Create clone On:")]
-    [SerializeField] private bool createCloneOnDashStart;
-    [SerializeField] private bool createCloneOnDashEnd;
     [SerializeField] private bool canCreateCloneOnCounterAttack;
     [Space, Header("Clone duplication")]
     [SerializeField] private bool canDuplicateClone;
@@ -36,18 +34,6 @@ public class CloneSkill : Skill
         CloneSkillController newClone = Instantiate(clonePrefab);
         newClone.SetupClone(clonePosition, cloneDuration, colorLoosingSpeed, canAttack, offset, FindClosestEnemy(newClone.transform), canDuplicateClone, 
             chanceToDuplicate, player);
-    }
-
-    public void CreateCloneOnDashStart()
-    {
-        if (createCloneOnDashStart)
-            CreateClone(player.transform, Vector3.zero);
-    }
-
-    public void CreateCloneOnDashEnd()
-    {
-        if (createCloneOnDashEnd)
-            CreateClone(player.transform, Vector3.zero);
     }
 
     public void CreateCloneOnCounterAttack(Transform enemyTransform, float offsetToEnemy = 1.5f)

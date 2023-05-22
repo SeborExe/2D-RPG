@@ -17,8 +17,10 @@ MonoBehaviour:
   icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 5
   equipmentType: 0
+  itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: d7d63bfaa01335e47b174a6f82b0cd9c, type: 2}
+  itemEffectDescription: 'Uniqie: Each 3rd attack summon ice-fire projectile'
   stregth: 0
   agility: 0
   intelligence: 0

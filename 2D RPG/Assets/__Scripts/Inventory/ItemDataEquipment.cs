@@ -8,8 +8,10 @@ public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
 
-    public ItemEffect[] itemEffects;
+    [Header("Unique Effects")]
     public float itemCooldown;
+    public ItemEffect[] itemEffects;
+    [TextArea] public string itemEffectDescription;
 
     [Header("Main Stats")]
     public int stregth;
@@ -105,6 +107,12 @@ public class ItemDataEquipment : ItemData
         AddItemDescription(fireDamage, "Fire Damage");
         AddItemDescription(iceDamage, "Ice Damage");
         AddItemDescription(lightingDamage, "Lighting Dam.");
+
+        if (itemEffectDescription.Length > 0)
+        {
+            sb.AppendLine();
+            sb.Append(itemEffectDescription);
+        }
 
         return sb.ToString();
     }

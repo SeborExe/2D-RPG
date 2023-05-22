@@ -17,9 +17,10 @@ MonoBehaviour:
   icon: {fileID: -410334530, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 15
   equipmentType: 3
+  itemCooldown: 25
   itemEffects:
   - {fileID: 11400000, guid: 821a2211a6162e24ea40c1ac2b033375, type: 2}
-  itemCooldown: 25
+  itemEffectDescription: 'Uniqie: Restore 40% HP on Use'
   stregth: 0
   agility: 0
   intelligence: 0

@@ -17,9 +17,11 @@ MonoBehaviour:
   icon: {fileID: -1547736094, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 12
   equipmentType: 1
+  itemCooldown: 25
   itemEffects:
   - {fileID: 11400000, guid: 0cac2016d9e608f49a65c666e1e94647, type: 2}
-  itemCooldown: 25
+  itemEffectDescription: 'Uniqie: When you HP is less than 20% freez all enemies
+    around you'
   stregth: 0
   agility: 0
   intelligence: 0

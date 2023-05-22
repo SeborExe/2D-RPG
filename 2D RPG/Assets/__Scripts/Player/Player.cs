@@ -141,6 +141,9 @@ public class Player : Entity
         if (IsWallDetected())
             return;
 
+        if (!SkillManager.DashSkill.dashUnlocked)
+            return;
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.DashSkill.CanUseSkill())
         {
             DashDir = Input.GetAxisRaw("Horizontal");

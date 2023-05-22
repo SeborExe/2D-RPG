@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Effect_FreezEnemies_2s
   m_EditorClassIdentifier: 
   duration: 2
+  minHealthPercentToActiveEffect: 20
   freezAreaRadius: 3
