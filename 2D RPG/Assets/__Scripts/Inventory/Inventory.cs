@@ -309,4 +309,6 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 
         return false;
     }
+
+    public void InvokeOnItemEquiped() => OnItemEquiped?.Invoke();
 }

@@ -56,6 +56,9 @@ public class CharacterStats : MonoBehaviour
     private int schockDamage;
     [SerializeField] private GameObject shockStrikePrefab;
     public int CurrentHealth { get; private set; }
+
+    private bool isVulnerable;
+    private float damageIncreaseWhenVulnerable = 1.1f;
     #endregion
 
 
@@ -230,6 +233,9 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void DecreaseHealthBy(int damage)
     {
+        if (isVulnerable)
+            damage = Mathf.RoundToInt(damage * damageIncreaseWhenVulnerable); 
+
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
 
         OnHealthChanged?.Invoke();
@@ -265,11 +271,14 @@ public class CharacterStats : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
+            targetStats.OnEvasion();
             return true;
         }
 
         return false;
     }
+
+    public virtual void OnEvasion() { }
 
     private int CalculateDamage(CharacterStats targetStats)
     {
@@ -388,6 +397,15 @@ public class CharacterStats : MonoBehaviour
             closestEnemy = transform;
 
         return closestEnemy;
+    }
+
+    public void MakeVulnerableFor(float duration) => StartCoroutine(VulnerableCoroutine(duration));
+
+    private IEnumerator VulnerableCoroutine(float duration)
+    {
+        isVulnerable = true;
+        yield return new WaitForSeconds(duration);
+        isVulnerable = false;
     }
 
     public int GetMaxHealthValue()

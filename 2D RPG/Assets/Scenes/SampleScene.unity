@@ -20503,10 +20503,12 @@ GameObject:
   - component: {fileID: 1639881709}
   - component: {fileID: 1639881708}
   - component: {fileID: 1639881710}
-  - component: {fileID: 1639881711}
-  - component: {fileID: 1639881712}
-  - component: {fileID: 1639881713}
+  - component: {fileID: 1639881715}
   - component: {fileID: 1639881714}
+  - component: {fileID: 1639881716}
+  - component: {fileID: 1639881712}
+  - component: {fileID: 1639881711}
+  - component: {fileID: 1639881713}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -20554,11 +20556,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
-  dashUnlocked: 0
   dashUnlockButton: {fileID: 724328620}
-  cloneOnDashUnlocked: 0
   cloneOnDashUnlockButton: {fileID: 1613703017}
-  cloneOnArrivalUnlocked: 0
   cloneOnArrivalUnlockButton: {fileID: 712395822}
 --- !u!114 &1639881711
 MonoBehaviour:
@@ -20577,9 +20576,6 @@ MonoBehaviour:
   cloneDuration: 1.5
   colorLoosingSpeed: 1
   canAttack: 0
-  createCloneOnDashStart: 0
-  createCloneOnDashEnd: 0
-  canCreateCloneOnCounterAttack: 0
   canDuplicateClone: 0
   chanceToDuplicate: 35
   crystalInsteadOfClone: 0
@@ -20597,16 +20593,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 2
   swordType: 0
+  swordUnlockButton: {fileID: 1233709395}
   swordPrefab: {fileID: 1692833936459921559, guid: 980df68a466b6bf4397da2e82f806f65, type: 3}
   lunchForce: {x: 35, y: 25}
   swordGravity: 4.5
   freezTimeDuration: 0.5
   returnSpeed: 20
+  bounceUnlockButton: {fileID: 1501239960}
   bounceAmount: 5
   bounceGravity: 5
   bounceSpeed: 20
+  pierceUnlockButton: {fileID: 607254561}
   pierceAmount: 2
   pierceGravity: 1
+  spinUnlockButton: {fileID: 2044204792}
   hitCooldown: 0.35
   maxTravelDinstance: 7
   spinDuration: 2
@@ -20616,6 +20616,8 @@ MonoBehaviour:
   spaceBetweenDots: 0.07
   dotPrefab: {fileID: 6958553576752401970, guid: 023ab69caeea66747a62d0121b7d4ff6, type: 3}
   dotsParent: {fileID: 858480503}
+  timeStopUnlockButton: {fileID: 1885223218}
+  vulnerableUnlockButton: {fileID: 1911566857}
 --- !u!114 &1639881713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20651,10 +20653,15 @@ MonoBehaviour:
   cooldown: 0
   crystalPrefab: {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
   crystalDuration: 2
+  unlockCrystalButton: {fileID: 1189776518}
+  unlockCrystalMirageButton: {fileID: 1511395418}
+  cloneInsteadCrystal: 0
+  unlockExplosiveCrystalButton: {fileID: 1144500157}
+  canExplode: 0
+  unlockMovingCrystalButton: {fileID: 610254362}
   moveSpeed: 3
   canMove: 0
-  canExplode: 0
-  cloneInsteadCrystal: 0
+  unlockMultiCrystalButton: {fileID: 1312394463}
   canUseMultiStacks: 0
   crystalAmount: 3
   multiStackCooldown: 4
@@ -20663,6 +20670,39 @@ MonoBehaviour:
   - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
   - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
   - {fileID: 8679322115533958783, guid: 337e90b8192f00244b46a56e0f41cc4f, type: 3}
+--- !u!114 &1639881715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639881707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dcb31deca2f1346a2cff981db7a7fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  parryUnlockButton: {fileID: 2039897037}
+  blodsuckerUnlockButton: {fileID: 805088746}
+  restoreHealthAmount: 0.05
+  mirrageAttackButton: {fileID: 968322671}
+--- !u!114 &1639881716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639881707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c5b63345c768f4abaa62b72dfc64e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  unlockDodgeButton: {fileID: 207772588}
+  evasionAmount: 10
+  unlockMirageDodgeButton: {fileID: 928595400}
 --- !u!1 &1642435860
 GameObject:
   m_ObjectHideFlags: 0

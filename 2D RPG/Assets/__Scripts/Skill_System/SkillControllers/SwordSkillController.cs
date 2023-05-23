@@ -211,7 +211,12 @@ public class SwordSkillController : MonoBehaviour
     private void SwordSkillDamage(Enemy enemy)
     {
         player.CharacterStats.DoDamage(enemy.CharacterStats);
-        enemy.FreezTimeFor(freezTimeDuration);
+
+        if (player.SkillManager.SwordSkill.timeStopUnlocked)
+            enemy.FreezTimeFor(freezTimeDuration);
+
+        if (player.SkillManager.SwordSkill.vulnerableUnlocked)
+            enemy.CharacterStats.MakeVulnerableFor(freezTimeDuration);   
 
         ItemDataEquipment equipedAmulat = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
         if (equipedAmulat != null)

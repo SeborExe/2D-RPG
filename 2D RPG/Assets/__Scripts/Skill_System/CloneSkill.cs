@@ -10,8 +10,6 @@ public class CloneSkill : Skill
     [SerializeField] private float colorLoosingSpeed;
     [Space]
     [SerializeField] private bool canAttack;
-    [Space, Header("Create clone On:")]
-    [SerializeField] private bool canCreateCloneOnCounterAttack;
     [Space, Header("Clone duplication")]
     [SerializeField] private bool canDuplicateClone;
     [SerializeField] private float chanceToDuplicate;
@@ -36,15 +34,12 @@ public class CloneSkill : Skill
             chanceToDuplicate, player);
     }
 
-    public void CreateCloneOnCounterAttack(Transform enemyTransform, float offsetToEnemy = 1.5f)
+    public void CreateCloneWithDelay(Transform enemyTransform, float offsetToEnemy = 1.5f)
     {
-        if (canCreateCloneOnCounterAttack)
-        {
-            StartCoroutine(CreateCloneWithDelay(enemyTransform, new Vector3(offsetToEnemy * player.FacingDir, 0)));
-        }
+        StartCoroutine(CloneDelayCoroutine(enemyTransform, new Vector3(offsetToEnemy * player.FacingDir, 0)));
     }
 
-    private IEnumerator CreateCloneWithDelay(Transform enemyTransform, Vector3 offset, float delay = 0.5f)
+    private IEnumerator CloneDelayCoroutine(Transform enemyTransform, Vector3 offset, float delay = 0.5f)
     {
         yield return new WaitForSeconds(delay);
         CreateClone(enemyTransform.transform, offset);

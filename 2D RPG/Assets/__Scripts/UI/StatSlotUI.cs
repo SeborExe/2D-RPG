@@ -32,11 +32,6 @@ public class StatSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         Inventory.Instance.OnItemEquiped += UpdateStatValueUI;
     }
 
-    private void OnDisable()
-    {
-        Inventory.Instance.OnItemEquiped -= UpdateStatValueUI;
-    }
-
     public void UpdateStatValueUI()
     {
         PlayerStats playerStats = PlayerManager.Instance.player.GetComponent<PlayerStats>();

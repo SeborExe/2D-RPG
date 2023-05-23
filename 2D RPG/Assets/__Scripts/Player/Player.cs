@@ -157,7 +157,7 @@ public class Player : Entity
 
     private void CheckForCrystal()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && SkillManager.CrystalSkill.crystalUnloced)
         {
             SkillManager.CrystalSkill.CanUseSkill();
         }
