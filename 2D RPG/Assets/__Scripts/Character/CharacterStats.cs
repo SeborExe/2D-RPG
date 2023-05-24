@@ -262,7 +262,7 @@ public class CharacterStats : MonoBehaviour
         statToModify.RemoveModifiers(modifier);
     }
 
-    private bool AvoidAttack(CharacterStats targetStats)
+    protected bool AvoidAttack(CharacterStats targetStats)
     {
         int totalEvasion = targetStats.Evasion.GetValue() + targetStats.Agility.GetValue();
 
@@ -280,7 +280,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void OnEvasion() { }
 
-    private int CalculateDamage(CharacterStats targetStats)
+    protected int CalculateDamage(CharacterStats targetStats)
     {
         int totalDamage = GetDamage();
 
@@ -297,7 +297,7 @@ public class CharacterStats : MonoBehaviour
         return Damage.GetValue() + Strength.GetValue();
     }
 
-    private bool CheckCritical()
+    protected bool CheckCritical()
     {
         int totalCriticalChance = CriticChance.GetValue() + Agility.GetValue();
 
@@ -309,7 +309,7 @@ public class CharacterStats : MonoBehaviour
         return false;
     }
 
-    private int CalculateCriticalDamage(int damage)
+    protected int CalculateCriticalDamage(int damage)
     {
         float totalCriticalPower = (CriticPower.GetValue() + Strength.GetValue()) / 100;
         float criticalDamage = damage * totalCriticalPower;

@@ -47,4 +47,24 @@ public class PlayerStats : CharacterStats
     {
         player.SkillManager.DodgeSkill.CreateMirageOnDodge();
     }
+
+    public void CloneDoDamage(CharacterStats targetStats, float multiplier)
+    {
+        if (AvoidAttack(targetStats))
+            return;
+
+        int totalDamage = CalculateDamage(targetStats);
+
+        if (multiplier > 0)
+            totalDamage = Mathf.RoundToInt(totalDamage * multiplier);
+
+        if (CheckCritical())
+        {
+            totalDamage = CalculateCriticalDamage(totalDamage);
+        }
+
+        targetStats.TakeDamage(totalDamage);
+
+        DoMagicDamage(targetStats); //Apply magic damage on normal attack
+    }
 }

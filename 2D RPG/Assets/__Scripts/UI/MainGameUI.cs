@@ -14,6 +14,11 @@ public class MainGameUI : MonoBehaviour
     [SerializeField] private GameObject craftUI;
     [SerializeField] private GameObject optionsUI;
 
+    private void Awake()
+    {
+        SwitchTo(skillUI); //Assign events on skill tree slot 
+    }
+
     private void Start()
     {
         SwitchTo(null);

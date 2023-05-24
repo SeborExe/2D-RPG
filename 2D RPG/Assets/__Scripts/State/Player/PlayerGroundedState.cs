@@ -18,7 +18,7 @@ public class PlayerGroundedState : PlayerState
         base.Update();
 
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && player.SkillManager.BlackholeSkill.blackHoleUnlocked)
             stateMachine.ChangeState(player.BlackholeState);
 
         if (Input.GetKeyDown(KeyCode.Q) && HasNoSword() && player.SkillManager.SwordSkill.swordUnlocked)
