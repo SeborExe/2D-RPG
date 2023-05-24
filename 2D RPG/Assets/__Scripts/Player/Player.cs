@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public event Action OnDashUsed;
+    public event Action OnParryUsed;
+    public event Action OnCrystalUsed;
+    public event Action OnSwordUsed;
+    public event Action OnBlackholeUsed;
+    public event Action OnFlaskUsed;
+
     public PlayerStateMachine StateMachine { get; private set; }
     public SkillManager SkillManager { get; private set; }
     public GameObject Sword { get; private set; }
@@ -152,6 +159,7 @@ public class Player : Entity
                 DashDir = FacingDir;
 
             StateMachine.ChangeState(DashState);
+            OnDashUsed?.Invoke();
         }
     }
 
@@ -160,6 +168,7 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.F) && SkillManager.CrystalSkill.crystalUnloced)
         {
             SkillManager.CrystalSkill.CanUseSkill();
+            OnCrystalUsed?.Invoke();
         }
     }
 
@@ -168,6 +177,7 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Inventory.Instance.UseFlask();
+            OnFlaskUsed?.Invoke();
         }
     }
 
@@ -188,4 +198,8 @@ public class Player : Entity
     }
 
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+
+    public void InvokeOnParryUsed() => OnParryUsed?.Invoke();
+    public void InvokeOnSwordUsed() => OnSwordUsed?.Invoke();
+    public void InvokeOnBlackholeUsed() => OnBlackholeUsed?.Invoke();
 }

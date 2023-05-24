@@ -124,7 +124,7 @@ public class CrystalSkill : Skill
                 if (crystalLeft.Count == crystalAmount)
                     Invoke(nameof(ResetAbility), useTimeWindow);
 
-                cooldown = 0;
+                SetCooldown(0);
 
                 GameObject crystalToSpawn = crystalLeft[crystalLeft.Count - 1];
                 GameObject newCrystal = Instantiate(crystalToSpawn, player.transform.position, Quaternion.identity);
@@ -136,7 +136,7 @@ public class CrystalSkill : Skill
 
                 if (crystalLeft.Count <= 0)
                 {
-                    cooldown = multiStackCooldown;
+                    SetCooldown(multiStackCooldown);
                     RefilCrystal();
                 }
 

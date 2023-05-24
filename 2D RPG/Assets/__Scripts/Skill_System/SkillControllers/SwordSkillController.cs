@@ -63,6 +63,8 @@ public class SwordSkillController : MonoBehaviour
 
         if (swordType != SwordType.Spin)
             spinDirection = Math.Clamp(rb.velocity.x, -1, 1);
+
+        player.InvokeOnSwordUsed();
     }
 
     private void Update()

@@ -19,13 +19,19 @@ public class PlayerGroundedState : PlayerState
 
 
         if (Input.GetKeyDown(KeyCode.R) && player.SkillManager.BlackholeSkill.blackHoleUnlocked)
+        {
             stateMachine.ChangeState(player.BlackholeState);
-
+            player.InvokeOnBlackholeUsed();
+        }
+            
         if (Input.GetKeyDown(KeyCode.Q) && HasNoSword() && player.SkillManager.SwordSkill.swordUnlocked)
             stateMachine.ChangeState(player.AimSwordState);
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && player.SkillManager.ParrySkill.parryUnlocked)
+        {
             stateMachine.ChangeState(player.CounterAttackState);
+            player.InvokeOnParryUsed();
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
             stateMachine.ChangeState(player.PrimaryAttack);

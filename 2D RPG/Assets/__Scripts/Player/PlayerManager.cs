@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : SingletonMonobehaviour<PlayerManager>
 {
+    public event Action OnCurrencyChanged;
+
     public Player player;
 
-    public int currency;
+    [field: SerializeField]public int Currency { get; private set; }
 
     protected override void Awake()
     {
@@ -15,10 +18,11 @@ public class PlayerManager : SingletonMonobehaviour<PlayerManager>
 
     public bool HaveEnoughMoney(int priece)
     {
-        if (priece > currency)
+        if (priece > Currency)
             return false;
 
-        currency -= priece;
+        Currency -= priece;
+        OnCurrencyChanged?.Invoke();
         return true;
     }
 }

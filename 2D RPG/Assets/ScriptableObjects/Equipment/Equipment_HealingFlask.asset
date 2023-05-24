@@ -20,7 +20,9 @@ MonoBehaviour:
   itemCooldown: 25
   itemEffects:
   - {fileID: 11400000, guid: 821a2211a6162e24ea40c1ac2b033375, type: 2}
-  itemEffectDescription: 'Uniqie: Restore 40% HP on Use'
+  itemEffectDescription: 'Uniqie: Restore 40% HP on Use
+
+    Cooldown: 25 s'
   stregth: 0
   agility: 0
   intelligence: 0

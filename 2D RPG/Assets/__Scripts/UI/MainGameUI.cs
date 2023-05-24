@@ -13,6 +13,7 @@ public class MainGameUI : MonoBehaviour
     [SerializeField] private GameObject skillUI;
     [SerializeField] private GameObject craftUI;
     [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject inGameUI;
 
     private void Awake()
     {
@@ -21,15 +22,15 @@ public class MainGameUI : MonoBehaviour
 
     private void Start()
     {
-        SwitchTo(null);
+        SwitchTo(inGameUI);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.I))
             SwitchWithKeyTo(characterUI);
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.O))
             SwitchWithKeyTo(skillUI);
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -55,9 +56,21 @@ public class MainGameUI : MonoBehaviour
         if (menu != null && menu.activeSelf)
         {
             menu.SetActive(false);
+            CheckForInGameUI();
             return;
         }
 
         SwitchTo(menu);
+    }
+
+    private void CheckForInGameUI()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+                return;
+        }
+
+        SwitchTo(inGameUI);
     }
 }
