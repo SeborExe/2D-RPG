@@ -1,19 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CrystalSkill : Skill
 {
     [SerializeField] private GameObject crystalPrefab;
     [SerializeField] private float crystalDuration;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private bool canMove;
-    [SerializeField] private bool canExplode;
+
+    [Header("Crystal")]
+    [SerializeField] private SkillTreeSlotUI unlockCrystalButton;
+    public bool crystalUnloced { get; private set; }
 
     [Header("Crystal Mirage")]
+    [SerializeField] private SkillTreeSlotUI unlockCrystalMirageButton;
     [SerializeField] private bool cloneInsteadCrystal;
 
+    [Header("Explosive crystal")]
+    [SerializeField] private SkillTreeSlotUI unlockExplosiveCrystalButton;
+    [SerializeField] private bool canExplode;
+
+    [Header("Moving Crystal")]
+    [SerializeField] private SkillTreeSlotUI unlockMovingCrystalButton;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private bool canMove;
+
     [Header("Multi Crystal")]
+    [SerializeField] private SkillTreeSlotUI unlockMultiCrystalButton;
     [SerializeField] private bool canUseMultiStacks;
     [SerializeField] private int crystalAmount;
     [SerializeField] private float multiStackCooldown;
@@ -21,6 +34,47 @@ public class CrystalSkill : Skill
     [SerializeField] private List<GameObject> crystalLeft = new List<GameObject>();
 
     private GameObject currentCrystal;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        unlockCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockCrystal);
+        unlockCrystalMirageButton.GetComponent<Button>().onClick.AddListener(UnlockCrystalMirage);
+        unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockExplosiveCrystal);
+        unlockMovingCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockMovingCrystal);
+        unlockMultiCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockMultiCrystal);
+    }
+
+    private void UnlockCrystal()
+    {
+        if (unlockCrystalButton.unlocked)
+            crystalUnloced = true;
+    }
+
+    private void UnlockCrystalMirage()
+    {
+        if (unlockCrystalMirageButton.unlocked)
+            cloneInsteadCrystal = true;
+    }
+
+    private void UnlockExplosiveCrystal()
+    {
+        if (unlockExplosiveCrystalButton.unlocked)
+            canExplode = true;
+    }
+
+    private void UnlockMovingCrystal()
+    {
+        if (unlockMovingCrystalButton.unlocked)
+            canMove = true;
+    }
+
+    private void UnlockMultiCrystal()
+    {
+        if (unlockMultiCrystalButton.unlocked)
+            canUseMultiStacks = true;
+    }
 
     public override void UseSkill()
     {
@@ -70,7 +124,7 @@ public class CrystalSkill : Skill
                 if (crystalLeft.Count == crystalAmount)
                     Invoke(nameof(ResetAbility), useTimeWindow);
 
-                cooldown = 0;
+                SetCooldown(0);
 
                 GameObject crystalToSpawn = crystalLeft[crystalLeft.Count - 1];
                 GameObject newCrystal = Instantiate(crystalToSpawn, player.transform.position, Quaternion.identity);
@@ -82,7 +136,7 @@ public class CrystalSkill : Skill
 
                 if (crystalLeft.Count <= 0)
                 {
-                    cooldown = multiStackCooldown;
+                    SetCooldown(multiStackCooldown);
                     RefilCrystal();
                 }
 

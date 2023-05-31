@@ -5,13 +5,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
+public class ItemSlotUI : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    [SerializeField] private TMP_Text itemText;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TMP_Text itemAmountText;
     [SerializeField] private Sprite defaultImage;
+    [SerializeField] protected GameObject itemAmountBackground;
+
+    protected MainGameUI mainGameUI;
 
     public InventoryItem item;
+
+    protected virtual void Start()
+    {
+        mainGameUI = GetComponentInParent<MainGameUI>();
+    }
 
     public void UpdateSlot(InventoryItem item)
     {
@@ -23,17 +31,22 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
 
             if (item.stackSize > 1)
             {
-                itemText.text = item.stackSize.ToString();
+                itemAmountBackground.SetActive(true);
+                itemAmountText.text = item.stackSize.ToString();
+
             }
             else
             {
-                itemText.text = "";
+                itemAmountBackground.SetActive(false);
+                itemAmountText.text = "";
             }
         }
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (item == null) return;
+
         if (Input.GetKey(KeyCode.LeftControl))
         {
             Inventory.Instance.RemoveItem(item.data);
@@ -44,6 +57,8 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
         {
             Inventory.Instance.EquipItem(item.data);
         }
+
+ 
     }
 
     public void CleanUpSlot()
@@ -51,6 +66,20 @@ public class ItemSlotUI : MonoBehaviour, IPointerDownHandler
         item = null;
         itemImage.sprite = defaultImage;
 
-        itemText.text = "";
+        itemAmountText.text = "";
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        mainGameUI.itemTooltipUI.ShowTooltip(item.data as ItemDataEquipment);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        mainGameUI.itemTooltipUI.HideTooltip();
     }
 }

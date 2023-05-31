@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,9 @@ public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
 
-    public ItemEffect[] itemEffects;
+    [Header("Unique Effects")]
     public float itemCooldown;
+    public ItemEffect[] itemEffects;
 
     [Header("Main Stats")]
     public int stregth;
@@ -80,6 +82,51 @@ public class ItemDataEquipment : ItemData
         foreach (ItemEffect effect in itemEffects)
         {
             effect.ExecuteEffect(enemyPosition);
+        }
+    }
+
+    public override string GetDiscription()
+    {
+        sb.Length = 0;
+
+        AddItemDescription(stregth, "Strength");
+        AddItemDescription(agility, "Agility");
+        AddItemDescription(intelligence, "Intelligence");
+        AddItemDescription(vitality, "Vitality");
+
+        AddItemDescription(damage, "Damage");
+        AddItemDescription(criticalChance, "Crit.Chance");
+        AddItemDescription(criticalPower, "Crit.Power");
+
+        AddItemDescription(health, "Health");
+        AddItemDescription(evasion, "Evasion");
+        AddItemDescription(armor, "Armor");
+        AddItemDescription(magicResistance, "Magic Resist.");
+
+        AddItemDescription(fireDamage, "Fire Damage");
+        AddItemDescription(iceDamage, "Ice Damage");
+        AddItemDescription(lightingDamage, "Lighting Dam.");
+
+        for (int i = 0; i < itemEffects.Length; i++)
+        {
+            if (itemEffects[i].effectDescription.Length > 0)
+            {
+                sb.AppendLine();
+                sb.AppendLine("Unique: " + itemEffects[i].effectDescription);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private void AddItemDescription(int value, string name)
+    {
+        if (value != 0)
+        {
+            if (sb.Length > 0)
+                sb.AppendLine();
+
+            if (value> 0) sb.Append($"+ {value} {name}");
         }
     }
 }

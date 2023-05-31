@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 
 public class Inventory : SingletonMonobehaviour<Inventory>
 {
+    public event Action OnItemEquiped;
     public event Action OnItemPickUp;
 
     [SerializeField] private List<ItemData> startingEquipment = new List<ItemData>();
@@ -31,7 +32,7 @@ public class Inventory : SingletonMonobehaviour<Inventory>
     private float lastTimeUsedFlask;
     private float lastTimeUsedArmor;
 
-    private float flaskCooldown;
+    public float flaskCooldown { get; private set; }
     private float armorCooldown;
 
     protected override void Awake()
@@ -90,19 +91,22 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         {
             stashItemSlots[i].UpdateSlot(stash[i]);
         }
+
+        OnItemEquiped?.Invoke();
     }
 
     private void AddStartingEquipment()
     {
         for (int i = 0; i < startingEquipment.Count; i++)
         {
-            AddItem(startingEquipment[i]);
+            if (startingEquipment[i] != null)
+                AddItem(startingEquipment[i]);
         }
     }
 
     public void AddItem(ItemData item)
     {
-        if (item.itemType == ItemType.Equipment)
+        if (item.itemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(item);
         }
@@ -214,6 +218,17 @@ public class Inventory : SingletonMonobehaviour<Inventory>
         }
     }
 
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= inventoryItemSlots.Length)
+        {
+            Debug.Log("No more space");
+            return false;
+        }
+
+        return true;
+    }
+
     public bool CanCraft(ItemDataEquipment itemToCraft, List<InventoryItem> requiredMaterials)
     {
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
@@ -294,4 +309,6 @@ public class Inventory : SingletonMonobehaviour<Inventory>
 
         return false;
     }
+
+    public void InvokeOnItemEquiped() => OnItemEquiped?.Invoke();
 }

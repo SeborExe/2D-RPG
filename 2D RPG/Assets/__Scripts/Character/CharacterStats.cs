@@ -56,6 +56,9 @@ public class CharacterStats : MonoBehaviour
     private int schockDamage;
     [SerializeField] private GameObject shockStrikePrefab;
     public int CurrentHealth { get; private set; }
+
+    private bool isVulnerable;
+    private float damageIncreaseWhenVulnerable = 1.1f;
     #endregion
 
 
@@ -230,6 +233,9 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void DecreaseHealthBy(int damage)
     {
+        if (isVulnerable)
+            damage = Mathf.RoundToInt(damage * damageIncreaseWhenVulnerable); 
+
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
 
         OnHealthChanged?.Invoke();
@@ -256,7 +262,7 @@ public class CharacterStats : MonoBehaviour
         statToModify.RemoveModifiers(modifier);
     }
 
-    private bool AvoidAttack(CharacterStats targetStats)
+    protected bool AvoidAttack(CharacterStats targetStats)
     {
         int totalEvasion = targetStats.Evasion.GetValue() + targetStats.Agility.GetValue();
 
@@ -265,15 +271,18 @@ public class CharacterStats : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
+            targetStats.OnEvasion();
             return true;
         }
 
         return false;
     }
 
-    private int CalculateDamage(CharacterStats targetStats)
+    public virtual void OnEvasion() { }
+
+    protected int CalculateDamage(CharacterStats targetStats)
     {
-        int totalDamage = Damage.GetValue() + Strength.GetValue();
+        int totalDamage = GetDamage();
 
         if (targetStats.IsChilled)
             totalDamage = Mathf.Max(1, totalDamage - Mathf.RoundToInt(targetStats.Armor.GetValue() * 0.8f));
@@ -283,7 +292,12 @@ public class CharacterStats : MonoBehaviour
         return totalDamage;
     }
 
-    private bool CheckCritical()
+    public int GetDamage()
+    {
+        return Damage.GetValue() + Strength.GetValue();
+    }
+
+    protected bool CheckCritical()
     {
         int totalCriticalChance = CriticChance.GetValue() + Agility.GetValue();
 
@@ -295,7 +309,7 @@ public class CharacterStats : MonoBehaviour
         return false;
     }
 
-    private int CalculateCriticalDamage(int damage)
+    protected int CalculateCriticalDamage(int damage)
     {
         float totalCriticalPower = (CriticPower.GetValue() + Strength.GetValue()) / 100;
         float criticalDamage = damage * totalCriticalPower;
@@ -385,8 +399,37 @@ public class CharacterStats : MonoBehaviour
         return closestEnemy;
     }
 
+    public void MakeVulnerableFor(float duration) => StartCoroutine(VulnerableCoroutine(duration));
+
+    private IEnumerator VulnerableCoroutine(float duration)
+    {
+        isVulnerable = true;
+        yield return new WaitForSeconds(duration);
+        isVulnerable = false;
+    }
+
     public int GetMaxHealthValue()
     {
         return MaxHealth.GetValue() + Vitality.GetValue() * 5;
+    }
+
+    public Stat GetStat(StatType statType)
+    {
+        if (statType == StatType.Strength) return Strength;
+        else if (statType == StatType.Agility) return Agility;
+        else if (statType == StatType.Inteligence) return Intelligence;
+        else if (statType == StatType.Vitality) return Vitality;
+        else if (statType == StatType.Damage) return Damage;
+        else if (statType == StatType.CritChance) return CriticChance;
+        else if (statType == StatType.CritPower) return CriticPower;
+        else if (statType == StatType.Health) return MaxHealth;
+        else if (statType == StatType.Armor) return Armor;
+        else if (statType == StatType.Evasion) return Evasion;
+        else if (statType == StatType.MaicRes) return MagicResistance;
+        else if (statType == StatType.FireDamage) return FireDamage;
+        else if (statType == StatType.IceDamage) return IceDamage;
+        else if (statType == StatType.LightingDamage) return LightingDamage;
+
+        return null;
     }
 }

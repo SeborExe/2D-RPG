@@ -14,26 +14,6 @@ public class BuffEffect : ItemEffect
     {
         stats = PlayerManager.Instance.player.GetComponent<PlayerStats>();
 
-        stats.IncreaseStatBy(buffAmount, buffDuration, StatToModify());
-    }
-
-    private Stat StatToModify()
-    {
-        if (buffType == StatType.Strength) return stats.Strength;
-        else if (buffType == StatType.Agility) return stats.Agility;
-        else if (buffType == StatType.Inteligence) return stats.Intelligence;
-        else if (buffType == StatType.Vitality) return stats.Vitality;
-        else if (buffType == StatType.Damage) return stats.Damage;
-        else if (buffType == StatType.CritChance) return stats.CriticChance;
-        else if (buffType == StatType.CritPower) return stats.CriticPower;
-        else if (buffType == StatType.Health) return stats.MaxHealth;
-        else if (buffType == StatType.Armor) return stats.Armor;
-        else if (buffType == StatType.Evasion) return stats.Evasion;
-        else if (buffType == StatType.MaicRes) return stats.MagicResistance;
-        else if (buffType == StatType.FireDamage) return stats.FireDamage;
-        else if (buffType == StatType.IceDamage) return stats.IceDamage;
-        else if (buffType == StatType.LightingDamage) return stats.LightingDamage;
-
-        return null;
+        stats.IncreaseStatBy(buffAmount, buffDuration, stats.GetStat(buffType));
     }
 }

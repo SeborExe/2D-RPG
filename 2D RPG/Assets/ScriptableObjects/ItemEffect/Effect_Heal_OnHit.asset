@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1215b01656bd3b845836e30073cf3ddd, type: 3}
   m_Name: Effect_Heal_OnHit
   m_EditorClassIdentifier: 
+  effectDescription: Restore 5% HP on hit
   healPercent: 5

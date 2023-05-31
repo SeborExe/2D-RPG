@@ -308,10 +308,10 @@ TextureImporter:
       name: artdecoUI_PIPO_green_11
       rect:
         serializedVersion: 2
-        x: 18
-        y: 403
-        width: 285
-        height: 182
+        x: 30
+        y: 415
+        width: 261
+        height: 158
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 33, y: 34, z: 33, w: 33}
@@ -414,7 +414,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 365
-        y: 91
+        y: 89
         width: 357
         height: 289
       alignment: 0

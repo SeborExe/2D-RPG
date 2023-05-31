@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fe71522d6688842881f53f32d29fdd, type: 3}
   m_Name: Effect_ThunderStrike
   m_EditorClassIdentifier: 
+  effectDescription: Summon Thunder Strike on third attack
   thunderStrikePrefab: {fileID: 5104315523558244443, guid: 5afe4f8f1b354e5479922ec677d568bb, type: 3}

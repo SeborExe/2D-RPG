@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] protected float cooldown;
+    [field:SerializeField] public float cooldown { get; private set; }
     protected float cooldownTimer;
 
     protected Player player;
@@ -86,5 +86,10 @@ public class Skill : MonoBehaviour
         }
 
         return closestEnemy;
+    }
+
+    public void SetCooldown(float cooldown)
+    {
+        this.cooldown = cooldown;
     }
 }
