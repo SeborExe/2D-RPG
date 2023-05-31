@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c93d93a8f18504ebf624034b843bf0, type: 3}
   m_Name: Effect_FreezEnemies_2s
   m_EditorClassIdentifier: 
+  effectDescription: When health is below 20% freez all nerby enemies
   duration: 2
   minHealthPercentToActiveEffect: 20
   freezAreaRadius: 3

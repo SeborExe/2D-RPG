@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6af1dab8f0b33e478a0a3cc29a8842a, type: 3}
   m_Name: Effect_IceAndFire
   m_EditorClassIdentifier: 
+  effectDescription: Summon Ice and Fire projectile
   iceAndFirePrefab: {fileID: 8844577945757711805, guid: 52469fa3a1526ae45bb55dc132a52317, type: 3}
   xVelocity: 15
