@@ -38,6 +38,7 @@ public class Inventory : SingletonMonobehaviour<Inventory>, ISaveManager
 
     [Header("Data Base")]
     public List<InventoryItem> loadedItems;
+    public List<ItemDataEquipment> loadedEquipment;
 
     protected override void Awake()
     {
@@ -101,6 +102,11 @@ public class Inventory : SingletonMonobehaviour<Inventory>, ISaveManager
 
     private void AddStartingEquipment()
     {
+        foreach (ItemDataEquipment item in loadedEquipment)
+        {
+            EquipItem(item);
+        }
+
         if (loadedItems.Count > 0)
         {
             foreach (InventoryItem item in loadedItems)
@@ -344,21 +350,44 @@ public class Inventory : SingletonMonobehaviour<Inventory>, ISaveManager
                 }
             }
         }
+
+        foreach (string loadedItemID in data.equipmentID)
+        {
+            foreach (var item in GetItemDataBase())
+            {
+                if (item != null && loadedItemID == item.itemID)
+                {
+                    loadedEquipment.Add(item as ItemDataEquipment);
+                }
+            }
+        }
     }
 
     public void SaveData(ref GameData data)
     {
         data.inventory.Clear();
+        data.equipmentID.Clear();
+
         foreach (KeyValuePair<ItemData, InventoryItem> pair in inventoryDictionary)
         {
             data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+        }
+
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in stashDictionary)
+        {
+            data.inventory.Add(pair.Key.itemID, pair.Value.stackSize);
+        }
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> pair in equipmentDictionary)
+        {
+            data.equipmentID.Add(pair.Key.itemID);
         }
     }
 
     private List<ItemData> GetItemDataBase()
     {
         List<ItemData> itemDataBase = new List<ItemData>();
-        string[] assetNames = AssetDatabase.FindAssets("", new[] { "Assets/ScriptableObjects/Equipment" });
+        string[] assetNames = AssetDatabase.FindAssets("", new[] { "Assets/ScriptableObjects/Items" });
 
         foreach (string assetName in assetNames)
         {
