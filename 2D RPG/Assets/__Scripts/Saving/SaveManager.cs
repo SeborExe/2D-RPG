@@ -6,6 +6,7 @@ using System.Linq;
 public class SaveManager : SingletonMonobehaviour<SaveManager>
 {
     private readonly string fileName = "MainSave";
+    [SerializeField] private bool encryptData = true;
 
     private GameData gameData;
     private FileDataHandler fileDataHandler;
@@ -19,7 +20,7 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
     private void Start()
     {
-        fileDataHandler = new FileDataHandler(fileName, Application.dataPath);
+        fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         saveManagers = FindAllSaveManagers();
 
         LoadGame();
@@ -53,6 +54,13 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
         }
 
         fileDataHandler.Save(gameData);
+    }
+
+    [ContextMenu("Delete Save File")]
+    private void DeleteSaveData()
+    {
+        fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
+        fileDataHandler.Delete();
     }
 
     private void OnApplicationQuit()

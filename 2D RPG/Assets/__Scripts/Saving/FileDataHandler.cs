@@ -6,13 +6,17 @@ using System.IO;
 
 public class FileDataHandler
 {
-    private string dataDirPath = string.Empty;
-    private string dataFileName = string.Empty;
+    private string dataDirPath = "";
+    private string dataFileName = "";
 
-    public FileDataHandler(string dataDirPath, string dataFileName)
+    private bool encryptData = false;
+    private string codeWord = "sebcio";
+
+    public FileDataHandler(string dataDirPath, string dataFileName, bool encryptData)
     {
         this.dataDirPath = dataDirPath;
         this.dataFileName = dataFileName;
+        this.encryptData = encryptData;
     }
 
     public void Save(GameData data)
@@ -24,6 +28,9 @@ public class FileDataHandler
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             string dataToStore = JsonUtility.ToJson(data, true);
 
+            if (encryptData)
+                dataToStore = EncryptDecrypt(dataToStore);
+
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(stream))
@@ -34,7 +41,7 @@ public class FileDataHandler
         }
         catch (Exception e)
         {
-            Debug.LogError("Error: " + fullPath + "\n" + e);
+            Debug.LogError("Save Error: " + fullPath + "\n" + e);
         }
     }
 
@@ -56,14 +63,37 @@ public class FileDataHandler
                     }
                 }
 
+                if (encryptData)
+                    dataToLoad = EncryptDecrypt(dataToLoad);
+
                 loadData = JsonUtility.FromJson<GameData>(dataToLoad);
             }
             catch (Exception e)
             {
-                Debug.LogError("Error: " + fullPath + "\n" + e);
+                Debug.LogError("Load Error: " + fullPath + "\n" + e);
             }
         }
 
         return loadData;
+    }
+
+    public void Delete()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+        if (File.Exists(fullPath))
+            File.Delete(fullPath);
+    }
+
+    private string EncryptDecrypt(string data)
+    {
+        string modifiedData = "";
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            modifiedData += (char)(data[i] ^ codeWord[i % codeWord.Length]);
+        }
+
+        return modifiedData;
     }
 }

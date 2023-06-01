@@ -64,6 +64,16 @@ public class SwordSkill : Skill
         spinUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSpin);
     }
 
+    protected override void CheckUnlock()
+    {
+        UnlockSword();
+        UnlockBounce();
+        UnlockSpin();
+        UnlockPierce();
+        UnlockTimeStop();
+        UnlockVulnerable();
+    }
+
     public void CreateSword()
     {
         SwordSkillController newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
