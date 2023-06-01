@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : SingletonMonobehaviour<PlayerManager>
+public class PlayerManager : SingletonMonobehaviour<PlayerManager>, ISaveManager
 {
     public event Action OnCurrencyChanged;
 
@@ -24,5 +24,15 @@ public class PlayerManager : SingletonMonobehaviour<PlayerManager>
         Currency -= priece;
         OnCurrencyChanged?.Invoke();
         return true;
+    }
+
+    public void LoadData(GameData data)
+    {
+        Currency = data.currency;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.currency = Currency;
     }
 }
