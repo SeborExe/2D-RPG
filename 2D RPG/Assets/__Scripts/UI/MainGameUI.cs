@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainGameUI : MonoBehaviour
 {
@@ -15,6 +17,10 @@ public class MainGameUI : MonoBehaviour
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject inGameUI;
 
+    [Space, SerializeField] private FadeScreenUI fadeScreenUI;
+    [SerializeField] private GameObject youDiedGameObject;
+    [SerializeField] private Button BackToMainMenuButton;
+
     private void Awake()
     {
         SwitchTo(skillUI); //Assign events on skill tree slot 
@@ -23,6 +29,13 @@ public class MainGameUI : MonoBehaviour
     private void Start()
     {
         SwitchTo(inGameUI);
+
+        PlayerManager.Instance.OnPlayerDie += PlayerManager_OnPlayerDie;
+    }
+
+    private void OnDisable()
+    {
+        PlayerManager.Instance.OnPlayerDie -= PlayerManager_OnPlayerDie;
     }
 
     private void Update()
@@ -44,7 +57,10 @@ public class MainGameUI : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            bool isFadeScreen = transform.GetChild(i).GetComponent<FadeScreenUI>() != null;
+
+            if (!isFadeScreen)
+                transform.GetChild(i).gameObject.SetActive(false);
         }
 
         if (menu != null)
@@ -72,5 +88,17 @@ public class MainGameUI : MonoBehaviour
         }
 
         SwitchTo(inGameUI);
+    }
+
+    private void PlayerManager_OnPlayerDie()
+    {
+        fadeScreenUI.FadeOut();
+        youDiedGameObject.SetActive(true);
+        BackToMainMenuButton.gameObject.SetActive(true);
+        BackToMainMenuButton.onClick.AddListener(() =>
+        {
+            SaveManager.Instance.DeleteSaveData();
+            SceneManager.LoadScene(0);
+        });
     }
 }
