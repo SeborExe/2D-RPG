@@ -22,4 +22,5 @@ public static class Resources
     public static int Explode = Animator.StringToHash("Explode");
     public static int Die = Animator.StringToHash("Die");
     public static int Hit = Animator.StringToHash("Hit");
+    public static int Active = Animator.StringToHash("Active");
 }

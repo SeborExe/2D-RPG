@@ -57,7 +57,7 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     }
 
     [ContextMenu("Delete Save File")]
-    private void DeleteSaveData()
+    public void DeleteSaveData()
     {
         fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, encryptData);
         fileDataHandler.Delete();
@@ -72,5 +72,13 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     {
         IEnumerable<ISaveManager> saveManagers = FindObjectsOfType<MonoBehaviour>().OfType<ISaveManager>();
         return new List<ISaveManager>(saveManagers);
+    }
+
+    public bool HasSaveData()
+    {
+        if (fileDataHandler.Load() != null) 
+            return true;
+
+        return false;
     }
 }

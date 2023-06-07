@@ -11,6 +11,8 @@ public class PlayerDeadState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        PlayerManager.Instance.InvokeOnPlayerDie();
     }
 
     public override void Update()

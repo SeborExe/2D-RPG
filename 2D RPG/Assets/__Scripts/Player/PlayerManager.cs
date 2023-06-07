@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerManager : SingletonMonobehaviour<PlayerManager>, ISaveManager
 {
     public event Action OnCurrencyChanged;
+    public event Action OnPlayerDie;
 
     public Player player;
 
@@ -35,4 +36,14 @@ public class PlayerManager : SingletonMonobehaviour<PlayerManager>, ISaveManager
     {
         data.currency = Currency;
     }
+    
+    public void InvokeOnPlayerDie() => OnPlayerDie?.Invoke();
+
+    public void AddCurrency(int amount)
+    {
+        Currency += amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void SetCurrency(int currency) => Currency = currency;
 }

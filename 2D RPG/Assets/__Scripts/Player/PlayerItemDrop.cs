@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class PlayerItemDrop : ItemDrop
 {
@@ -39,9 +38,11 @@ public class PlayerItemDrop : ItemDrop
             }
         }
 
+        if (stashToLoose.Count <= 0) return;
+
         for (int i = 0; i < stashToLoose.Count; i++)
         {
-            inventory.RemoveItem(itemsToUnequip[i].data);
+            inventory.RemoveItem(stashToLoose[i].data);
         }
     }
 }
