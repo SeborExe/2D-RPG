@@ -9,6 +9,7 @@ public class EnemyStats : CharacterStats
 
     [Header("Level Details")]
     [SerializeField] private int level = 1;
+    [field:SerializeField] public Stat SoulsDropAmount { get; private set; }
 
     [Range(0f, 1f), SerializeField] private float percentageModifier = 0.3f;
 
@@ -44,6 +45,8 @@ public class EnemyStats : CharacterStats
         Modifier(FireDamage);
         Modifier(IceDamage);
         Modifier(LightingDamage);
+
+        Modifier(SoulsDropAmount);
     }
 
     public override void TakeDamage(int damage)
@@ -67,6 +70,7 @@ public class EnemyStats : CharacterStats
         base.Die();
         enemy.Die();
 
+        PlayerManager.Instance.AddCurrency(SoulsDropAmount.GetValue());
         itemDrop.GenerateDrop();
     }
 }

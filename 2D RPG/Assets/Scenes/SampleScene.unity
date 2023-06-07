@@ -25306,6 +25306,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e1d57e0318f3f4f80f11f1799e3f1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPoints: []
+  corpsPrefab: {fileID: 6727617428252721064, guid: 6630cb8337308694b925e86c791373de, type: 3}
+  corpsXPosition: 0
+  corpsYPosition: 0
 --- !u!4 &1783298576
 Transform:
   m_ObjectHideFlags: 0

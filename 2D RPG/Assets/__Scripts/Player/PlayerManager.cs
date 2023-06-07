@@ -38,4 +38,12 @@ public class PlayerManager : SingletonMonobehaviour<PlayerManager>, ISaveManager
     }
     
     public void InvokeOnPlayerDie() => OnPlayerDie?.Invoke();
+
+    public void AddCurrency(int amount)
+    {
+        Currency += amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void SetCurrency(int currency) => Currency = currency;
 }

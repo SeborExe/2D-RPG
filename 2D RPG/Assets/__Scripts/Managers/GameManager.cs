@@ -2,14 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveManager
 {
     [SerializeField] private List<CheckPoint> checkPoints = new List<CheckPoint>();
 
+    [SerializeField] private GameObject corpsPrefab;
+    [SerializeField] private float corpsXPosition;
+    [SerializeField] private float corpsYPosition;
+    public int LostCurrency { get; set; }
+
+    private Transform player;
+
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    private void Start()
+    {
+        player = PlayerManager.Instance.player.transform;
     }
 
     public void AddCheckpointToList(CheckPoint checkPoint)
@@ -19,37 +33,29 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveManager
 
     public async void LoadData(GameData data)
     {
-        foreach (KeyValuePair<string, bool> pair in data.checkpoints)
+        foreach (var checkPoint in from KeyValuePair<string, bool> pair in data.checkpoints
+                                   from CheckPoint checkPoint in checkPoints
+                                   where checkPoint.checkpointID == pair.Key && pair.Value == true
+                                   select checkPoint)
         {
-            foreach (CheckPoint checkPoint in checkPoints)
-            {
-                if (checkPoint.checkpointID == pair.Key && pair.Value == true)
-                {
-                    checkPoint.ActivateCheckpoint();
-                }
-            }
+            checkPoint.ActivateCheckpoint();
         }
 
         string closestCheckpointID = data.closestCheckPointID;
-        await PlacePlayerAtClosestCheckpoint(closestCheckpointID);
-    }
 
-    private async Task PlacePlayerAtClosestCheckpoint(string closestCheckpointID)
-    {
-        await Task.Delay(100);
-
-        foreach (CheckPoint checkPoint in checkPoints)
-        {
-            if (closestCheckpointID == checkPoint.checkpointID)
-            {
-                PlayerManager.Instance.player.transform.position = checkPoint.transform.position;
-            }
-        }
+        await PlacePlayerAtClosestCheckpoint(data);
+        await LoadCorps(data);
     }
 
     public void SaveData(ref GameData data)
     {
-        data.closestCheckPointID = FindClosestCheckpoint().checkpointID;
+        data.lostCurrencyAmount = LostCurrency;
+        data.lostCurrencyX = player.position.x;
+        data.lostCurrencyY = player.position.y;
+
+        if (FindClosestCheckpoint() != null)
+            data.closestCheckPointID = FindClosestCheckpoint().checkpointID;
+
         data.checkpoints.Clear();
 
         foreach (CheckPoint checkPoint in checkPoints)
@@ -62,11 +68,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveManager
     {
         float closestDistance = Mathf.Infinity;
         CheckPoint closestCheckpoint = null;
-        Player player = PlayerManager.Instance.player;
 
         foreach (CheckPoint checkPoint in checkPoints)
         {
-            float distanceToCheckpoint = Vector2.Distance(player.transform.position, checkPoint.transform.position);
+            float distanceToCheckpoint = Vector2.Distance(player.position, checkPoint.transform.position);
             if (distanceToCheckpoint < closestDistance && checkPoint.activated)
             {
                 closestDistance = distanceToCheckpoint;
@@ -75,5 +80,43 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveManager
         }
 
         return closestCheckpoint;
+    }
+
+    private async Task PlacePlayerAtClosestCheckpoint(GameData data)
+    {
+        await Task.Delay(100);
+
+        if (data.closestCheckPointID == null) return;
+
+        foreach (CheckPoint checkPoint in checkPoints)
+        {
+            if (data.closestCheckPointID == checkPoint.checkpointID)
+            {
+                player.position = checkPoint.transform.position;
+            }
+        }
+    }
+
+    private async Task LoadCorps(GameData data)
+    {
+        await Task.Delay(100);
+
+        LostCurrency = data.lostCurrencyAmount;
+        corpsXPosition = data.lostCurrencyX;
+        corpsYPosition = data.lostCurrencyY;
+
+        if (LostCurrency > 0)
+        {
+            GameObject newCorps = Instantiate(corpsPrefab, new Vector3(corpsXPosition, corpsYPosition), Quaternion.identity);
+            newCorps.GetComponent<Corps>().Currency = LostCurrency;
+        }
+
+        LostCurrency = 0;
+    }
+
+    public void RestartGame()
+    {
+        SaveManager.Instance.SaveGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
