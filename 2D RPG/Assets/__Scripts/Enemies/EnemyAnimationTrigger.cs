@@ -12,6 +12,8 @@ public class EnemyAnimationTrigger : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attackCheckRadius);
 
+        AudioManager.Instance.PlaySFX(1, enemy.transform);
+
         foreach (Collider2D collider in colliders)
         {
             if (collider.TryGetComponent(out Player player))

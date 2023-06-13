@@ -30,6 +30,9 @@ public class BlackholeSkill : Skill
     {
         base.UseSkill();
 
+        AudioManager.Instance.PlaySFX(3, player.transform);
+        AudioManager.Instance.PlaySFX(6, player.transform);
+
         GameObject newBlackhole = Instantiate(blackholePrefab, player.transform.position, Quaternion.identity);
         currentBlackhole = newBlackhole.GetComponent<BlackholeSkillController>();
         currentBlackhole.SetUpBlackhole(maxSize, growSpeed, shrinkSpeed, attacksAmount, cloneAttackCooldown, blackholeDuration, player);
