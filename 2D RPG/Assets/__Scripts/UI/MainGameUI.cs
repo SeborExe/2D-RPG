@@ -67,7 +67,10 @@ public class MainGameUI : MonoBehaviour, ISaveManager
         }
 
         if (menu != null)
+        {
             menu.SetActive(true);
+            AudioManager.Instance.PlaySFX(7, null);
+        }
     }
 
     public void SwitchWithKeyTo(GameObject menu)

@@ -27,6 +27,6 @@ public class SkeletonIdleState : SkeletonGroundedState
     {
         base.Exit();
 
-        AudioManager.Instance.PlaySFX(14, enemy.transform);
+        AudioManager.Instance.PlaySFX(24, enemy.transform);
     }
 }

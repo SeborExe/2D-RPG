@@ -11,10 +11,13 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     public bool playBgm;
 
     private int bgmIndex;
+    private bool canPlaySFX;
 
     protected override void Awake()
     {
         base.Awake();
+
+        Invoke(nameof(AllowSFX), 1f);
     }
 
     private void Update()
@@ -30,7 +33,7 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
 
     public void PlaySFX(int sfxIndex, Transform source)
     {
-        //if (sfx[sfxIndex].isPlaying) return;
+        if (!canPlaySFX) return;
 
         if (source != null && Vector2.Distance(PlayerManager.Instance.player.transform.position, source.position) > sfxMinimumDistance)
             return;
@@ -64,4 +67,6 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
             bgm[i].Stop();
         }
     }
+
+    private void AllowSFX() => canPlaySFX = true;
 }
