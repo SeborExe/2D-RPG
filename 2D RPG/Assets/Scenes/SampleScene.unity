@@ -26741,8 +26741,8 @@ MonoBehaviour:
   wallCheckDistance: 0.1
   attackCheck: {fileID: 1926319266}
   attackCheckRadius: 0.8
-  knockbackDirection: {x: 0, y: 0}
-  knockbackDuration: 0
+  knockbackPower: {x: 0, y: 0}
+  knockbackDuration: 0.3
   <MoveSpeed>k__BackingField: 8
   <JumpForce>k__BackingField: 16
   <SwordReturnImpact>k__BackingField: 7

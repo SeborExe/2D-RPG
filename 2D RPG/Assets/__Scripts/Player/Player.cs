@@ -197,6 +197,11 @@ public class Player : Entity
         StateMachine.ChangeState(DeadState);
     }
 
+    protected override void SetUpZeroKnockbackPower()
+    {
+        knockbackPower = Vector2.zero;
+    }
+
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
     public void InvokeOnParryUsed() => OnParryUsed?.Invoke();

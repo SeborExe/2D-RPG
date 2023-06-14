@@ -82,6 +82,8 @@ public class CharacterStats : MonoBehaviour
         if (AvoidAttack(targetStats))
             return;
 
+        targetStats.GetComponent<Entity>().SetUpKnockbackDir(transform);
+
         int totalDamage = CalculateDamage(targetStats);
 
         if (CheckCritical())

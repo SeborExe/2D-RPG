@@ -507,7 +507,7 @@ MonoBehaviour:
   wallCheckDistance: 1.2
   attackCheck: {fileID: 8545509615983762733}
   attackCheckRadius: 1.1
-  knockbackDirection: {x: 4, y: 8}
+  knockbackPower: {x: 7, y: 12}
   knockbackDuration: 0.25
   <IdleTime>k__BackingField: 2
   <BattleTime>k__BackingField: 6
