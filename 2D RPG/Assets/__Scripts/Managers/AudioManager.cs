@@ -47,6 +47,29 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
 
     public void StopSFX(int sfxIndex) => sfx[sfxIndex].Stop();
 
+    public void StopSFXWithTime(int index, float decreasingSpeed = 0.5f)
+    {
+        StartCoroutine(DecreaseVolume(sfx[index], decreasingSpeed));
+    }
+
+    private IEnumerator DecreaseVolume(AudioSource audioSource, float decreasingSpeed)
+    {
+        float defaultVolume = audioSource.volume;
+
+        while (audioSource.volume > 0.1f)
+        {
+            audioSource.volume -= audioSource.volume * 0.2f;
+            yield return new WaitForSeconds(decreasingSpeed);
+
+            if (audioSource.volume <= 0.1f)
+            {
+                audioSource.Stop();
+                audioSource.volume = defaultVolume;
+                break;
+            }
+        }
+    }
+
     public void PLayBGM(int bgmIndex)
     {
         this.bgmIndex = bgmIndex;
