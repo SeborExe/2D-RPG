@@ -513,8 +513,9 @@ MonoBehaviour:
   <BattleTime>k__BackingField: 6
   <MaxDistanceToFollowPlayer>k__BackingField: 15
   <MoveSpeed>k__BackingField: 1.2
-  <AttackDistance>k__BackingField: 2
+  <AttackDistance>k__BackingField: 2.5
   <AttackCooldown>k__BackingField: 0.5
+  <AttackCooldownRange>k__BackingField: {x: 0.35, y: 0.65}
   lastTimeAttack: 0
   stunTime: 0.65
   stunDirection: {x: 6, y: 10}
