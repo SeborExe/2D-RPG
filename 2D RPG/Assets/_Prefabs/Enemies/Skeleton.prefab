@@ -545,6 +545,9 @@ MonoBehaviour:
   igniteColors:
   - {r: 0.9716981, g: 0.37951222, b: 0.37951222, a: 1}
   - {r: 0.9528302, g: 0.5788893, b: 0.5788893, a: 1}
+  igniteFX: {fileID: 5915581468759161045, guid: e46b4f747a7f3f448acd6bd8ddcd0a7c, type: 3}
+  chillFX: {fileID: 6871745732318157120, guid: 440a784885598ff42bd029a409a0e9ee, type: 3}
+  shockFX: {fileID: 2524214592503746292, guid: c9d6e8ac8721e8940bf402f7b4cb2706, type: 3}
 --- !u!114 &1778788399715199478
 MonoBehaviour:
   m_ObjectHideFlags: 0

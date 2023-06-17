@@ -17,6 +17,11 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private Color[] schockColors;
     [SerializeField] private Color[] igniteColors;
 
+    [Header("FX")]
+    [SerializeField] private GameObject igniteFX;
+    [SerializeField] private GameObject chillFX;
+    [SerializeField] private GameObject shockFX;
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -57,18 +62,27 @@ public class EntityFX : MonoBehaviour
 
     public void IgniteFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(igniteFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(IgniteColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
 
     public void ChillFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(chillFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(ChillColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
 
     public void SchockFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(shockFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(SchockColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
