@@ -31,6 +31,8 @@ public class PlayerDashState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
+
+        player.EntityFX.CreateAfterImage();
     }
 
     public override void Exit()

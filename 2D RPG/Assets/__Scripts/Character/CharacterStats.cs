@@ -83,6 +83,8 @@ public class CharacterStats : MonoBehaviour
         if (AvoidAttack(targetStats))
             return;
 
+        bool criticalStrike = false;
+
         targetStats.GetComponent<Entity>().SetUpKnockbackDir(transform);
 
         int totalDamage = CalculateDamage(targetStats);
@@ -90,7 +92,10 @@ public class CharacterStats : MonoBehaviour
         if (CheckCritical())
         {
             totalDamage = CalculateCriticalDamage(totalDamage);
+            criticalStrike = true;
         }
+
+        entityFX.CreateHitFX(targetStats.transform, criticalStrike);
 
         targetStats.TakeDamage(totalDamage);
 

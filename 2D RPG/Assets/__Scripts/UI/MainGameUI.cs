@@ -77,9 +77,9 @@ public class MainGameUI : MonoBehaviour, ISaveManager
         if (GameManager.Instance != null)
         {
             if (menu == inGameUI)
-                GameManager.Instance.PauseGame(true);
-            else
                 GameManager.Instance.PauseGame(false);
+            else
+                GameManager.Instance.PauseGame(true);
         }
     }
 
