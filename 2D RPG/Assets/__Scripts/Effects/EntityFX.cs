@@ -1,11 +1,11 @@
+using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    private Player player;
 
     [Header("Flash FX")]
     [SerializeField] private Material hitMat;
@@ -31,6 +31,13 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private float afterImageCooldown;
     private float afterImageCooldownTimer;
 
+    [Header("Camera Shake")]
+    [SerializeField] private float shakeMultiplier;
+    public Vector3 shakeSwordImpack;
+    public Vector3 shakeHighDamage;
+    public Vector3 shakeAttack;
+    private CinemachineImpulseSource impulseSource;
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -39,6 +46,10 @@ public class EntityFX : MonoBehaviour
     private void Start()
     {
         originalMat = spriteRenderer.material;
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+
+        if (TryGetComponent(out Player playerComponent))
+            player = playerComponent;
     }
 
     private void Update()
@@ -184,5 +195,11 @@ public class EntityFX : MonoBehaviour
     {
         if (dustFX != null)
             dustFX.Play();
+    }
+
+    public void ScreenShake(Vector3 shakePower)
+    {
+        impulseSource.m_DefaultVelocity = new Vector3(shakePower.x * player.FacingDir, shakePower.y) * shakeMultiplier;
+        impulseSource.GenerateImpulse();
     }
 }

@@ -33,6 +33,8 @@ public class PlayerPrimaryAttackState : PlayerState
 
         float slideTimeWhenAttack = 0.1f;
         stateTimer = slideTimeWhenAttack;
+
+        player.EntityFX.ScreenShake(player.EntityFX.shakeAttack);
     }
 
     public override void Update()

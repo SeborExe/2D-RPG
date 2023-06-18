@@ -18,6 +18,7 @@ public class PlayerCatchSwordState : PlayerState
         sword = player.Sword.transform;
 
         player.EntityFX.PlayDustFX();
+        player.EntityFX.ScreenShake(player.EntityFX.shakeSwordImpack);
 
         FacePlayerToSwordDirection();
 
