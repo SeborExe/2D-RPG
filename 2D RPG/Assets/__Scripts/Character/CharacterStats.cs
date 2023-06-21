@@ -56,6 +56,7 @@ public class CharacterStats : MonoBehaviour
     private int schockDamage;
     [SerializeField] private GameObject shockStrikePrefab;
     public int CurrentHealth { get; private set; }
+    public bool IsInvincible { get; private set; }
 
     private bool isVulnerable;
     private float damageIncreaseWhenVulnerable = 1.1f;
@@ -82,12 +83,19 @@ public class CharacterStats : MonoBehaviour
         if (AvoidAttack(targetStats))
             return;
 
+        bool criticalStrike = false;
+
+        targetStats.GetComponent<Entity>().SetUpKnockbackDir(transform);
+
         int totalDamage = CalculateDamage(targetStats);
 
         if (CheckCritical())
         {
             totalDamage = CalculateCriticalDamage(totalDamage);
+            criticalStrike = true;
         }
+
+        entityFX.CreateHitFX(targetStats.transform, criticalStrike);
 
         targetStats.TakeDamage(totalDamage);
 
@@ -96,6 +104,8 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
+        if (IsInvincible) return;
+
         DecreaseHealthBy(damage);
 
         entity.DamageImpact();
@@ -231,12 +241,21 @@ public class CharacterStats : MonoBehaviour
         
     }
 
+    public void KillEntity()
+    {
+        if (!GetComponent<Entity>().IsDead)
+            Die();
+    }
+
     protected virtual void DecreaseHealthBy(int damage)
     {
         if (isVulnerable)
             damage = Mathf.RoundToInt(damage * damageIncreaseWhenVulnerable); 
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
+
+        if (damage > 0)
+            entityFX.CreatePopupText(damage.ToString(), true);
 
         OnHealthChanged?.Invoke();
     }
@@ -412,6 +431,8 @@ public class CharacterStats : MonoBehaviour
     {
         return MaxHealth.GetValue() + Vitality.GetValue() * 5;
     }
+
+    public void MakeInvincible(bool invincible) => IsInvincible = invincible;
 
     public Stat GetStat(StatType statType)
     {

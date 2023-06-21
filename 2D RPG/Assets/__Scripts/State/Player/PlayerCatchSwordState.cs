@@ -17,6 +17,9 @@ public class PlayerCatchSwordState : PlayerState
 
         sword = player.Sword.transform;
 
+        player.PlayerFX.PlayDustFX();
+        player.PlayerFX.ScreenShake(player.PlayerFX.shakeSwordImpack);
+
         FacePlayerToSwordDirection();
 
         player.Rigidbody2D.velocity = new Vector2(player.SwordReturnImpact * -player.FacingDir, player.Rigidbody2D.velocity.y);

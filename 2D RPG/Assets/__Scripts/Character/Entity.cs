@@ -11,7 +11,6 @@ public class Entity : MonoBehaviour
 
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
-    public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
     public CharacterStats CharacterStats { get; private set; }
     public CapsuleCollider2D CapsuleCollider { get; private set;}
@@ -35,9 +34,10 @@ public class Entity : MonoBehaviour
 
     #region Knockback
     [Header("Knockback info")]
-    [SerializeField] protected Vector2 knockbackDirection;
+    [SerializeField] protected Vector2 knockbackPower;
     [SerializeField] protected float knockbackDuration;
     protected bool isKnocked;
+    public int KnockbackDir { get; private set; }
     #endregion
 
     #region Dead
@@ -47,7 +47,6 @@ public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        EntityFX = GetComponent<EntityFX>();
         CharacterStats = GetComponent<CharacterStats>();
         CapsuleCollider = GetComponent<CapsuleCollider2D>();
         Animator = GetComponentInChildren<Animator>();
@@ -107,15 +106,28 @@ public class Entity : MonoBehaviour
         StartCoroutine(HitKnockback());
     }
 
+    public virtual void SetUpKnockbackDir(Transform damageDirection)
+    {
+        if (damageDirection.position.x > transform.position.x)
+            KnockbackDir = -1;
+        else if (damageDirection.position.x < transform.position.x)
+            KnockbackDir = 1;
+    }
+
+    public void SetUpKnockbackPower(Vector2 knockbackPower) => this.knockbackPower = knockbackPower;
+
     protected virtual IEnumerator HitKnockback()
     {
         isKnocked = true;
-        Rigidbody2D.velocity = new Vector2(knockbackDirection.x * -FacingDir, knockbackDirection.y);
+        Rigidbody2D.velocity = new Vector2(knockbackPower.x * KnockbackDir, knockbackPower.y);
 
         yield return new WaitForSeconds(knockbackDuration);
 
         isKnocked = false;
+        SetUpZeroKnockbackPower();
     }
+
+    protected virtual void SetUpZeroKnockbackPower() { }
 
     public virtual void Die() 
     {

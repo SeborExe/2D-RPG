@@ -17,6 +17,7 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         xInput = 0;
 
         if (ComboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
@@ -32,6 +33,8 @@ public class PlayerPrimaryAttackState : PlayerState
 
         float slideTimeWhenAttack = 0.1f;
         stateTimer = slideTimeWhenAttack;
+
+        player.PlayerFX.ScreenShake(player.PlayerFX.shakeAttack);
     }
 
     public override void Update()

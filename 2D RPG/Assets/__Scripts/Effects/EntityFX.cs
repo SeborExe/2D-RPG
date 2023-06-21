@@ -1,11 +1,12 @@
+using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
+    protected Player player;
 
     [Header("Flash FX")]
     [SerializeField] private Material hitMat;
@@ -17,14 +18,40 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private Color[] schockColors;
     [SerializeField] private Color[] igniteColors;
 
+    [Header("FX")]
+    [SerializeField] private GameObject igniteFX;
+    [SerializeField] private GameObject chillFX;
+    [SerializeField] private GameObject shockFX;
+    [SerializeField] private GameObject hitFX00;
+    [SerializeField] private GameObject criticalHitFX;
+
+    [Header("Popup")]
+    [SerializeField] private GameObject popupTextPrefab;
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         originalMat = spriteRenderer.material;
+
+        if (TryGetComponent(out Player playerComponent))
+            player = playerComponent;
+    }
+
+    public void CreatePopupText(string text, bool isDamageText = false)
+    {
+        float randomX = Random.Range(-1f, 1f);
+        float randomY = Random.Range(2f, 4f);
+        Vector3 positionOffset = new Vector3(randomX, randomY, 0);
+
+        GameObject newText = Instantiate(popupTextPrefab, transform.position + positionOffset, Quaternion.identity);
+        newText.GetComponent<TMP_Text>().text = text;
+
+        if (isDamageText)
+            newText.GetComponent<TMP_Text>().color = Color.red;
     }
 
     public void MakeTransparent(bool transparent)
@@ -57,18 +84,27 @@ public class EntityFX : MonoBehaviour
 
     public void IgniteFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(igniteFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(IgniteColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
 
     public void ChillFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(chillFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(ChillColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
 
     public void SchockFX(float seconds, float blinkingDuration = 0.2f)
     {
+        GameObject FX = Instantiate(shockFX, transform.position, Quaternion.identity);
+        Destroy(FX, seconds);
+
         InvokeRepeating(nameof(SchockColorFX), 0, blinkingDuration);
         Invoke(nameof(CancelColorChange), seconds);
     }
@@ -106,5 +142,35 @@ public class EntityFX : MonoBehaviour
     {
         CancelInvoke();
         spriteRenderer.color = Color.white;
+    }
+
+    public void CreateHitFX(Transform hitPosition, bool isCritical)
+    {
+        float randomZRotation = Random.Range(-90f, 90f);
+        float xPosition = Random.Range(-0.5f, 0.5f);
+        float yPosition = Random.Range(-0.5f, 0.5f);
+
+        Vector3 hitRotation = new Vector3(0, 0, randomZRotation);
+
+        GameObject hitFxPrefab = hitFX00;
+
+        if (isCritical)
+        {
+            hitFxPrefab = criticalHitFX;
+
+            float yRotation = 0;
+            randomZRotation = Random.Range(-45f, 45f);
+
+            if (GetComponent<Entity>().FacingDir == -1)
+                yRotation = 180;
+
+            hitRotation = new Vector3(0, yRotation, randomZRotation);
+        }
+
+        GameObject hitFX = Instantiate(hitFxPrefab, hitPosition.position + new Vector3(xPosition, yPosition), Quaternion.identity);
+
+        hitFX.transform.Rotate(hitRotation);
+
+        Destroy(hitFX, 1f);
     }
 }

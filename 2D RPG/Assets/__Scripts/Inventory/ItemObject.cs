@@ -39,9 +39,11 @@ public class ItemObject : MonoBehaviour
         if (!Inventory.Instance.CanAddItem() && itemData.itemType == ItemType.Equipment)
         {
             rb.velocity = new Vector2(0, 7f);
+            PlayerManager.Instance.player.PlayerFX.CreatePopupText("Not Enough Space");
             return;
         }
 
+        AudioManager.Instance.PlaySFX(18, transform);
         Inventory.Instance.AddItem(itemData);
         Destroy(gameObject);
     }

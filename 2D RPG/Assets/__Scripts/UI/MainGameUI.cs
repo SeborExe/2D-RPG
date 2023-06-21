@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainGameUI : MonoBehaviour
+public class MainGameUI : MonoBehaviour, ISaveManager
 {
     [field: SerializeField] public ItemTooltipUI itemTooltipUI { get; private set; }
     [field: SerializeField] public StatTooltipUI statTooltipUI { get; private set; }
@@ -20,6 +21,8 @@ public class MainGameUI : MonoBehaviour
     [Space, SerializeField] private FadeScreenUI fadeScreenUI;
     [SerializeField] private GameObject youDiedGameObject;
     [SerializeField] private Button BackToMainMenuButton;
+
+    [SerializeField] private VolumeSliderUI[] volumeSettings;
 
     private void Awake()
     {
@@ -64,7 +67,20 @@ public class MainGameUI : MonoBehaviour
         }
 
         if (menu != null)
+        {
             menu.SetActive(true);
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(7, null);
+        }
+
+        if (GameManager.Instance != null)
+        {
+            if (menu == inGameUI)
+                GameManager.Instance.PauseGame(false);
+            else
+                GameManager.Instance.PauseGame(true);
+        }
     }
 
     public void SwitchWithKeyTo(GameObject menu)
@@ -100,5 +116,27 @@ public class MainGameUI : MonoBehaviour
             SaveManager.Instance.DeleteSaveData();
             SceneManager.LoadScene(0);
         });
+    }
+
+    public void LoadData(GameData data)
+    {
+        foreach (KeyValuePair<string, float> pair in data.volumeSettings)
+        {
+            foreach (VolumeSliderUI item in volumeSettings)
+            {
+                if (item.parameter == pair.Key)
+                    item.LoadSlider(pair.Value);
+            }
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.volumeSettings.Clear();
+
+        foreach (VolumeSliderUI item in volumeSettings)
+        {
+            data.volumeSettings.Add(item.parameter, item.slider.value);
+        }
     }
 }
