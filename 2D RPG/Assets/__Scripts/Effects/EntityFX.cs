@@ -1,11 +1,12 @@
 using Cinemachine;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    private Player player;
+    protected SpriteRenderer spriteRenderer;
+    protected Player player;
 
     [Header("Flash FX")]
     [SerializeField] private Material hitMat;
@@ -24,41 +25,33 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private GameObject hitFX00;
     [SerializeField] private GameObject criticalHitFX;
 
-    [Space]
-    [SerializeField] private ParticleSystem dustFX;
-    [SerializeField] private GameObject afterImagePrefab;
-    [SerializeField] private float colorLooseRate;
-    [SerializeField] private float afterImageCooldown;
-    private float afterImageCooldownTimer;
-
-    [Header("Camera Shake")]
-    [SerializeField] private float shakeMultiplier;
-    public Vector3 shakeSwordImpack;
-    public Vector3 shakeHighDamage;
-    public Vector3 shakeAttack;
-    private CinemachineImpulseSource impulseSource;
+    [Header("Popup")]
+    [SerializeField] private GameObject popupTextPrefab;
 
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         originalMat = spriteRenderer.material;
-        impulseSource = GetComponent<CinemachineImpulseSource>();
 
         if (TryGetComponent(out Player playerComponent))
             player = playerComponent;
     }
 
-    private void Update()
+    public void CreatePopupText(string text, bool isDamageText = false)
     {
-        if (afterImageCooldownTimer > 0)
-        {
-            afterImageCooldownTimer -= Time.deltaTime;
-            if (afterImageCooldownTimer < 0) afterImageCooldownTimer = 0;
-        }
+        float randomX = Random.Range(-1f, 1f);
+        float randomY = Random.Range(2f, 4f);
+        Vector3 positionOffset = new Vector3(randomX, randomY, 0);
+
+        GameObject newText = Instantiate(popupTextPrefab, transform.position + positionOffset, Quaternion.identity);
+        newText.GetComponent<TMP_Text>().text = text;
+
+        if (isDamageText)
+            newText.GetComponent<TMP_Text>().color = Color.red;
     }
 
     public void MakeTransparent(bool transparent)
@@ -67,16 +60,6 @@ public class EntityFX : MonoBehaviour
             spriteRenderer.color = Color.clear;
         else
             spriteRenderer.color = Color.white;
-    }
-
-    public void CreateAfterImage()
-    {
-        if (afterImageCooldownTimer <= 0)
-        {
-            afterImageCooldownTimer = afterImageCooldown;
-            GameObject newAfterImage = Instantiate(afterImagePrefab, transform.position, transform.rotation);
-            newAfterImage.GetComponent<AfterImageFX>().SetUpAfterImage(colorLooseRate, spriteRenderer.sprite);
-        }
     }
 
     public IEnumerator FlashFX()
@@ -189,17 +172,5 @@ public class EntityFX : MonoBehaviour
         hitFX.transform.Rotate(hitRotation);
 
         Destroy(hitFX, 1f);
-    }
-
-    public void PlayDustFX()
-    {
-        if (dustFX != null)
-            dustFX.Play();
-    }
-
-    public void ScreenShake(Vector3 shakePower)
-    {
-        impulseSource.m_DefaultVelocity = new Vector3(shakePower.x * player.FacingDir, shakePower.y) * shakeMultiplier;
-        impulseSource.GenerateImpulse();
     }
 }

@@ -16,6 +16,7 @@ public class Player : Entity
 
     public PlayerStateMachine StateMachine { get; private set; }
     public SkillManager SkillManager { get; private set; }
+    public PlayerFX PlayerFX { get; private set; }
     public GameObject Sword { get; private set; }
 
     #region States
@@ -70,6 +71,7 @@ public class Player : Entity
     protected override void Awake()
     {
         StateMachine = new PlayerStateMachine();
+        PlayerFX = GetComponent<PlayerFX>();
 
         IdleState = new PlayerIdleState(StateMachine, this, Resources.Idle);
         MoveState = new PlayerMoveState(StateMachine, this, Resources.Move);

@@ -11,7 +11,6 @@ public class Entity : MonoBehaviour
 
     public Animator Animator { get; private set; }
     public Rigidbody2D Rigidbody2D { get; private set; }
-    public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
     public CharacterStats CharacterStats { get; private set; }
     public CapsuleCollider2D CapsuleCollider { get; private set;}
@@ -48,7 +47,6 @@ public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        EntityFX = GetComponent<EntityFX>();
         CharacterStats = GetComponent<CharacterStats>();
         CapsuleCollider = GetComponent<CapsuleCollider2D>();
         Animator = GetComponentInChildren<Animator>();

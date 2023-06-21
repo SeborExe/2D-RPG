@@ -550,6 +550,15 @@ MonoBehaviour:
   shockFX: {fileID: 2524214592503746292, guid: c9d6e8ac8721e8940bf402f7b4cb2706, type: 3}
   hitFX00: {fileID: 4822436330378843465, guid: 9ed829157ae763549af225c893ba5ff4, type: 3}
   criticalHitFX: {fileID: 6461099014217204550, guid: 4facc88b5e3f48e4d97f8a3f43f51391, type: 3}
+  dustFX: {fileID: 0}
+  afterImagePrefab: {fileID: 0}
+  colorLooseRate: 0
+  afterImageCooldown: 0
+  shakeMultiplier: 0
+  shakeSwordImpack: {x: 0, y: 0, z: 0}
+  shakeHighDamage: {x: 0, y: 0, z: 0}
+  shakeAttack: {x: 0, y: 0, z: 0}
+  popupTextPrefab: {fileID: 3117978701585891607, guid: db5ee7604ef6f3841b0634f88efb33d7, type: 3}
 --- !u!114 &1778788399715199478
 MonoBehaviour:
   m_ObjectHideFlags: 0

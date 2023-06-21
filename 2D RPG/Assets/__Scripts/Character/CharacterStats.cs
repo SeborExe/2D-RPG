@@ -254,6 +254,9 @@ public class CharacterStats : MonoBehaviour
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
 
+        if (damage > 0)
+            entityFX.CreatePopupText(damage.ToString(), true);
+
         OnHealthChanged?.Invoke();
     }
 

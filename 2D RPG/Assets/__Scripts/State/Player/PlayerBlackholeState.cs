@@ -52,6 +52,6 @@ public class PlayerBlackholeState : PlayerState
         base.Exit();
 
         player.Rigidbody2D.gravityScale = defaultGravity;
-        player.EntityFX.MakeTransparent(false);
+        player.PlayerFX.MakeTransparent(false);
     }
 }

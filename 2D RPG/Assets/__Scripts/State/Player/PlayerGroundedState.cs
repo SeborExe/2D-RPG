@@ -20,7 +20,11 @@ public class PlayerGroundedState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.R) && player.SkillManager.BlackholeSkill.blackHoleUnlocked)
         {
-            if (player.SkillManager.BlackholeSkill.cooldownTimer > 0) return;
+            if (player.SkillManager.BlackholeSkill.cooldownTimer > 0)
+            {
+                player.PlayerFX.CreatePopupText("Cooldown");
+                return;
+            }
 
             stateMachine.ChangeState(player.BlackholeState);
             player.InvokeOnBlackholeUsed();

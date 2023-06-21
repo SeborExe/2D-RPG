@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : Entity
 {
     public EnemyStateMachine StateMachine { get; private set; }
+    public EntityFX EntityFX { get; private set; }
 
     #region States Times
     [field: Header("States Times")]
@@ -50,6 +51,7 @@ public class Enemy : Entity
         StateMachine = new EnemyStateMachine();
 
         base.Awake();
+        EntityFX = GetComponent<EntityFX>();
 
         defaultMoveSpeed = MoveSpeed;
     }
