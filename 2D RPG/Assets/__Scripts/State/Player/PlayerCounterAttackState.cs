@@ -27,22 +27,27 @@ public class PlayerCounterAttackState : PlayerState
 
         foreach (Collider2D collider in colliders)
         {
+            if (collider.TryGetComponent(out ArrowController arrow))
+            {
+                SuccesfulCounterAttack();
+                arrow.FlipArrow();
+            }
+
             if (collider.TryGetComponent(out Enemy enemy))
             {
                 if (enemy.CanBeStunned())
                 {
-                    stateTimer = Mathf.Infinity; //any value bigger than 1
-                    player.Animator.SetBool(Resources.SuccessfulCounterAttack, true);
+                        SuccesfulCounterAttack();
 
-                    player.SkillManager.ParrySkill.UseSkill();
+                        player.SkillManager.ParrySkill.UseSkill();
 
-                    if (canCreateClone)
-                    {
-                        canCreateClone = false;
-                        player.SkillManager.ParrySkill.MakeMirageOnParry(enemy.transform);
+                        if (canCreateClone)
+                        {
+                            canCreateClone = false;
+                            player.SkillManager.ParrySkill.MakeMirageOnParry(enemy.transform);
+                        }
                     }
                 }
-            }
         }
 
         if (stateTimer <= 0 || triggerCalled)
@@ -52,5 +57,11 @@ public class PlayerCounterAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    private void SuccesfulCounterAttack()
+    {
+        stateTimer = Mathf.Infinity; //any value bigger than 1
+        player.Animator.SetBool(Resources.SuccessfulCounterAttack, true);
     }
 }
