@@ -29,6 +29,7 @@ public class Enemy : Entity
     [field: Header("Attack Info")]
     [field: SerializeField] public float AttackDistance { get; private set; }
     [field: SerializeField] public float AttackCooldown { get; set; }
+    [field: SerializeField] public float AggroDistance { get; set; } = 2;
     [field: SerializeField] public Vector2 AttackCooldownRange { get; private set; }
     [HideInInspector] public float lastTimeAttack;
     #endregion

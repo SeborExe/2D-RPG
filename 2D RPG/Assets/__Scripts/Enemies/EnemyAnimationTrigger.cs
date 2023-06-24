@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
+    [SerializeField] private int attackSoundIndex = -1;
+
     private Enemy enemy => GetComponentInParent<Enemy>();
 
     private void AnimationTrigger() => enemy.AnimationFinishTrigger();
@@ -12,7 +14,8 @@ public class EnemyAnimationTrigger : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attackCheckRadius);
 
-        AudioManager.Instance.PlaySFX(1, enemy.transform);
+        if (attackSoundIndex != -1)
+            AudioManager.Instance.PlaySFX(attackSoundIndex, enemy.transform);
 
         foreach (Collider2D collider in colliders)
         {

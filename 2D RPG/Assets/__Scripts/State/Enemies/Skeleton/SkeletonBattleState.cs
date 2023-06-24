@@ -48,6 +48,9 @@ public class SkeletonBattleState : EnemyState
         else if (player.transform.position.x < enemy.transform.position.x)
             moveDir = -1;
 
+        if (enemy.IsPlayerDetected() && enemy.IsPlayerDetected().distance < enemy.AttackDistance - .5f)
+            return;
+
         enemy.SetVelocity(enemy.MoveSpeed * moveDir, enemy.Rigidbody2D.velocity.y);
     }
 

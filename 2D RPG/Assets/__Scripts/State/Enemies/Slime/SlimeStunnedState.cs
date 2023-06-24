@@ -26,6 +26,14 @@ public class SlimeStunnedState : EnemyState
     {
         base.Update();
 
+        if (enemy.Rigidbody2D.velocity.y < 0.1f && enemy.IsGroundDetected())
+        {
+            enemy.EntityFX.CancelColorChange();
+            enemy.Animator.SetTrigger(Resources.StunFold);
+            enemy.CharacterStats.MakeInvincible(true);
+        }
+
+
         if (stateTimer <= 0)
             stateMachine.ChangeState(enemy.IdleState);
     }
@@ -34,6 +42,6 @@ public class SlimeStunnedState : EnemyState
     {
         base.Exit();
 
-        enemy.EntityFX.CancelColorChange();
+        enemy.CharacterStats.MakeInvincible(false);
     }
 }
