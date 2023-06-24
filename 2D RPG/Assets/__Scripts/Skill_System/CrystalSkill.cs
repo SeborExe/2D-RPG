@@ -19,6 +19,7 @@ public class CrystalSkill : Skill
     [Header("Explosive crystal")]
     [SerializeField] private SkillTreeSlotUI unlockExplosiveCrystalButton;
     [SerializeField] private bool canExplode;
+    [SerializeField] private float explosiveCooldown;
 
     [Header("Moving Crystal")]
     [SerializeField] private SkillTreeSlotUI unlockMovingCrystalButton;
@@ -70,7 +71,10 @@ public class CrystalSkill : Skill
     private void UnlockExplosiveCrystal()
     {
         if (unlockExplosiveCrystalButton.unlocked)
+        {
             canExplode = true;
+            SetCooldown(explosiveCooldown);
+        }
     }
 
     private void UnlockMovingCrystal()
