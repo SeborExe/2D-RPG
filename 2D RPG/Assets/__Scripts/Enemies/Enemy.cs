@@ -143,6 +143,8 @@ public class Enemy : Entity
 
     public virtual void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
+    public virtual void AnimationSpecialAttackTrigger() { }
+
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();

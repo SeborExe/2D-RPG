@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    [SerializeField] private int damage;
-    [SerializeField] private float xVelocity;
+    private float xVelocity;
     [SerializeField] private Vector2 timeToDestroyObject;
 
     private Rigidbody2D rb;
+    private CharacterStats characterStats;
     private bool canMove = true;
     private bool flipped;
     private string targetLayerName = "Player";
@@ -24,13 +24,20 @@ public class ArrowController : MonoBehaviour
             rb.velocity = new Vector2(xVelocity, rb.velocity.y);
     }
 
+    public void SetupArrow(float xVelocity, CharacterStats characterStats)
+    {
+        this.xVelocity = xVelocity;
+        this.characterStats = characterStats;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer(targetLayerName))
         {
             if (collision.TryGetComponent(out CharacterStats stats))
             {
-                stats.TakeDamage(damage);
+                characterStats.DoDamage(stats);
+                //stats.TakeDamage(damage);
 
                 StackInto(collision);
             }
