@@ -22,7 +22,7 @@ public class Enemy : Entity
 
     #region Stats
     [field: Header("Stats")]
-    [field: SerializeField] public float MoveSpeed { get; private set; } = 3f;
+    [field: SerializeField] public float MoveSpeed { get; set; } = 3f;
     #endregion
 
     #region Attack Info

@@ -24,4 +24,5 @@ public static class Resources
     public static int Hit = Animator.StringToHash("Hit");
     public static int Active = Animator.StringToHash("Active");
     public static int StunFold = Animator.StringToHash("StunFold");
+    public static int Run = Animator.StringToHash("Run");
 }
