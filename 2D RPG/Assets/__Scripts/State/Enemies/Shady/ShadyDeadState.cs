@@ -15,6 +15,7 @@ public class ShadyDeadState : EnemyState
     {
         base.Enter();
 
+        /*
         if (!enemy.HasDeadAnimation)
         {
             enemy.Animator.SetBool(enemy.LastAnimBoolName, true);
@@ -23,12 +24,13 @@ public class ShadyDeadState : EnemyState
 
             stateTimer = 0.1f;
         }
+        */
     }
 
     public override void Update()
     {
         base.Update();
-
+        /*
         if (!enemy.HasDeadAnimation)
         {
             if (stateTimer > 0)
@@ -38,6 +40,10 @@ public class ShadyDeadState : EnemyState
         {
             enemy.SetVelocity(0, 0);
         }
+        */
+
+        if (triggerCalled)
+            enemy.SelfDestroy();
     }
 
     public override void Exit()

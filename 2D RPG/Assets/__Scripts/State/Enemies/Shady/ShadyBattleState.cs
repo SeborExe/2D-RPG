@@ -37,7 +37,7 @@ public class ShadyBattleState : EnemyState
 
             if (enemy.IsPlayerDetected().distance < enemy.AttackDistance && CanAttack())
             {
-                //stateMachine.ChangeState(enemy.AttackState);
+                enemy.CharacterStats.KillEntity(); //Enter dead state witch trigger explosion and drop items + currency
             }
         }
         else

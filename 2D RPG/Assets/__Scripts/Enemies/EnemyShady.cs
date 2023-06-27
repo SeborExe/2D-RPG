@@ -15,6 +15,9 @@ public class EnemyShady : Enemy
 
     [field: Header("Shady Info")]
     [field: SerializeField] public float RunSpeed { get; private set; }
+    [SerializeField] public GameObject explosionPrefab;
+    [SerializeField] public float growSpeed;
+    [SerializeField] public float maxSize;
 
     protected override void Awake()
     {
@@ -23,13 +26,8 @@ public class EnemyShady : Enemy
         IdleState = new ShadyIdleState(StateMachine, this, Resources.Idle, this);
         MoveState = new ShadyMoveState(StateMachine, this, Resources.Move, this);
         BattleState = new ShadyBattleState(StateMachine, this, Resources.Run, this);
-        //AttackState = new SkeletonAttackState(StateMachine, this, Resources.Attack, this);
         StunnedState = new ShadyStunnedState(StateMachine, this, Resources.Stun, this);
-
-        if (HasDeadAnimation)
-            DeadState = new ShadyDeadState(StateMachine, this, Resources.Die, this);
-        else
-            DeadState = new ShadyDeadState(StateMachine, this, LastAnimBoolName, this);
+        DeadState = new ShadyDeadState(StateMachine, this, Resources.Explode, this);
     }
 
     protected override void Start()
@@ -60,4 +58,15 @@ public class EnemyShady : Enemy
 
         StateMachine.ChangeState(DeadState);
     }
+
+    public override void AnimationSpecialAttackTrigger()
+    {
+        GameObject newExplosion = Instantiate(explosionPrefab, attackCheck.position, Quaternion.identity);
+        newExplosion.GetComponent<ShadyExplosion>().SetupExplosion(CharacterStats, growSpeed, maxSize, attackCheckRadius);
+
+        CapsuleCollider.enabled = false;
+        Rigidbody2D.gravityScale = 0;
+    }
+
+    public void SelfDestroy() => Destroy(gameObject);
 }
