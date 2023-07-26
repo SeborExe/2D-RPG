@@ -2,17 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BringerOfDeathIdleState : MonoBehaviour
+public class BringerOfDeathIdleState : EnemyState
 {
-    // Start is called before the first frame update
-    void Start()
+    private EnemyBringerOfDeath enemy;
+
+    public BringerOfDeathIdleState(EnemyStateMachine stateMachine, Enemy enemyBase, int animBoolName, EnemyBringerOfDeath enemy) : base(stateMachine, enemyBase, animBoolName)
     {
+        this.enemy = enemy;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        stateTimer = enemy.IdleTime;
+    }
+
+    public override void Update()
+    {
+        base.Update();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+        base.Exit();
+
+        //AudioManager.Instance.PlaySFX(24, enemy.transform);
     }
 }

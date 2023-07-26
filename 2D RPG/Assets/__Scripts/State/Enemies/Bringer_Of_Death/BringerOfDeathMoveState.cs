@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BringerOfDeathMoveState : MonoBehaviour
+public class BringerOfDeathMoveState : EnemyState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private EnemyBringerOfDeath enemy;
 
-    // Update is called once per frame
-    void Update()
+    public BringerOfDeathMoveState(EnemyStateMachine stateMachine, Enemy enemyBase, int animBoolName, EnemyBringerOfDeath enemy) : base(stateMachine, enemyBase, animBoolName)
     {
-        
+        this.enemy = enemy;
     }
 }
