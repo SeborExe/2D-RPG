@@ -14,9 +14,20 @@ public class EnemyBringerOfDeath : Enemy
     public BringerOfDeathDeadState DeadState { get; private set; }
     #endregion
 
+    public bool bossFightBegun;
+
     [Header("Teleport details")]
     [SerializeField] private BoxCollider2D arena;
     [SerializeField] private Vector2 surroundingCheckSize;
+    public float chanceToTeleport;
+    public float defaultChanceToTeleport;
+
+    [Header("Spell Cast details")]
+    [SerializeField] private GameObject spellPrefab;
+    [SerializeField] private float spellStateCooldown;
+    public int amountOfSpells;
+    public float spellCooldown;
+    public float lastTimeCast;
 
     private CapsuleCollider2D collider;
 
@@ -24,6 +35,8 @@ public class EnemyBringerOfDeath : Enemy
     {
         base.Awake();
         collider = GetComponent<CapsuleCollider2D>();
+
+        SetupDefaultFacingDir(-1);
 
         IdleState = new BringerOfDeathIdleState(StateMachine, this, Resources.Idle, this);
         MoveState = new BringerOfDeathMoveState(StateMachine, this, Resources.Move, this);
@@ -74,6 +87,42 @@ public class EnemyBringerOfDeath : Enemy
     private RaycastHit2D GroundBelow() => Physics2D.Raycast(transform.position, Vector2.down, 100, whatIsGround);
 
     private bool SomethingIsAround() => Physics2D.BoxCast(transform.position, surroundingCheckSize, 0, Vector2.zero, whatIsGround);
+
+    public bool CanTeleport()
+    {
+        if (Random.Range(0, 100) <= chanceToTeleport)
+        {
+            chanceToTeleport = defaultChanceToTeleport;
+            return true;
+        }   
+
+        return false;
+    }
+
+    public bool CanDoSpellCast()
+    {
+        if (Time.time >= lastTimeCast + spellStateCooldown)
+        {
+            lastTimeCast = Time.time;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void CastSpell()
+    {
+        Player player = PlayerManager.Instance.player;
+
+        float xOffset = 0;
+        if (player.Rigidbody2D.velocity.x != 0)
+            xOffset = player.FacingDir * 3f;
+
+        Vector3 spellPosition = new Vector3(player.transform.position.x + xOffset, player.transform.position.y + 2.5f);;
+
+        GameObject newSpell = Instantiate(spellPrefab, spellPosition, Quaternion.identity);
+        newSpell.GetComponent<BringerOfDeathSpellHand>().SetUpSpell(CharacterStats);
+    }
 
     protected override void OnDrawGizmos()
     {

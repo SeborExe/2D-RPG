@@ -3552,7 +3552,7 @@ GameObject:
   - component: {fileID: 250264360}
   - component: {fileID: 250264359}
   - component: {fileID: 250264358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bringer_of_Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3605,12 +3605,12 @@ MonoBehaviour:
   knockbackDuration: 0.07
   capsuleColliderOffsetAfterDie: {x: 0, y: 0}
   capsuleColliderSiezeAfterDie: {x: 0, y: 0}
-  <IdleTime>k__BackingField: 2
+  <IdleTime>k__BackingField: 0.8
   <BattleTime>k__BackingField: 8
   <MaxDistanceToFollowPlayer>k__BackingField: 25
   <MoveSpeed>k__BackingField: 3
   <AttackDistance>k__BackingField: 3
-  <AttackCooldown>k__BackingField: 2
+  <AttackCooldown>k__BackingField: 1.5
   <AggroDistance>k__BackingField: 3
   <AttackCooldownRange>k__BackingField: {x: 1, y: 2}
   lastTimeAttack: 0
@@ -3621,8 +3621,16 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+  bossFightBegun: 0
   arena: {fileID: 2050568454}
   surroundingCheckSize: {x: 3, y: 3}
+  chanceToTeleport: 25
+  defaultChanceToTeleport: 25
+  spellPrefab: {fileID: 932681129967346859, guid: 16f5e3d2669560a458501c32ef277a54, type: 3}
+  spellStateCooldown: 18
+  amountOfSpells: 5
+  spellCooldown: 1.5
+  lastTimeCast: 0
 --- !u!114 &250264359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31411,6 +31419,7 @@ GameObject:
   - component: {fileID: 1861284959}
   - component: {fileID: 1861284961}
   - component: {fileID: 1861284960}
+  - component: {fileID: 1861284962}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -31506,6 +31515,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1861284962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861284958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b81d4ffd1f2a5e4b972ffc9eaacf6ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSoundIndex: -1
 --- !u!1 &1865758348
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class BringerOfDeathAttackState : EnemyState
     public override void Enter()
     {
         base.Enter();
+
+        enemy.chanceToTeleport += 5;
     }
 
     public override void Update()
@@ -22,7 +24,12 @@ public class BringerOfDeathAttackState : EnemyState
         enemy.SetVelocity(0, 0);
 
         if (triggerCalled)
-            stateMachine.ChangeState(enemy.BattleState);
+        {
+            if (enemy.CanTeleport())
+                stateMachine.ChangeState(enemy.TeleportState);
+            else
+                stateMachine.ChangeState(enemy.BattleState);
+        }    
     }
 
     public override void Exit()

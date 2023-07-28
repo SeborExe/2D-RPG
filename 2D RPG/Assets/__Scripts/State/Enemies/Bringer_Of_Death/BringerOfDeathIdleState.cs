@@ -21,7 +21,12 @@ public class BringerOfDeathIdleState : EnemyState
     public override void Update()
     {
         base.Update();
-        
+
+        if (Vector2.Distance(PlayerManager.Instance.player.transform.position, enemy.transform.position) < 7)
+            enemy.bossFightBegun = true;
+
+        if (stateTimer <= 0 && enemy.bossFightBegun)
+            stateMachine.ChangeState(enemy.BattleState);
     }
 
     public override void Exit()

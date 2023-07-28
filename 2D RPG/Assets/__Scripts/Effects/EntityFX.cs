@@ -28,6 +28,8 @@ public class EntityFX : MonoBehaviour
     [Header("Popup")]
     [SerializeField] private GameObject popupTextPrefab;
 
+    private GameObject myHealthBar;
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -36,6 +38,7 @@ public class EntityFX : MonoBehaviour
     protected virtual void Start()
     {
         originalMat = spriteRenderer.material;
+        myHealthBar = GetComponentInChildren<HealthBarUI>().gameObject;
 
         if (TryGetComponent(out Player playerComponent))
             player = playerComponent;
@@ -57,9 +60,15 @@ public class EntityFX : MonoBehaviour
     public void MakeTransparent(bool transparent)
     {
         if (transparent)
+        {
             spriteRenderer.color = Color.clear;
+            myHealthBar.SetActive(false);
+        }
         else
+        {
             spriteRenderer.color = Color.white;
+            myHealthBar.SetActive(true);
+        }
     }
 
     public IEnumerator FlashFX()

@@ -20,7 +20,7 @@ public class BringerOfDeathBattleState : EnemyState
         player = PlayerManager.Instance.player.transform;
 
         if (player.GetComponent<Player>().IsDead)
-            stateMachine.ChangeState(enemy.MoveState);
+            stateMachine.ChangeState(enemy.IdleState);
     }
 
     public override void Update()
@@ -31,15 +31,13 @@ public class BringerOfDeathBattleState : EnemyState
         {
             stateTimer = enemy.BattleTime;
 
-            if (enemy.IsPlayerDetected().distance < enemy.AttackDistance && CanAttack())
+            if (enemy.IsPlayerDetected().distance < enemy.AttackDistance)
             {
-                stateMachine.ChangeState(enemy.AttackState);
+                if (CanAttack())
+                    stateMachine.ChangeState(enemy.AttackState);
+                else
+                    stateMachine.ChangeState(enemy.IdleState);
             }
-        }
-        else
-        {
-            if (stateTimer <= 0 || Vector2.Distance(player.transform.position, enemy.transform.position) > enemy.MaxDistanceToFollowPlayer)
-                stateMachine.ChangeState(enemy.IdleState);
         }
 
         if (player.transform.position.x > enemy.transform.position.x)

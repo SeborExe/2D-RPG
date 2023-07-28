@@ -15,20 +15,26 @@ public class BringerOfDeathTeleportState : EnemyState
     {
         base.Enter();
 
-        enemy.FindPosition();
-        stateTimer = 1f;
+        enemy.CharacterStats.MakeInvincible(true);
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (stateTimer < 0f)
-            stateMachine.ChangeState(enemy.IdleState);
+        if (triggerCalled)
+        {
+            if (enemy.CanDoSpellCast())
+                stateMachine.ChangeState(enemy.SpellCastState);
+            else
+                stateMachine.ChangeState(enemy.BattleState);
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        enemy.CharacterStats.MakeInvincible(false);
     }
 }
