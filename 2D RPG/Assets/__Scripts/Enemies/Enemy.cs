@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(EnemyStats))]
+[RequireComponent(typeof(EntityFX))]
+[RequireComponent(typeof(ItemDrop))]
 public class Enemy : Entity
 {
     public EnemyStateMachine StateMachine { get; private set; }
@@ -17,13 +22,14 @@ public class Enemy : Entity
 
     #region Stats
     [field: Header("Stats")]
-    [field: SerializeField] public float MoveSpeed { get; private set; } = 3f;
+    [field: SerializeField] public float MoveSpeed { get; set; } = 3f;
     #endregion
 
     #region Attack Info
     [field: Header("Attack Info")]
     [field: SerializeField] public float AttackDistance { get; private set; }
     [field: SerializeField] public float AttackCooldown { get; set; }
+    [field: SerializeField] public float AggroDistance { get; set; } = 2;
     [field: SerializeField] public Vector2 AttackCooldownRange { get; private set; }
     [HideInInspector] public float lastTimeAttack;
     #endregion
@@ -136,6 +142,8 @@ public class Enemy : Entity
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDir, 20f, whatIsPlayer);
 
     public virtual void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+
+    public virtual void AnimationSpecialAttackTrigger() { }
 
     protected override void OnDrawGizmos()
     {

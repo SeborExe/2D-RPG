@@ -37,3 +37,10 @@ public enum StatType
     IceDamage,
     LightingDamage
 }
+
+public enum SlimeType
+{
+    Small,
+    Medium,
+    Big
+}

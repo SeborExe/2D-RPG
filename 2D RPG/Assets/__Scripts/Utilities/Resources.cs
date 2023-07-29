@@ -23,4 +23,8 @@ public static class Resources
     public static int Die = Animator.StringToHash("Die");
     public static int Hit = Animator.StringToHash("Hit");
     public static int Active = Animator.StringToHash("Active");
+    public static int StunFold = Animator.StringToHash("StunFold");
+    public static int Run = Animator.StringToHash("Run");
+    public static int Teleport = Animator.StringToHash("Teleport");
+    public static int Cast = Animator.StringToHash("Cast");
 }

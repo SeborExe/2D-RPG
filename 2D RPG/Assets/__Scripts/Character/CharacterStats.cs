@@ -83,6 +83,9 @@ public class CharacterStats : MonoBehaviour
         if (AvoidAttack(targetStats))
             return;
 
+        if (targetStats.IsInvincible)
+            return;
+
         bool criticalStrike = false;
 
         targetStats.GetComponent<Entity>().SetUpKnockbackDir(transform);
@@ -254,7 +257,7 @@ public class CharacterStats : MonoBehaviour
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);
 
-        if (damage > 0)
+        if (damage > 1)
             entityFX.CreatePopupText(damage.ToString(), true);
 
         OnHealthChanged?.Invoke();

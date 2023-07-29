@@ -35,6 +35,7 @@ public class Entity : MonoBehaviour
     #region Knockback
     [Header("Knockback info")]
     [SerializeField] protected Vector2 knockbackPower;
+    [SerializeField] protected Vector2 knockbackOffset;
     [SerializeField] protected float knockbackDuration;
     protected bool isKnocked;
     public int KnockbackDir { get; private set; }
@@ -42,6 +43,8 @@ public class Entity : MonoBehaviour
 
     #region Dead
     public bool IsDead { get; private set; }
+    [SerializeField] private Vector2 capsuleColliderOffsetAfterDie;
+    [SerializeField] private Vector2 capsuleColliderSiezeAfterDie;
     #endregion
 
     protected virtual void Awake()
@@ -101,6 +104,14 @@ public class Entity : MonoBehaviour
             Flip();
     }
 
+    public virtual void SetupDefaultFacingDir(int direction)
+    {
+        FacingDir = direction;
+
+        if (FacingDir == -1)
+            FacingRight = false;
+    }
+
     public virtual void DamageImpact()
     {
         StartCoroutine(HitKnockback());
@@ -119,7 +130,11 @@ public class Entity : MonoBehaviour
     protected virtual IEnumerator HitKnockback()
     {
         isKnocked = true;
-        Rigidbody2D.velocity = new Vector2(knockbackPower.x * KnockbackDir, knockbackPower.y);
+
+        float xOffset = UnityEngine.Random.Range(knockbackOffset.x, knockbackOffset.y);
+
+        //if (knockbackPower.x > 0 || knockbackPower.y > 0)
+        Rigidbody2D.velocity = new Vector2((knockbackPower.x + xOffset) * KnockbackDir, knockbackPower.y);
 
         yield return new WaitForSeconds(knockbackDuration);
 
@@ -133,8 +148,8 @@ public class Entity : MonoBehaviour
     {
         IsDead = true;
 
-        CapsuleCollider.offset = new Vector2(0, -0.73f);
-        CapsuleCollider.size = new Vector2(0.5f, 0.5f);
+        CapsuleCollider.offset = capsuleColliderOffsetAfterDie;
+        CapsuleCollider.size = capsuleColliderSiezeAfterDie;
     }
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -143,7 +158,7 @@ public class Entity : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * FacingDir, wallCheck.position.y));
         Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
 }
